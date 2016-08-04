@@ -5,5 +5,5 @@ function ModelChart(){
 	this.sopTotal = 0;
 	this.productName = '';
     this.zoneName = '';
-    this.productIns = [];
+    
 }

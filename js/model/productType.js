@@ -1,4 +1,5 @@
 function ProductType(){
 	this.model = '';
-	this.productTypes = [];
+	this.productTypes = []; //amereto
+	this.productIns = [];
 }

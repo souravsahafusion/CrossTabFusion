@@ -10,11 +10,34 @@ ParsingData.prototype.setZonalValues = function(){
     var instance = this.instance;
     for(var i = 0; i < input.zone_map.length; i++){
         var product = new ProductType();
-        var zoneDataSet = object.data[index].values[i].zone;
-        for(var j = 0; j < input.zone_map.length; j++){
-            //if()
-        }
         instance.productIns[i] = product;
+        var objectZone = input.zone_map[i];
+        
+        //console.log(zoneDataSet);
+        
+        for(var j = 0; j < object.data[index].values.length; j++){ //extra loop running
+            if(object.data[index].values[j] !== undefined){ // to recover the error
+            var zoneDataSet = object.data[index].values[j].zone;
+        }
+
+            if( input.zone_map[i] == zoneDataSet){
+                //console.log(zoneDataSet);
+                for(var k = 0; k < instance.productTypes.length; k++){
+                    for(var l = 0; l < object.data[index].values[j].productValues.length; l++){
+                        var productTypeValue = object.data[index].values[j].productValues[l].product;
+                        if(instance.productTypes[k] == productTypeValue){
+                            instance.productIns[i].sos = object.data[index].values[j].productValues[l].sos;
+                            instance.productIns[i].sop = object.data[index].values[j].productValues[l].sop;
+                            instance.productIns[i].productName = productTypeValue;
+                            //console.log(instance.productIns[i].sos + instance.productIns[i].productName);
+
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
     }
 };
 ParsingData.prototype.setValues = function(input){
@@ -56,7 +79,7 @@ ParsingData.prototype.setProductName = function(){
             //console.log(value);
            
             if(instance.productTypes.indexOf(value) < 0){
-                 console.log(value);
+                 //console.log(value);
 			instance.productTypes.push(value);
                 
             }
@@ -70,7 +93,13 @@ ParsingData.prototype.setProductName = function(){
         
         
 } //end of product setting
+ParsingData.prototype.printValues = function(){
+    var input = this.input;
+    var index = this.index;
+    //for(var i = 0; i < )
 
+
+};
 
 };
 ParsingData.prototype.calculateValues = function(input, index){
@@ -80,5 +109,6 @@ ParsingData.prototype.calculateValues = function(input, index){
     this.input = input;
     this.index = index;
     this.setProductName();
+    this.setZonalValues();
 };
 var object ={};
