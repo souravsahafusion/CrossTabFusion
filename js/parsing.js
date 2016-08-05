@@ -137,10 +137,11 @@ ParsingData.prototype.setZonalValues = function(){
                         var productTypeValue = object.data[index].values[j].productValues[l].product;
                         if(instance.productTypes[k] == productTypeValue){
                             instance.productIns[i].sos[k] = object.data[index].values[j].productValues[l].sos;
-                            if(maximum <= object.data[index].values[j].productValues[l].sos){
-                                maximum = object.data[index].values[j].productValues[l].sos;
+                            instance.productIns[i].sosTotal = instance.productIns[i].sosTotal + instance.productIns[i].sos[k];
+                            if(maximum <= instance.productIns[i].sosTotal){
+                                maximum = instance.productIns[i].sosTotal;
                             }
-                            instance.productIns[i].sop.push[k] = object.data[index].values[j].productValues[l].sop;
+                            instance.productIns[i].sop[k] = object.data[index].values[j].productValues[l].sop;
                             instance.productIns[i].productName[k] = productTypeValue;  //reduntant it's already stored
                             //console.log(instance.productIns[i].sos + instance.productIns[i].productName);
 

@@ -9,6 +9,7 @@
         this.chartUpBoundXCoor = 0;
         this.ChartIndex = 0;
         this.noofXTips = 0;
+        this.sepSVG = '';
 
 
 
@@ -24,6 +25,7 @@
         this.svg[index].setAttribute("class", "chartSVG");
         //console.log(this.svg[index]);
         chartId.appendChild(this.svg[index]);
+        return this.svg[index];
 
     };
     
@@ -44,8 +46,25 @@
         this.svg[this.ChartIndex].appendChild(line);
 
     };
+    DrawChart.prototype.drawLineSep = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
+        var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("class", className);
+        //line.setAttribute("stroke-dasharray", strokedasharray);
+        line.setAttribute("style", style);
+        if (typeof visibility !== 'undefined') {
+            line.setAttribute("visibility", "hidden");
+
+        }
+
+        this.sepSVG.appendChild(line);
+
+    };
     
-    DrawChart.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
+    DrawChart.prototype.addText = function(x, y, textValue, fontSize,className,transform,  textElement,  style) {
 
         if (typeof textElement == 'undefined') {
             textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -55,11 +74,12 @@
         textElement.setAttribute("x", x);
         textElement.setAttribute("y", y);
         textElement.innerHTML = textValue;
-        //var fontSize  = heightEachChart * .04;
-        textElement.setAttribute("font-size", fontSize);
-        textElement.setAttribute("transform", transform);
-        textElement.setAttribute("style", style);
-        this.svg.appendChild(textElement);
+        textElement.setAttribute("class", "addedText");
+        //var fontSize  = widthEachChart * .06;
+        //textElement.setAttribute("font-size", fontSize);
+        //textElement.setAttribute("transform", transform);
+        //textElement.setAttribute("style", style);
+        this.sepSVG.appendChild(textElement);
 
     };
     DrawChart.prototype.drawXAxis = function() {
@@ -146,7 +166,7 @@
         var b = maximum;
         var c = 0/*this.upLimitYAxis*/;
         var d = widthEachChart/*this.lowLimitYAxis*/;
-        return (d - (value - a) / (b - a) * (d - c));
+        return ((value - a) / (b - a) * (d - c));
 
     };
     
@@ -157,6 +177,7 @@
             var value = this.instance.productIns[this.ChartIndex].sos[i]
             if (typeof value != 'undefined') {
                 scaleColChartFactor = object.scaleColChartFactor / 100;
+                console.log(value);
 
                 var yPointPlot = this.calculateMappingPoint(value);
                 //console.log(range.length); need to debug
@@ -326,19 +347,67 @@
 
 
     };
+    DrawChart.prototype.initiateText = function(){
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        //var chartNo = this.chartNo;
+        svg.setAttribute("height", 30) ;
+        svg.setAttribute("width", window.innerWidth);
+        chartId = document.getElementById("chart");
+        svg.setAttribute("class", "chartSVG");
+
+        //console.log(this.svg[index]);
+        chartId.appendChild(svg);
+        this.sepSVG = svg;
+        var textProductType = "Product Type";
+        var textProduct = "Product";
+        var x = 0;
+        var y = 12;
+        var fontSize  = widthEachChart * .06;
+        var className = "addedText";
+        this.addText(x, y, textProductType,fontSize);
+        x = Math.floor(window.innerWidth / (object.zone_map.length + 2));
+        this.addText(x / 2, y, textProduct,fontSize);
+        for(var i = 0; i < object.zone_map.length;i++){
+            var x1 = x * (i+1);
+            var x2 = x * (i+1);
+            var y1 = 0;
+            var y2 = 30;
+            var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+            this.drawLineSep(x1,y1,x2,y2,style);
+            var textZone = object.zone_map[i];
+            this.addText(x1 + x * .3, y, textZone,fontSize);
+
+        }
+
+
+
+
+    };
 
 
     DrawChart.prototype.initiateDraw = function(){
-        this.printValues();
-        heightEachChart = window.innerHeight / object.data.length;
-        widthEachChart = window.innerWidth / (object.zone_map.length + 1);
-        
+        //this.printValues();
+        heightEachChart = (window.innerHeight - 30) / object.data.length;
+        widthEachChart = Math.floor(window.innerWidth / (object.zone_map.length + 2));
+        this.sepSVG = this.createSVG(object.zone_map.length);
+        var productType = this.instance.model;
+        var fontSize  = widthEachChart * .06
+        this.addText(0, 12,productType,fontSize);
+         for(var j = 0;j < this.instance.productTypes.length; j++){
+            var x = widthEachChart / 2 ;
+            //var y = (heightEachChart / this.noofXTips) * (j) + 12;
+            //console.log(this.instance.productTypes[j] + 'y' +y);
+            this.addText(x, 12 + (j)* heightEachChart/this.instance.productTypes.length,this.instance.productTypes[j],fontSize);
+         }
+
         for(var i = 0; i < object.zone_map.length; i++){ 
+
             this.ChartIndex = i;
             this.createSVG(i);
             this.drawChartOutline();
             this.plotColumnChart();
         }
+        //this.drawYAxis();
         
 
     };

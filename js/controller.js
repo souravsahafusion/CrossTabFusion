@@ -13,10 +13,13 @@ function parseData(input) {
 	} 
     console.log(maximum);
     findRangeModified();
+    var addChartText = new DrawChart();
+    addChartText.initiateText();
     //need to create a separate loop for drawing since the maximum value need to be calculated from all the datas
 	 for(var i = 0; i < input.data.length; i++){
 		//modelChart[i] = new ModelChart();
 		drawChart[i] = new DrawChart(range[i].instance, input, i);
+		
 		drawChart[i].initiateDraw();
 
 	}
