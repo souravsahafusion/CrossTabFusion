@@ -399,6 +399,8 @@
 
     };
     CrossTab.prototype.addHeader = function(){
+        var div = document.getElementById("heading");
+        document.body.removeChild(div);
         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         //var chartNo = this.chartNo;
         svg.setAttribute("height", 30) ;
