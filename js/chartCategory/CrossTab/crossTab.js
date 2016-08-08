@@ -1,4 +1,4 @@
-    function DrawChart(instance, input, index) {
+    function CrossTab(instance, input, index) {
         
         this.instance = instance;
         this.input = input;
@@ -16,7 +16,7 @@
 
     }
     
-    DrawChart.prototype.createSVG = function(index) {
+    CrossTab.prototype.createSVG = function(index) {
         this.svg[index] = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         //var chartNo = this.chartNo;
         this.svg[index].setAttribute("height", heightEachChart) ;
@@ -29,7 +29,7 @@
 
     };
     
-    DrawChart.prototype.drawLine = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
+    CrossTab.prototype.drawLine = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
         var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", x1);
         line.setAttribute("y1", y1);
@@ -46,7 +46,7 @@
         this.svg[this.ChartIndex].appendChild(line);
 
     };
-    DrawChart.prototype.drawLineSep = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
+    CrossTab.prototype.drawLineSep = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
         var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", x1);
         line.setAttribute("y1", y1);
@@ -64,7 +64,7 @@
 
     };
     
-    DrawChart.prototype.addText = function(x, y, textValue, fontSize,className,transform,  textElement,  style) {
+    CrossTab.prototype.addText = function(x, y, textValue, fontSize,className,transform,  textElement,  style) {
 
         if (typeof textElement == 'undefined') {
             textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -82,7 +82,7 @@
         this.sepSVG.appendChild(textElement);
 
     };
-    DrawChart.prototype.drawXAxis = function() {
+    CrossTab.prototype.drawXAxis = function() {
         //var chartNo = this.chartNo;
 
 
@@ -134,7 +134,7 @@
             }
         }*/
     };
-    DrawChart.prototype.drawYAxis = function() {
+    CrossTab.prototype.drawYAxis = function() {
 
         //var chartNo = this.chartNo;
         //var yShift = this.yShift;
@@ -161,7 +161,7 @@
         
 
     };
-    DrawChart.prototype.calculateMappingPoint = function(value) {
+    CrossTab.prototype.calculateMappingPoint = function(value) {
         var a = 0;
         var b = maximum;
         var c = 0/*this.upLimitYAxis*/;
@@ -169,57 +169,108 @@
         return ((value - a) / (b - a) * (d - c));
 
     };
-    
+   CrossTab.prototype.genColor = function(ratio){
+       if(ratio > 0){
+          var color1 = object.minProfitColor;
+          var color2 = object.maxProfitColor; 
+       }else{
+           var color1 = object.minLossColor;
+          var color2 = object.maxLossColor;  
+       }
+   
+   
 
-    DrawChart.prototype.plotColumnChart = function() {
+   var hex = function(x) {
+       x = x.toString(16);
+       return (x.length == 1) ? '0' + x : x;
+   };
+
+   var r = Math.ceil(parseInt(color1.substring(0,2), 16) * ratio + parseInt(color2.substring(0,2), 16) * (1-ratio));
+   var g = Math.ceil(parseInt(color1.substring(2,4), 16) * ratio + parseInt(color2.substring(2,4), 16) * (1-ratio));
+   var b = Math.ceil(parseInt(color1.substring(4,6), 16) * ratio + parseInt(color2.substring(4,6), 16) * (1-ratio));
+
+   var middle = hex(r) + hex(g) + hex(b);
+   return middle;
+};
+
+    CrossTab.prototype.plotColumnChart = function() {
 
         for (var i = 0; i < this.instance.productTypes.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
             var value = this.instance.productIns[this.ChartIndex].sos[i]
             if (typeof value != 'undefined') {
                 scaleColChartFactor = object.scaleColChartFactor / 100;
-                console.log(value);
+                //console.log(value);
 
                 var yPointPlot = this.calculateMappingPoint(value);
                 //console.log(range.length); need to debug
                 //this.storeAncorPointsY[i] = yPointPlot;
                 var xPointPlot = 0/*this.lowLimitXAxis + (widthEachChart / this.noofXTips) * (i)*/;
-
+                var valueProfit = this.instance.productIns[this.ChartIndex].sop[i];
+                var ratio = valueProfit / value;
+                
+                var styleColor = this.genColor(ratio);
                 //storeAncorPointsX[i] = Math.floor(xPointPlot);
                 var x = 0/*xPointPlot - widthEachChart * scaleColChartFactor*/;
-                var y =  (heightEachChart / this.noofXTips) * (i);
+                var y =  (heightEachChart / (this.noofXTips+1)) * (i);
                 var heightRect = heightEachChart/*widthEachChart*/ * scaleColChartFactor * 2;
                 var widthRect = yPointPlot;
-                var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
+                var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
                 var className = "plotColumnGraph";
 
-                var rectIns = this.drawRectangle(x, y, heightRect, widthRect, className, style);
+                var rectIns = this.drawRectangle(x, y, heightRect, widthRect, className, style,styleColor);
 
                 //this.columnChartListener(rectIns, className);
-                this.lastPlottedPointX = xPointPlot;
-                this.lastPlottedPointY = yPointPlot;
+                //this.lastPlottedPointX = xPointPlot;
+                //this.lastPlottedPointY = yPointPlot;
 
                 //skipping the 2D array for storing x-y w.r.t month and instead storing the previous x-y coordinates
 
             }
         }
+        //add total column
+        value = this.instance.productIns[this.ChartIndex].sosTotal;
+        if (typeof value != 'undefined') {
+                scaleColChartFactor = object.scaleColChartFactor / 100;
+                //console.log(value);
+
+                yPointPlot = this.calculateMappingPoint(value);
+        }
+                valueProfit = this.instance.productIns[this.ChartIndex].sopTotal;
+                ratio = valueProfit / value;
+                styleColor = this.genColor(ratio);
+                var x = 0/*xPointPlot - widthEachChart * scaleColChartFactor*/;
+                var y =  (heightEachChart / (this.noofXTips+1)) * (i);
+                var heightRect = heightEachChart/*widthEachChart*/ * scaleColChartFactor * 2;
+                var widthRect = yPointPlot;
+                var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
+                var className = "plotColumnGraph";
+             
+
+                var rectIns = this.drawRectangle(x, y, heightRect, widthRect, className, style,styleColor);
+        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+        this.drawLine(0,heightEachChart,widthEachChart,heightEachChart,style);
 
     };
 
     
-    DrawChart.prototype.drawRectangle = function(x, y, height, width, className, style) {
+    CrossTab.prototype.drawRectangle = function(x, y, height, width, className, style,styleColor) {
         var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         rect.setAttributeNS(null, 'x', x);
         rect.setAttributeNS(null, 'y', y);
         rect.setAttributeNS(null, 'height', height);
         rect.setAttributeNS(null, 'width', width);
         rect.setAttribute("class", className);
-        rect.setAttribute("style", style);
+        //rect.setAttribute("style", style);
+        rect.setAttribute("fill", "#"+styleColor);
+        rect.setAttribute("stroke", "#"+styleColor);
+        
+        
         this.svg[this.ChartIndex].appendChild(rect);
         return rect;
 
 
     };
-    DrawChart.prototype.addChartName = function(chartNo, check) {
+    CrossTab.prototype.addChartName = function(chartNo, check) {
         var chartName = obj.y_axis_map[chartNo];
         var x = this.chartLowBoundXCoor;
         var y = 0;
@@ -247,7 +298,7 @@
 
     };
     
-    DrawChart.prototype.drawChartOutline = function() {
+    CrossTab.prototype.drawChartOutline = function() {
         this.chartId = document.getElementById("chart");
         //this.chartNo = chartNo + 1;
 
@@ -264,7 +315,7 @@
 
     };
     
-    DrawChart.prototype.drawBoundRectangle = function(className) {
+    CrossTab.prototype.drawBoundRectangle = function(className) {
        
         style = "stroke:rgb(237, 237, 237);stroke-width:1;fill:transparent";
         var widthRect = this.chartUpBoundXCoor - this.chartLowBoundXCoor;
@@ -275,7 +326,7 @@
 
     };
 
-    DrawChart.prototype.drawDivRectangle = function(index) {
+    CrossTab.prototype.drawDivRectangle = function(index) {
         /*var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");*/
         var x = this.lowLimitXAxis;
         var y = this.upLimitYAxis;
@@ -331,7 +382,7 @@
     //var yShiftPer = .25;
     //var chartNameBoxShift = .03;
     //var chartNameBoxHtFactor = .15;
-    DrawChart.prototype.printValues = function(){
+    CrossTab.prototype.printValues = function(){
         var input = this.input;
         var index = this.index;
         var instance = this.instance;
@@ -347,7 +398,7 @@
 
 
     };
-    DrawChart.prototype.initiateText = function(){
+    CrossTab.prototype.addHeader = function(){
         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         //var chartNo = this.chartNo;
         svg.setAttribute("height", 30) ;
@@ -378,6 +429,53 @@
             this.addText(x1 + x * .3, y, textZone,fontSize);
 
         }
+        this.drawLineSep(x * (i+1),y1,x * (i+1),y2,style);
+
+
+
+
+    };
+CrossTab.prototype.addFooter = function(){
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        //var chartNo = this.chartNo;
+        svg.setAttribute("height", 30) ;
+        svg.setAttribute("width", window.innerWidth);
+        chartId = document.getElementById("chart");
+        svg.setAttribute("class", "chartSVG");
+
+        //console.log(this.svg[index]);
+        chartId.appendChild(svg);
+        this.sepSVG = svg;
+       
+        x = Math.floor(window.innerWidth / (object.zone_map.length + 2));
+      
+        for(var i = 0; i < object.zone_map.length;i++){
+            
+            var x1 = x * (i+1);
+            var x2 = x * (i+1);
+            var y1 = 0;
+            var y2 = 30;
+            var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+            this.drawLineSep(x1,y1,x2,y2,style);
+            console.log(noOfYTips);
+            for(var j = 0;j < noOfYTips; j++){
+                var xLabelCoor = widthEachChart / noOfYTips;
+             this.drawLineSep(x1 +xLabelCoor *(j+1),0,x1 + xLabelCoor *(j+1),4,style);
+                console.log(x1 *(j+1));
+             if(j==0){
+                 
+                 this.addText(x1 +xLabelCoor *(j)+ 5,16,0+"K");
+             }else if(j != noOfYTips){
+                 var tickValue = maximum / noOfYTips * j/1000;
+                this.addText(x1 +xLabelCoor *(j) - 10,16,tickValue+"K"); 
+             }    
+            }
+            this.addText(x1 + x * .3, 28, object.xAxisLabel);
+            
+
+        }
+    this.drawLineSep(x * (i+1),y1,x * (i+1),y2,style);
+    
 
 
 
@@ -385,28 +483,33 @@
     };
 
 
-    DrawChart.prototype.initiateDraw = function(){
+    CrossTab.prototype.initiateDraw = function(){
         //this.printValues();
-        heightEachChart = (window.innerHeight - 30) / object.data.length;
+        heightEachChart = (window.innerHeight - 100) / object.data.length;
         widthEachChart = Math.floor(window.innerWidth / (object.zone_map.length + 2));
         this.sepSVG = this.createSVG(object.zone_map.length);
         var productType = this.instance.model;
         var fontSize  = widthEachChart * .06
-        this.addText(0, 12,productType,fontSize);
+        this.addText(0, 12,productType);
+        
          for(var j = 0;j < this.instance.productTypes.length; j++){
             var x = widthEachChart / 2 ;
             //var y = (heightEachChart / this.noofXTips) * (j) + 12;
             //console.log(this.instance.productTypes[j] + 'y' +y);
-            this.addText(x, 12 + (j)* heightEachChart/this.instance.productTypes.length,this.instance.productTypes[j],fontSize);
+            this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),this.instance.productTypes[j]);
          }
-
+        this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),"Total");
+        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+        this.drawLineSep(0,0,widthEachChart,0,style); 
         for(var i = 0; i < object.zone_map.length; i++){ 
 
             this.ChartIndex = i;
             this.createSVG(i);
             this.drawChartOutline();
             this.plotColumnChart();
+            
         }
+        this.drawLine(widthEachChart,0,widthEachChart,heightEachChart,style);
         //this.drawYAxis();
         
 

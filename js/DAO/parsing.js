@@ -142,6 +142,7 @@ ParsingData.prototype.setZonalValues = function(){
                                 maximum = instance.productIns[i].sosTotal;
                             }
                             instance.productIns[i].sop[k] = object.data[index].values[j].productValues[l].sop;
+                            instance.productIns[i].sopTotal = instance.productIns[i].sopTotal + instance.productIns[i].sop[k];
                             instance.productIns[i].productName[k] = productTypeValue;  //reduntant it's already stored
                             //console.log(instance.productIns[i].sos + instance.productIns[i].productName);
 
