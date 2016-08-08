@@ -75,10 +75,6 @@
         textElement.setAttribute("y", y);
         textElement.innerHTML = textValue;
         textElement.setAttribute("class", "addedText");
-        //var fontSize  = widthEachChart * .06;
-        //textElement.setAttribute("font-size", fontSize);
-        //textElement.setAttribute("transform", transform);
-        //textElement.setAttribute("style", style);
         this.sepSVG.appendChild(textElement);
 
     };
@@ -175,7 +171,9 @@
           var color2 = object.maxProfitColor; 
        }else{
            var color1 = object.minLossColor;
-          var color2 = object.maxLossColor;  
+          var color2 = object.maxLossColor; 
+          console.log(ratio);
+          ratio = ratio * -1;
        }
    
    
@@ -270,33 +268,7 @@
 
 
     };
-    CrossTab.prototype.addChartName = function(chartNo, check) {
-        var chartName = obj.y_axis_map[chartNo];
-        var x = this.chartLowBoundXCoor;
-        var y = 0;
-        if (check !== 2) {
-            y = this.lowLimitYAxis + heightEachChart * chartNameBoxShift;/*heightEachChart * .02; -> space between y-axis and the chartName box*/
-             /*from where the chartName box rectangle will be plotted if the chart name lies below the chart*/
-        } else {
-            y = this.upLimitYAxis - heightEachChart * chartNameBoxShift - heightEachChart * chartNameBoxHtFactor;
-        }
-
-        var height = heightEachChart * chartNameBoxHtFactor;
-        var width = this.chartUpBoundXCoor - this.chartLowBoundXCoor;
-        var className = "chartName";
-        var style = "fill:rgb(245,250,255);stroke:rgb(190,223,254);stroke-width:1;";
-        this.drawRectangle(x, y, height, width, className, style);
-        y = y + (height) * .6;
-        x = (this.chartLowBoundXCoor + this.chartUpBoundXCoor) / 2 * .8;  //font position determination horizontally
-        style = "stroke:rgb(6,48,86);"
-        var fontSize = heightEachChart * .1;  //font position determination vertically within the box
-        var transform = "rotate(0 " + x + "," + y + ")";
-        var className = "textAdd";
-        var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");;
-        //
-        this.addText(x, y, chartName, transform, className, textElement, fontSize, style);
-
-    };
+    
     
     CrossTab.prototype.drawChartOutline = function() {
         this.chartId = document.getElementById("chart");
@@ -315,60 +287,7 @@
 
     };
     
-    CrossTab.prototype.drawBoundRectangle = function(className) {
-       
-        style = "stroke:rgb(237, 237, 237);stroke-width:1;fill:transparent";
-        var widthRect = this.chartUpBoundXCoor - this.chartLowBoundXCoor;
-        var heightRect = this.lowLimitYAxis - this.upLimitYAxis;
-        var rectBound = this.drawRectangle(this.chartLowBoundXCoor, this.upLimitYAxis, heightRect, widthRect, className, style);
-        
-        return rectBound;
-
-    };
-
-    CrossTab.prototype.drawDivRectangle = function(index) {
-        /*var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");*/
-        var x = this.lowLimitXAxis;
-        var y = this.upLimitYAxis;
-        var heightRect = this.lowLimitYAxis - this.upLimitYAxis;
-        var widthRect = this.upLimitXAxis - this.lowLimitXAxis;
-        var rectangleDiv = 'svgDivs';
-        style = "fill:transparent";
-        //plotted rectangle div
-        /*rect.setAttributeNS(null, 'x', x);
-        rect.setAttributeNS(null, 'y', y);
-        rect.setAttributeNS(null, 'height', heightRect);
-        rect.setAttributeNS(null, 'width', widthRect);
-        rect.setAttribute("class", rectangleId);
-        rect.setAttribute("style", "fill:transparent");
-        //rect.setAttribute("visibility","hidden");
-        this.svg.appendChild(rect);*/
-        var rect = this.drawRectangle(x, y, heightRect, widthRect, rectangleDiv, style);
-        
-        rect.addEventListener("mousemove", entercoordinates.bind(this, rectangleDiv));
-        /*rect.addEventListener("mousemove", function () {
-                entercoordinates.call(this, rectangleId);  
-            });*/
-        rect.addEventListener("syncCrossHair", showCoords, false);
-        //divNames[i].addEventListener("mousemove", showCoords,false);
-        rect.addEventListener("mouseleave", clearcoor, false);
-        this.toolTipTextIns = document.createElementNS("http://www.w3.org/2000/svg", "text"); //might need to be added in column as well
-        this.toolTipBoxIns = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-
-        this.selectRectIns = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        var _this = this;
-        this.svg.appendChild(this.selectRectIns);
-
-        rect.addEventListener("mousedown", instantiateDragLine.bind(_this));
-        rect.addEventListener("mousemove", dragLineRect.bind(_this));
-        rect.addEventListener("mouseup", releaseLineRect.bind(_this));
-
-
-        //svg chart area bound with x y axis
-        /**/
-
-    };
-
+    
    
     var heightEachChart = 0;
     var widthEachChart = 0;
@@ -391,7 +310,7 @@
                 /*if(instance.productIns[i].sos[j] == NaN || instance.productIns[i].sos[j] == undefined){
                     instance.productIns[i].sos[j] = 0;
                 }*/
-                console.log(instance.productIns[i].sos[j] + instance.productIns[i].productName[j]+ ' '+instance.model+ ' '+input.zone_map[i]);
+                //console.log(instance.productIns[i].sos[j] + instance.productIns[i].productName[j]+ ' '+instance.model+ ' '+input.zone_map[i]);
             }
             
         }
@@ -459,11 +378,11 @@ CrossTab.prototype.addFooter = function(){
             var y2 = 30;
             var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
             this.drawLineSep(x1,y1,x2,y2,style);
-            console.log(noOfYTips);
+            //console.log(noOfYTips);
             for(var j = 0;j < noOfYTips; j++){
                 var xLabelCoor = widthEachChart / noOfYTips;
              this.drawLineSep(x1 +xLabelCoor *(j+1),0,x1 + xLabelCoor *(j+1),4,style);
-                console.log(x1 *(j+1));
+                //console.log(x1 *(j+1));
              if(j==0){
                  
                  this.addText(x1 +xLabelCoor *(j)+ 5,16,0+"K");
