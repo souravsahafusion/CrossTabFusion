@@ -4,28 +4,34 @@ function parseData(input) {
     var range = [];
     var chartType = input.chartType;
     if(chartType == "CrossTab"){
-        var ctrl = new ParsingData();
-	ctrl.setValues(input);
-	for(var i = 0; i < input.data.length; i++){
-		//modelChart[i] = new ModelChart();
-		range[i] = new ParsingData();
-		range[i].calculateValues(input, i);
-	} 
-    console.log(maximum);
+        if(typeof input.zone_map !== 'undefined'){
+            var ctrl = new ParsingData();
+    ctrl.setValues(input);
+    for(var i = 0; i < input.data.length; i++){
+        //modelChart[i] = new ModelChart();
+        range[i] = new ParsingData();
+        range[i].calculateValues(input, i);
+    } 
+    //console.log(maximum);
     findRangeModified();
     var addChartText = new CrossTab();
     addChartText.addHeader();
     //need to create a separate loop for drawing since the maximum value need to be calculated from all the datas
-	 for(var i = 0; i < input.data.length; i++){
-		//modelChart[i] = new ModelChart();
-		drawChart[i] = new CrossTab(range[i].instance, input, i);
-		
-		drawChart[i].initiateDraw();
+     for(var i = 0; i < input.data.length; i++){
+        //modelChart[i] = new ModelChart();
+        drawChart[i] = new CrossTab(range[i].instance, input, i);
+        
+        drawChart[i].initiateDraw();
 
-	}
+    }
     addChartText.addFooter();    
+}else{
+    document.getElementById("heading").innerHTML = "Chart type not supported";
+}
+        
     }else{
-       var chartBound = new CalValues();
+        if(typeof y_axis_map !== 'undefined'){
+             var chartBound = new CalValues();
     chartBound.calculateChartOutLines(input);
     var numberOfCharts = obj.y_axis_map.length;
     var chartArrange = new CalValues();
@@ -51,7 +57,11 @@ function parseData(input) {
         range[i] = new DrawChart(instance, i);
         range[i].initiateGraph();
 
-    } 
+    }  
+        }else{
+    document.getElementById("heading").innerHTML = "Chart type not supported";
+}
+     
     }
     
 

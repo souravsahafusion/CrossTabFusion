@@ -110,7 +110,7 @@ function findYTipsModified(diffTenthPow) {
     maximum = (maximum + (diff - diffBwTips)) /*/ instance.mulTiplyFactor*/;
     diffBwTips = diff /*/ instance.mulTiplyFactor*/;
     //instance.minTipValue = instance.minTipValue /*/ instance.mulTiplyFactor*/;
-    console.log(maximum + 'maximum' + diffBwTips + 'diffBwTips' + noOfYTips);
+    //console.log(maximum + 'maximum' + diffBwTips + 'diffBwTips' + noOfYTips);
 };
 ParsingData.prototype.setZonalValues = function(){
     var input = this.input;

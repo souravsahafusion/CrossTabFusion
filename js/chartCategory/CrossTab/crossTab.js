@@ -172,7 +172,7 @@
        }else{
            var color1 = object.minLossColor;
           var color2 = object.maxLossColor; 
-          console.log(ratio);
+          //console.log(ratio);
           ratio = ratio * -1;
        }
    
