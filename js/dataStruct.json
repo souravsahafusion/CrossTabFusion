@@ -1,12 +1,5 @@
 var jsonData = {
 
-    "chart": {
-
-        "width": 600,
-        "height": 300
-
-
-    },
     "chart_order_func": "minimum",
     "scaleColChartFactor": 4,
     "chartType": "CrossTab",

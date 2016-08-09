@@ -68,4 +68,4 @@ function parseData(input) {
 
 }
 parseData(jsonData);
-
+window.onresize = function(){ location.reload(); }

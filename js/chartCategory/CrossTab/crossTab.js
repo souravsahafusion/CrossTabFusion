@@ -16,20 +16,20 @@
 
     }
     
-    CrossTab.prototype.createSVG = function(index) {
-        this.svg[index] = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    CrossTab.prototype.createSVG = function(widthSVG, heightSVG) {
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         //var chartNo = this.chartNo;
-        this.svg[index].setAttribute("height", heightEachChart) ;
-        this.svg[index].setAttribute("width", widthEachChart);
+        svg.setAttribute("height", heightSVG) ;
+        svg.setAttribute("width", widthSVG);
         chartId = document.getElementById("chart");
-        this.svg[index].setAttribute("class", "chartSVG");
+        svg.setAttribute("class", "chartSVG");
         //console.log(this.svg[index]);
-        chartId.appendChild(this.svg[index]);
-        return this.svg[index];
+        chartId.appendChild(svg);
+        return svg;
 
     };
     
-    CrossTab.prototype.drawLine = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
+    CrossTab.prototype.drawLine = function(sepSVG, x1, y1, x2, y2, style, className, visibility, strokedasharray) {
         var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", x1);
         line.setAttribute("y1", y1);
@@ -42,27 +42,12 @@
             line.setAttribute("visibility", "hidden");
 
         }
-
-        this.svg[this.ChartIndex].appendChild(line);
-
-    };
-    CrossTab.prototype.drawLineSep = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
-        var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", x1);
-        line.setAttribute("y1", y1);
-        line.setAttribute("x2", x2);
-        line.setAttribute("y2", y2);
-        line.setAttribute("class", className);
-        //line.setAttribute("stroke-dasharray", strokedasharray);
-        line.setAttribute("style", style);
-        if (typeof visibility !== 'undefined') {
-            line.setAttribute("visibility", "hidden");
-
-        }
-
-        this.sepSVG.appendChild(line);
+        
+            sepSVG.appendChild(line); 
+       
 
     };
+    
     
     CrossTab.prototype.addText = function(x, y, textValue, fontSize,className,transform,  textElement,  style) {
 
@@ -89,9 +74,10 @@
         this.chartUpBoundXCoor = x2;
         var y1 = 0;
         var y2 = heightEachChart;
-      var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+      var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         var className = "drawXAxis";
-        this.drawLine(x1, y1, x2, y2, style, className);
+        var svg = this.svg[this.ChartIndex];
+        this.drawLine(svg, x1, y1, x2, y2, style, className);
         
 
         this.lowLimitXAxis = x1; //setting the limits from the Tip value
@@ -139,9 +125,10 @@
         //console.log(chartNo + 'chartNo');
         var y1 = 0/*(heightEachChart * yShift)*/;
         var y2 = 0/*(heightEachChart) * yShift) + (heightEachChart)*/;
-        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+        var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         var className = "axisDraw";
-        this.drawLine(x1, y1, x2, y2, style, className);
+        var svg = this.svg[this.ChartIndex];
+        this.drawLine(svg, x1, y1, x2, y2, style, className);
 
         //draw ticks
         //var noOfYTips = this.noOfYTips;
@@ -194,7 +181,8 @@
     CrossTab.prototype.plotColumnChart = function() {
 
         for (var i = 0; i < this.instance.productTypes.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
-            var value = this.instance.productIns[this.ChartIndex].sos[i]
+            var value = this.instance.productIns[this.ChartIndex].sos[i];
+        var svg = this.svg[this.ChartIndex];
             if (typeof value != 'undefined') {
                 scaleColChartFactor = object.scaleColChartFactor / 100;
                 //console.log(value);
@@ -214,8 +202,8 @@
                 var widthRect = yPointPlot;
                 var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
                 var className = "plotColumnGraph";
-
-                var rectIns = this.drawRectangle(x, y, heightRect, widthRect, className, style,styleColor);
+                
+                var rectIns = this.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
 
                 //this.columnChartListener(rectIns, className);
                 //this.lastPlottedPointX = xPointPlot;
@@ -244,14 +232,16 @@
                 var className = "plotColumnGraph";
              
 
-                var rectIns = this.drawRectangle(x, y, heightRect, widthRect, className, style,styleColor);
-        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-        this.drawLine(0,heightEachChart,widthEachChart,heightEachChart,style);
+                var rectIns = this.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
+        var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
+        className = "drawLine";
+        svg = this.svg[this.ChartIndex];
+        this.drawLine(svg,0,heightEachChart,widthEachChart,heightEachChart,style,className);
 
     };
 
     
-    CrossTab.prototype.drawRectangle = function(x, y, height, width, className, style,styleColor) {
+    CrossTab.prototype.drawRectangle = function(svg, x, y, height, width, className, style,styleColor) {
         var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         rect.setAttributeNS(null, 'x', x);
         rect.setAttributeNS(null, 'y', y);
@@ -263,7 +253,7 @@
         rect.setAttribute("stroke", "#"+styleColor);
         
         
-        this.svg[this.ChartIndex].appendChild(rect);
+        svg.appendChild(rect);
         return rect;
 
 
@@ -320,16 +310,8 @@
     CrossTab.prototype.addHeader = function(){
         var div = document.getElementById("heading");
         document.body.removeChild(div);
-        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        //var chartNo = this.chartNo;
-        svg.setAttribute("height", 30) ;
-        svg.setAttribute("width", window.innerWidth);
-        chartId = document.getElementById("chart");
-        svg.setAttribute("class", "chartSVG");
-
-        //console.log(this.svg[index]);
-        chartId.appendChild(svg);
-        this.sepSVG = svg;
+        var sepSVG = this.createSVG(window.innerWidth,30);
+        this.sepSVG = sepSVG;
         var textProductType = "Product Type";
         var textProduct = "Product";
         var x = 0;
@@ -344,13 +326,14 @@
             var x2 = x * (i+1);
             var y1 = 0;
             var y2 = 30;
-            var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-            this.drawLineSep(x1,y1,x2,y2,style);
+            var style = "stroke:rgb(237, 237, 237);stroke-width:2;";
+            
+            this.drawLine(sepSVG,x1,y1,x2,y2,style);
             var textZone = object.zone_map[i];
             this.addText(x1 + x * .3, y, textZone,fontSize);
 
         }
-        this.drawLineSep(x * (i+1),y1,x * (i+1),y2,style);
+        this.drawLine(sepSVG,x * (i+1),y1,x * (i+1),y2,style);
 
 
 
@@ -358,17 +341,10 @@
     };
 CrossTab.prototype.addFooter = function(){
         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        //var chartNo = this.chartNo;
-        svg.setAttribute("height", 30) ;
-        svg.setAttribute("width", window.innerWidth);
-        chartId = document.getElementById("chart");
-        svg.setAttribute("class", "chartSVG");
-
-        //console.log(this.svg[index]);
-        chartId.appendChild(svg);
-        this.sepSVG = svg;
        
-        x = Math.floor(window.innerWidth / (object.zone_map.length + 2));
+        var sepSVG = this.createSVG(window.innerWidth, 30);
+        this.sepSVG =sepSVG;
+        x = widthEachChart/*Math.floor(window.innerWidth / (object.zone_map.length + 2))*/;
       
         for(var i = 0; i < object.zone_map.length;i++){
             
@@ -376,12 +352,14 @@ CrossTab.prototype.addFooter = function(){
             var x2 = x * (i+1);
             var y1 = 0;
             var y2 = 30;
-            var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-            this.drawLineSep(x1,y1,x2,y2,style);
+            var style = "stroke:rgb(237, 237, 237);stroke-width:2;";
+            //zone separator lines
+            this.drawLine(sepSVG,x1,y1,x2,y2,style);
             //console.log(noOfYTips);
             for(var j = 0;j < noOfYTips; j++){
                 var xLabelCoor = widthEachChart / noOfYTips;
-             this.drawLineSep(x1 +xLabelCoor *(j+1),0,x1 + xLabelCoor *(j+1),4,style);
+                //ticks 
+             this.drawLine(sepSVG, x1 +xLabelCoor *(j+1),0,x1 + xLabelCoor *(j+1),4,style);
                 //console.log(x1 *(j+1));
              if(j==0){
                  
@@ -395,7 +373,8 @@ CrossTab.prototype.addFooter = function(){
             
 
         }
-    this.drawLineSep(x * (i+1),y1,x * (i+1),y2,style);
+        //last separator line 
+    this.drawLine(sepSVG, x * (i+1),y1,x * (i+1),y2,style);
     
 
 
@@ -408,7 +387,8 @@ CrossTab.prototype.addFooter = function(){
         //this.printValues();
         heightEachChart = (window.innerHeight - 100) / object.data.length;
         widthEachChart = Math.floor(window.innerWidth / (object.zone_map.length + 2));
-        this.sepSVG = this.createSVG(object.zone_map.length);
+        var sepSVG = this.createSVG(widthEachChart, heightEachChart);
+        this.sepSVG =sepSVG;
         var productType = this.instance.model;
         var fontSize  = widthEachChart * .06
         this.addText(0, 12,productType);
@@ -420,17 +400,21 @@ CrossTab.prototype.addFooter = function(){
             this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),this.instance.productTypes[j]);
          }
         this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),"Total");
-        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-        this.drawLineSep(0,0,widthEachChart,0,style); 
+        var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
+        this.drawLine(sepSVG, 0,0,widthEachChart,0,style); 
         for(var i = 0; i < object.zone_map.length; i++){ 
 
             this.ChartIndex = i;
-            this.createSVG(i);
+            
+            this.svg[i] = this.createSVG(widthEachChart, heightEachChart);
             this.drawChartOutline();
             this.plotColumnChart();
             
         }
-        this.drawLine(widthEachChart,0,widthEachChart,heightEachChart,style);
+        //draw boundary line at the end of product type
+        var className = "drawLine";
+        sepSVG = this.svg[this.ChartIndex];
+        this.drawLine(sepSVG, widthEachChart,0,widthEachChart,heightEachChart,style,className);
         //this.drawYAxis();
         
 
