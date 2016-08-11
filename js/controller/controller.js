@@ -30,7 +30,7 @@ function parseData(input) {
 }
         
     }else{
-        if(typeof y_axis_map !== 'undefined'){
+        if(typeof input.y_axis_map !== 'undefined'){
              var chartBound = new CalValues();
     chartBound.calculateChartOutLines(input);
     var numberOfCharts = obj.y_axis_map.length;

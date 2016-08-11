@@ -13,7 +13,7 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     var x1 = widthEachChart * distYAxisFromOr; // distance from the origin to the yaxis
     instance.chartLowBoundXCoor = x1;
 
-    var x2 = widthEachChart + (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
+    var x2 = x1 + widthEachChart ;//+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
     instance.chartUpBoundXCoor = x2;
     var y1 = 0;
     var y2 = 0;
@@ -44,6 +44,7 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     /*
      */
     instance.noofXTips = instance.storeValue.length;
+    //end of horizontal axis draw
     for (i = 0; i < instance.noofXTips; i++) {
         //console.log(instance.noofXTips + 'noofXTips');
         x1 = temp_x1 + (widthEachChart / instance.noofXTips) * (i);
@@ -69,13 +70,13 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
         //put x-axis label 
         //console.log(check+ ' check'+ numberOfColCharts + ' numberOfColCharts');
         if (check !== 2 && chartNo <= numberOfColCharts) {
-            console.log("test");
+            //console.log("test");
             lineDraw.chartDivLabelX(obj.month[i], x1, y2, check);
 
         }
 
         if (check == 2 && chartNo > (numberOfCharts - numberOfColCharts)) {
-            console.log("test");
+            //console.log("test");
             lineDraw.chartDivLabelX(obj.month[i], x1, y2, check);
         }
     }
