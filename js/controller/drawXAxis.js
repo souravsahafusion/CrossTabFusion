@@ -5,7 +5,7 @@ function DrawXAxis(instance) {
 DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     var instance = this.instance;
     var chartNo = instance.chartNo;
-    lineDraw = new PlotGraph(instance);
+    var lineDraw = new PlotGraph(instance);
 
 
 
@@ -30,7 +30,8 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     }
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
     var className = "drawXAxis";
-    lineDraw.drawLine(x1, y1, x2, y2, style, className);
+
+    //lineDraw.drawLine(x1, y1, x2, y2, style, className);
     //drawTicks
     var numberOfTicks = obj.data.length;
     if (obj.chartType == "line") {

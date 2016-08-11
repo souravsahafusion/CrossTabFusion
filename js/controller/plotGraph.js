@@ -71,7 +71,7 @@ PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
     var y = y + (heightEachChart / 40);
 
     var transform = '';
-    textElement.innerHTML = textValue;
+    
     if (check !== 2) {
         y = y - 20;
         transform = "rotate(0 " + x + "," + y + ")";
@@ -79,14 +79,12 @@ PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
     } else {
         transform = "rotate(90 " + x + "," + y + ")";
     }
-    textElement.setAttribute("x", x);
-    textElement.setAttribute("y", y);
-
+    
+    var className = "chartDivLabelX";
     var fontSize = heightEachChart * .05;
-    textElement.setAttribute("font-size", fontSize);
-    textElement.setAttribute("transform", transform);
-    this.instance.svg.appendChild(textElement);
-    console.log(fontSize);
+   
+    this.addText(x, y, textValue, transform, className, textElement, fontSize);
+    
 
 };
 PlotGraph.prototype.chartDivLabelY = function(y, index) {
@@ -101,10 +99,10 @@ PlotGraph.prototype.chartDivLabelY = function(y, index) {
     } else if (instance.mulTiplyFactor == 100) {
         textValue = parseFloat(textValue).toFixed(1);
     }
-    textElement.setAttribute("x", x);
-    textElement.setAttribute("y", y);
-    textElement.innerHTML = textValue;
-    textElement.setAttribute("font-size", fontSize);
-    instance.svg.appendChild(textElement);
+    
+    var className = "chartDivLabelY";
+    var transform = "rotate(0 " + x + "," + y + ")"; // not required only given to match the order, need to remove it
+    this.addText(x, y, textValue, transform, className, textElement, fontSize);
+   
 
 };

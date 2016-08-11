@@ -1,13 +1,14 @@
 function DrawYAxis(instance) {
-
+    Axis.call(this, instance);
     this.instance = instance;
 
 }
-
+DrawYAxis.prototype=Object.create(Axis.prototype);
+DrawYAxis.prototype.constructor=DrawYAxis;
 DrawYAxis.prototype.drawYAxis = function() {
     var instance = this.instance;
     draw = new PlotGraph(instance);
-
+    this.verticalAxis();
     var chartNo = instance.chartNo;
     var yShift = instance.yShift;
     var x1 = widthEachChart * distYAxisFromOr;
@@ -17,7 +18,8 @@ DrawYAxis.prototype.drawYAxis = function() {
     var y2 = y1 + (heightEachChart);
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
     var className = "axisDraw";
-    draw.drawLine(x1, y1, x2, y2, style, className);
+    console.log("hello");
+    //draw.drawLine(x1, y1, x2, y2, style, className);
 
     //draw ticks
     var noOfYTips = instance.noOfYTips;
@@ -55,7 +57,7 @@ DrawYAxis.prototype.drawYAxis = function() {
 
             className = "designRect";
             style = "fill:rgb(247,247,247);";
-            draw.drawRectangle(xl, y1, height, width, className, style);
+            //draw.drawRectangle(xl, y1, height, width, className, style);
         }
 
     }
