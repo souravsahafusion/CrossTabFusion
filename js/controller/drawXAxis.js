@@ -1,7 +1,9 @@
 function DrawXAxis(instance) {
+    Axis.call(this, instance);
     this.instance = instance;
 }
-
+DrawXAxis.prototype = Object.create(Axis.prototype);
+DrawXAxis.prototype.constructor = DrawXAxis;
 DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     var instance = this.instance;
     var chartNo = instance.chartNo;
@@ -28,10 +30,9 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
         y1 = (heightEachChart * yShift) + (heightEachChart);
         y2 = (heightEachChart * yShift) + (heightEachChart);
     }
-    var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-    var className = "drawXAxis";
-
-    //lineDraw.drawLine(x1, y1, x2, y2, style, className);
+   
+    this.horizontalAxis();
+    
     //drawTicks
     var numberOfTicks = obj.data.length;
     if (obj.chartType == "line") {
