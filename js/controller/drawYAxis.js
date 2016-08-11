@@ -8,7 +8,7 @@ DrawYAxis.prototype.constructor=DrawYAxis;
 
 DrawYAxis.prototype.drawYAxis = function() {
     var instance = this.instance;
-    draw = new PlotGraph(instance);
+    
     this.verticalAxis();
     var chartNo = instance.chartNo;
     var yShift = instance.yShift;
@@ -45,11 +45,13 @@ DrawYAxis.prototype.drawYAxis = function() {
         //drawing ticks
         var style = "";
         var className = "axisTicks";
-        draw.drawLine(x1, y1, x2, y2, style, className);
+        var svg = instance.svg;
+        this.drawLine(svg,x1, y1, x2, y2, style, className);
+        //draw.drawLine(x1, y1, x2, y2, style, className);
         //drawing divs
         var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
         className = "divLines";
-        draw.drawLine(x1, y1, widthEachChart + (widthEachChart * distYAxisFromOr) /* + (widthEachChart / 20)*/ , y2, style, className);
+        this.drawLine(svg,x1, y1, widthEachChart + (widthEachChart * distYAxisFromOr) /* + (widthEachChart / 20)*/ , y2, style, className);
         //writing the labels
 
         //drawing the rect
@@ -57,14 +59,14 @@ DrawYAxis.prototype.drawYAxis = function() {
 
             className = "designRect";
             style = "fill:rgb(247,247,247);";
-            draw.drawRectangle(xl, y1, height, width, className, style);
+            this.drawRectangle(xl, y1, height, width, className, style);
         }
 
     }
     instance.lowLimitYAxis = y1 + (heightEachChart / noOfYTips);
     for (i = 0; i <= noOfYTips; i++) {
         y2 = temp_y1 + (heightEachChart / noOfYTips) * (i);
-        draw.chartDivLabelY(y2, i);
+        this.chartDivLabelY(y2, i);
     }
 
 };

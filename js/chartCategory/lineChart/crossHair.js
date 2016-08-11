@@ -12,5 +12,6 @@ CrossHair.prototype.drawCrossHair = function() {
     var style = "stroke:rgb(255, 0 , 0);stroke-width:1;";
     var strokedasharray = "3, 2";
     var visibility = "hidden";
-    draw.drawLine(x, y1, x, y2, style, className, visibility, strokedasharray);
+    var svg = instance.svg;
+    draw.drawLine(svg, x, y1, x, y2, style, className, visibility, strokedasharray);
 };

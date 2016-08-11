@@ -128,6 +128,7 @@
         var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         var className = "axisDraw";
         var svg = this.svg[this.ChartIndex];
+        var plotGraph = new PlotGraph();
         this.drawLine(svg, x1, y1, x2, y2, style, className);
 
         //draw ticks

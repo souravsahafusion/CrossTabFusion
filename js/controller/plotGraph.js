@@ -1,11 +1,13 @@
+"use strict";
 function PlotGraph(instance) {
 
     this.instance = instance;
 
 
 }
-PlotGraph.prototype.drawLine = function(x1, y1, x2, y2, style, className, visibility, strokedasharray) {
-    var instance = this.instance;
+
+PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, visibility, strokedasharray) {
+    
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", x1);
     line.setAttribute("y1", y1);
@@ -18,10 +20,11 @@ PlotGraph.prototype.drawLine = function(x1, y1, x2, y2, style, className, visibi
         line.setAttribute("visibility", "hidden");
 
     }
-
-    instance.svg.appendChild(line);
+    //console.log(instance.svg);
+    svg.appendChild(line);
 
 };
+
 PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, style) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttributeNS(null, 'x', x);
@@ -38,7 +41,7 @@ PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, sty
 PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
     var circleTip = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circleTip.setAttribute("cx", xPointPlot); // setting circle 
-    console.log(xPointPlot);
+    
     circleTip.setAttribute("cy", yPointPlot); // coordinates
     circleTip.setAttribute("r", 5);
     circleTip.setAttribute("class", "ancorTipCicle");

@@ -7,7 +7,7 @@ DrawXAxis.prototype.constructor = DrawXAxis;
 DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     var instance = this.instance;
     var chartNo = instance.chartNo;
-    var lineDraw = new PlotGraph(instance);
+   
 
 
 
@@ -63,8 +63,9 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
             var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
             var className = "axisTicks";
 
-
-            lineDraw.drawLine(x1, y1, x2, y2, style, className);
+            var svg = instance.svg;
+            this.drawLine(svg, x1, y1, x2, y2, style, className);
+            
 
         }
 
@@ -73,13 +74,13 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
         //console.log(check+ ' check'+ numberOfColCharts + ' numberOfColCharts');
         if (check !== 2 && chartNo <= numberOfColCharts) {
             //console.log("test");
-            lineDraw.chartDivLabelX(obj.month[i], x1, y2, check);
+            this.chartDivLabelX(obj.month[i], x1, y2, check);
 
         }
 
         if (check == 2 && chartNo > (numberOfCharts - numberOfColCharts)) {
             //console.log("test");
-            lineDraw.chartDivLabelX(obj.month[i], x1, y2, check);
+            this.chartDivLabelX(obj.month[i], x1, y2, check);
         }
     }
 };

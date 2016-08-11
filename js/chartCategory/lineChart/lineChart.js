@@ -35,7 +35,8 @@ LineChart.prototype.plotLineChart = function() {
             {
                 var style = "stroke:rgb(29, 121, 204);stroke-width:6";
                 var className = "plotGraph";
-                draw.drawLine(instance.lastPlottedPointX, instance.lastPlottedPointY, xPointPlot, yPointPlot, style, className);
+                var svg = instance.svg;
+                draw.drawLine(svg, instance.lastPlottedPointX, instance.lastPlottedPointY, xPointPlot, yPointPlot, style, className);
                 className = "ancorTipCicle";
 
                 draw.plotTipCirle(instance.lastPlottedPointX, instance.lastPlottedPointY);
