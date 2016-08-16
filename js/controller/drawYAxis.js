@@ -1,5 +1,5 @@
-function DrawYAxis(instance) {
-    Axis.call(this, instance);
+function DrawYAxis(instance, x1, y1, inclination) {
+    Axis.call(this, instance, x1, y1, inclination);
     this.instance = instance;
 
 }
@@ -9,7 +9,7 @@ DrawYAxis.prototype.constructor=DrawYAxis;
 DrawYAxis.prototype.drawYAxis = function() {
     var instance = this.instance;
     
-    this.verticalAxis();
+    
     var chartNo = instance.chartNo;
     var yShift = instance.yShift;
     var x1 = widthEachChart * distYAxisFromOr;
@@ -19,7 +19,8 @@ DrawYAxis.prototype.drawYAxis = function() {
     var y2 = y1 + (heightEachChart);
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
     var className = "axisDraw";
-   
+   //this.verticalAxis(x1,y1);
+   this.plotAxis();
 
     //draw ticks
     var noOfYTips = instance.noOfYTips;

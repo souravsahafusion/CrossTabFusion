@@ -46,11 +46,24 @@ DrawChart.prototype.drawChartOutline = function() {
     if (numberOfCharts % 2 == 0) {
         check = 2; //even
     }
+    var x1 = widthEachChart * distYAxisFromOr; // distance from the origin to the yaxis
+    instance.chartLowBoundXCoor = x1;
+    var x2 = x1 + widthEachChart ;//+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
+    instance.chartUpBoundXCoor = x2;
+    var y1 = 0;
+    var inclination = "horizontal";
 
-    var xAxis = new DrawXAxis(instance);
+    var xAxis = new DrawXAxis(instance, x1, y1, inclination);
     xAxis.drawXAxis(check, numberOfCharts);
 
-    var yAxis = new DrawYAxis(instance);
+    var yShift = instance.yShift;
+    x1 = widthEachChart * distYAxisFromOr;
+    x2 = widthEachChart * distYAxisFromOr;
+    //console.log(chartNo + 'chartNo');
+    y1 = (heightEachChart * yShift);
+    y2 = y1 + (heightEachChart);
+    inclination = "vertical";
+    var yAxis = new DrawYAxis(instance, x1, y1, inclination);
     yAxis.drawYAxis();
     this.addChartName(check); //this chartNo is the index value of the array 
 

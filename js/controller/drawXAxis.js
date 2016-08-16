@@ -1,6 +1,7 @@
-function DrawXAxis(instance) {
-    Axis.call(this, instance);
+function DrawXAxis(instance, x1, y1, inclination) {
+    Axis.call(this, instance, x1, y1, inclination);
     this.instance = instance;
+    
 }
 DrawXAxis.prototype = Object.create(Axis.prototype);
 DrawXAxis.prototype.constructor = DrawXAxis;
@@ -23,15 +24,16 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
         instance.yShift = yShiftPer;
         var yShift = instance.yShift;
         y1 = (heightEachChart * yShift);
-        y2 = (heightEachChart * yShift);
+        //y2 = (heightEachChart * yShift);
     } else {
         instance.yShift = yShiftPer;
         var yShift = instance.yShift;
         y1 = (heightEachChart * yShift) + (heightEachChart);
-        y2 = (heightEachChart * yShift) + (heightEachChart);
+        //y2 = (heightEachChart * yShift) + (heightEachChart);
     }
    
-    this.horizontalAxis();
+    //this.horizontalAxis(x1, y1);
+    this.plotAxis();
     
     //drawTicks
     var numberOfTicks = jsonData.data.length;
