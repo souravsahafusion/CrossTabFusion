@@ -166,8 +166,14 @@
         if (typeof value != 'undefined') {
                 scaleColChartFactor = jsonData.scaleColChartFactor / 100;
                 //console.log(value);
+                var a = 0;
+                var b = maximum;
+                var c = 0;
+                var d = widthEachChart;
+                var chartFunc = new ChartFunc();
+                var yPointPlot = chartFunc.calculateMappingPoint(value, a, b, c, d);
 
-                yPointPlot = this.calculateMappingPoint(value);
+                //yPointPlot = this.calculateMappingPoint(value);
         }
                 valueProfit = this.instance.productIns[this.ChartIndex].sopTotal;
                 ratio = valueProfit / value;
