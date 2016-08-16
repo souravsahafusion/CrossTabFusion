@@ -30,9 +30,9 @@ var process = function(){
        .pipe(iife())
        .pipe(uglify())
        .pipe(gulp.dest('./build/css/'));   
-   gulp.src('./index')
-       .pipe(concat('style.css'))
+   gulp.src('index.html')
+       .pipe(concat('index.html'))
        .pipe(iife())
        .pipe(uglify())
-       .pipe(gulp.dest('./public/style/'));        
+       .pipe(gulp.dest('./build/'));        
 }

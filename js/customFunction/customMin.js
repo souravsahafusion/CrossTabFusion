@@ -2,7 +2,7 @@ function arrangeOnMin() {
     var minValueArray = [];
     
     object = range2;
-    for (var i = 0; i < obj.y_axis_map.length; i++) {
+    for (var i = 0; i < jsonData.y_axis_map.length; i++) {
         minValueArray.push(object[i].min);
 
     }
@@ -17,11 +17,11 @@ function arrangeOnMin() {
         }
         if (min != i) { //After each pass, if the current min num != initial min num, exchange the position.
             //Swap the numbers
-            var y_map_tmp = obj.y_axis_map[i];
+            var y_map_tmp = jsonData.y_axis_map[i];
             var tmp = minValueArray[i];
-            obj.y_axis_map[i] = obj.y_axis_map[min];
+            jsonData.y_axis_map[i] = jsonData.y_axis_map[min];
             minValueArray[i] = minValueArray[min];
-            obj.y_axis_map[min] = y_map_tmp;
+            jsonData.y_axis_map[min] = y_map_tmp;
             minValueArray[min] = tmp;
         }
     }

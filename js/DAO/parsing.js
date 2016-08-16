@@ -1,22 +1,31 @@
+"use strict";
 function ParsingData(){
-	this.instance = '';
+    this.instance = '';
     this.input = '';
     this.index = 0;
+    this.pdts = [];
+    this.pdtsIns = [];
 
 } 
-function findRangeModified() {
+function findRangeModified(instance) {
 
     //var instance = this.instance;
-
-    var minValue = 0/*instance.min*/;
-    /*var lastDigit = minValue % 10;
+    var minValue = 0;
+    var maxValue;
+    var lastDigit;
+    if(jsonData.minYTickValue === true && typeof instance !== 'undefined'){
+    minValue = instance.min;
+    lastDigit = minValue % 10;
     if (lastDigit < 0) {
         lastDigit = 10 + lastDigit;
     }
 
-    minValue = minValue - lastDigit;*/
-    var maxValue = maximum;
-    var lastDigit = maxValue % 10;
+    minValue = minValue - lastDigit;
+    maxValue = instance.max;
+    }
+    
+    maxValue = maximum;
+    lastDigit = maxValue % 10;
 
     if (lastDigit < 0) {
         lastDigit = 10 - lastDigit;
@@ -62,10 +71,10 @@ function findRangeModified() {
 
     diffBwTips = maximum - minValue;
     findYTipsModified(diffTenthPow);
-};
+}
 function findYTipsModified(diffTenthPow) {
 
-    var instance = this.instance;
+    //var instance = this.instance;
 
     var minValue = 0;
     var maxValue = maximum;
@@ -73,31 +82,31 @@ function findYTipsModified(diffTenthPow) {
 
     for (var i = 0; i < 10; i++) {
         var flag = 0;
-        if (((diff / 5) % (Math.pow(10, diffTenthPow))) == 0) {
+        if (((diff / 5) % (Math.pow(10, diffTenthPow))) === 0) {
 
             noOfYTips = 5;
             flag = 1;
             break;
 
-        } else if (((diff / 3) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 3) % (Math.pow(10, diffTenthPow))) === 0) {
 
             noOfYTips = 3;
             flag = 1;
             break;
 
-        } else if (((diff / 4) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 4) % (Math.pow(10, diffTenthPow))) === 0) {
 
             noOfYTips = 4;
             flag = 1;
             break;
 
-        } else if (((diff / 6) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 6) % (Math.pow(10, diffTenthPow))) === 0) {
 
             noOfYTips = 6;
             flag = 1;
             break;
 
-        } else if (((diff / 7) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 7) % (Math.pow(10, diffTenthPow))) === 0) {
 
             noOfYTips = 7;
             flag = 1;
@@ -111,134 +120,109 @@ function findYTipsModified(diffTenthPow) {
     diffBwTips = diff /*/ instance.mulTiplyFactor*/;
     //instance.minTipValue = instance.minTipValue /*/ instance.mulTiplyFactor*/;
     //console.log(maximum + 'maximum' + diffBwTips + 'diffBwTips' + noOfYTips);
-};
-ParsingData.prototype.setZonalValues = function(){
-    var input = this.input;
-    var index =this.index;
-    var instance = this.instance;
-    //var maximum = this.maxTipValue;
-    for(var i = 0; i < input.zone_map.length; i++){
+}
 
-        var product = new ProductType();
-        instance.productIns[i] = product;
-        var objectZone = input.zone_map[i];
-        
-        //console.log(zoneDataSet);
-        
-        for(var j = 0; j < object.data[index].values.length; j++){ //extra loop running
-            if(object.data[index].values[j] !== undefined){ // to recover the error
-            var zoneDataSet = object.data[index].values[j].zone;
-        }
-
-            if( objectZone == zoneDataSet){
-                //console.log(zoneDataSet);
-                for(var k = 0; k < instance.productTypes.length; k++){
-                    for(var l = 0; l < object.data[index].values[j].productValues.length; l++){
-                        var productTypeValue = object.data[index].values[j].productValues[l].product;
-                        if(instance.productTypes[k] == productTypeValue){
-                            instance.productIns[i].sos[k] = object.data[index].values[j].productValues[l].sos;
-                            instance.productIns[i].sosTotal = instance.productIns[i].sosTotal + instance.productIns[i].sos[k];
-                            if(maximum <= instance.productIns[i].sosTotal){
-                                maximum = instance.productIns[i].sosTotal;
-                            }
-                            instance.productIns[i].sop[k] = object.data[index].values[j].productValues[l].sop;
-                            instance.productIns[i].sopTotal = instance.productIns[i].sopTotal + instance.productIns[i].sop[k];
-                            instance.productIns[i].productName[k] = productTypeValue;  //reduntant it's already stored
-                            //console.log(instance.productIns[i].sos + instance.productIns[i].productName);
-
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-        }
-    }
+ParsingData.prototype.setZoneAndProduct = function(){
+   var value;
+   var pdts = [];
+   
+   
     
+ for(var i = 0; i < jsonData.data.length; i++){
+    //console.log(object.data[i].values.length);
+    
+        value = jsonData.data[i].zone;
+        if(jsonData.zone_map.indexOf(value) < 0){
+            jsonData.zone_map.push(value);
+
+
+            //console.log(value);
+        }
+        value = jsonData.data[i].product;
+
+        if(pdts.indexOf(value) < 0){
+            pdts.push(value);
+            this.pdts = pdts;
+
+        }
+
+
+ }
+jsonData.zone_map.sort(); 
+this.pdts.sort();
+
+};
+ParsingData.prototype.setProductTypes = function(){
+var indexProduct;
+var indexZone;
+var productName;
+var sosVal;
+var sopVal;
+var indexProductType;
+var productType;
+for(var i = 0; i < jsonData.data.length; i++){
+      
+    indexProduct = this.pdts.indexOf(jsonData.data[i].product);
+    //console.log(jsonData.data[i]["product"]);
+    indexZone = jsonData.zone_map.indexOf(jsonData.data[i].zone);
+    productType = jsonData.data[i].productType;
+    //console.log(productType);
+    if(this.pdtsIns[indexProduct].productTypes.indexOf(productType) < 0){
+        this.pdtsIns[indexProduct].productTypes.push(productType);
+        //console.log(this.pdtsIns[indexProduct].productIns[indexZone].productName[1]+'productName');
+    }
+    sosVal = jsonData.data[i].sos;
+    sopVal = jsonData.data[i].sop;
+    indexProductType = this.pdtsIns[indexProduct].productTypes.indexOf(productType);
+    this.pdtsIns[indexProduct].productIns[indexZone].sos[indexProductType] = sosVal;
+    this.pdtsIns[indexProduct].productIns[indexZone].sop[indexProductType] = sopVal;
+
+    if(sosVal > maximum){
+        maximum = sosVal;
+    }
+    //console.log(this.pdtsIns[indexProduct].productIns[indexZone].sop[indexProductType]);
+
+
+}
+//this.pdtsIns[indexProduct].productTypes.sort();
+
+    
+
 };
 ParsingData.prototype.setValues = function(input){
  //var instance = this.instance;
- object =  input;
- //console.log(object);
- var modelChart = [];
- for(var i = 0; i < object.data.length; i++){
- 	//console.log(object.data[i].values.length);
- 	for(var j = 0; j < object.data[i].values.length; j++){
- 		var value = object.data[i].values[j].zone;
- 		if(object.zone_map.indexOf(value) < 0){
- 			object.zone_map.push(value);
- 			//console.log(value);
- 		}
- 	}
- 	
- }
+ jsonData =  input;
+ var range = [];
+ 
+ this.setZoneAndProduct();
+ var productLen = this.pdts.length;
+ 
+ var pdtsIns;
+ 
+ for(var i = 0; i < productLen; i++){
+    
+    //creating a object of the model ProductType for each product viz. coffee, tea
+    
+    this.pdtsIns[i] = new ProductType();
+    pdtsIns = this.pdtsIns[i];
+    pdtsIns.model = this.pdts[i];
+    range[i] = pdtsIns;
 
-
-};
-ParsingData.prototype.setProductName = function(){
-    var input = this.input;
-    var index = this.index;
-    var instance = this.instance;
-	
-	
-	instance.model = object.data[index].product_type;
-	for( var i = 0; i < object.zone_map.length ; i++){
-		//console.log(object.zone_map.length + 'zone_map');
+    for(var j = 0; j < jsonData.zone_map.length; j++){
+        //creating a object of the model ProductType for each zone viz. west, east
         
-    //object.data[2].values[1].productValues[1].product
-        if(typeof object.data[index].values[i] !== 'undefined'){ //temporary error removed 
-            
-       
-       
-		for(var j = 0; j < object.data[index].values[i].productValues.length; j++){
-            value = object.data[index].values[i].productValues[j].product;
-            //console.log(value);
-           
-            if(instance.productTypes.indexOf(value) < 0){
-                 //console.log(value);
-			instance.productTypes.push(value);
-                
-            }
-            
-			//var tempIns = pdtType[i].productTypes[j];
-			//tempIns.productName = object.data[index].values[i].productValues[]
-
-
-		}
-             }
-        
-        
-} //end of product setting
-/*ParsingData.prototype.printValues = function(){
-    var input = this.input;
-    var index = this.index;
-    var instance = this.instance;
-    for(var i = 0; i < input.zone_map.length; i++){ 
-        for(var j = 0; j < instance.productTypes.length; j++){
-            if(instance.productIns[i].sos[j] == NaN || instance.productIns[i].sos[j] == undefined){
-                instance.productIns[i].sos[j] = 0;
-            }
-            console.log(instance.productIns[i].sos[j] + instance.productIns[i].productName[j]+ ' '+instance.model+ ' '+input.zone_map[i]);
-        }
-        
+        pdtsIns.productIns[j] = new ProductType();
     }
 
+ }
+ //console.log(pdtIns.productIns);
 
-};*/
+ this.setProductTypes();
 
+return range;
 };
-ParsingData.prototype.calculateValues = function(input, index){
-    var pdtType = [];
-    pdtType[index] = new ProductType();
-    this.instance = pdtType[index];
-    this.input = input;
-    this.index = index;
-    this.setProductName();
-    this.setZonalValues();
-    //this.printValues();
-    //return this.instance;
-};
-var object ={};
+
+var jsonData ={};
 var maximum = 0;
 
 var diffBwTips = 0;

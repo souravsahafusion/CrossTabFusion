@@ -5,7 +5,19 @@ function PlotGraph(instance) {
 
 
 }
+PlotGraph.prototype.createSVG = function(widthSVG, heightSVG) {
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        //var chartNo = this.chartNo;
+        svg.setAttribute("height", heightSVG) ;
+        svg.setAttribute("width", widthSVG);
+        var chartId = document.getElementById("chart");
+        svg.setAttribute("class", "chartSVG");
+        //console.log(this.svg[index]);
+        chartId.appendChild(svg);
+        return svg;
 
+    };
+    
 PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, visibility, strokedasharray) {
     
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");

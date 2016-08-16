@@ -1,6 +1,6 @@
 function showCoords(event) {
     //console.log(this);
-    var x = event.detail.x % obj.chart.width;
+    var x = event.detail.x % jsonData.chart.width;
     x = x - 8;
     var index = -1;
 

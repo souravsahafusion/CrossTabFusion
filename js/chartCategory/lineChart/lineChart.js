@@ -21,11 +21,15 @@ LineChart.prototype.plotLineChart = function() {
     var draw = new PlotGraph(instance);
 
     var flagFirstPoint = 0;
-    for (i = 0; i < obj.data.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
+    for (i = 0; i < jsonData.data.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
         var value = instance.storeValue[i];
         if (typeof value != 'undefined') {
             var calculate = new ChartFunc(instance);
-            var yPointPlot = calculate.calculateMappingPoint(value);
+            var a = instance.minTipValue;
+            var b = instance.maxTipValue;
+            var c = instance.upLimitYAxis;
+            var d = instance.lowLimitYAxis;
+            var yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
             //console.log(range.length); need to debug
             instance.storeAncorPointsY[i] = yPointPlot;
             var xPointPlot = instance.lowLimitXAxis + (widthEachChart / instance.noofXTips) * (i);

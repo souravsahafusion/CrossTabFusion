@@ -1,5 +1,5 @@
 function displayCrossHair(event) {
-    var x = event.detail.x % obj.chart.width;
+    var x = event.detail.x % jsonData.chart.width;
     x = x - 8;
     var lineElement = document.getElementsByClassName("drawCrossHairLines");
     for (var i = 0; i < lineElement.length; i++) {

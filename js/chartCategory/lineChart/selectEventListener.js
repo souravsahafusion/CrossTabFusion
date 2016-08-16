@@ -5,9 +5,9 @@
 function instantiateDragLine(event) {
     
     if (flagRemoveColor !== 1) {
-            var xC = event.clientX % obj.chart.width - 10;
-            var yC = event.pageY % obj.chart.height - heightEachChart * chartModel[0].yShift - 49;
-            console.log(xC + 'x ' + 'y ' + yC, obj.chart.width);
+            var xC = event.clientX % jsonData.chart.width - 10;
+            var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49;
+            console.log(xC + 'x ' + 'y ' + yC, jsonData.chart.width);
             console.log(event.clientX + 'clientX' + event.clientY + 'clientY');
 
             var rect = this.selectRectIns;
@@ -42,8 +42,8 @@ function dragLineRect(event) {
 
     if (flag == 1) {
             var rect = this.selectRectIns;
-            var xC = event.clientX % obj.chart.width - 10;
-            var yC = event.pageY % obj.chart.height - heightEachChart * chartModel[0].yShift - 49 ;
+            var xC = event.clientX % jsonData.chart.width - 10;
+            var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49 ;
             var xBeg = rect.getAttribute("x");
             var yBeg = rect.getAttribute("y");
             var width = Math.abs(xC - xBeg);
@@ -69,7 +69,7 @@ function dragLineRect(event) {
                 var testX = Math.floor(columnElement[i].getAttribute("cx"));
                 var testR = columnElement[i].getAttribute("r");
 
-                testX = testX + widthEachChart * obj.scaleColChartFactor / 100;
+                testX = testX + widthEachChart * jsonData.scaleColChartFactor / 100;
                 var testY = Math.floor(columnElement[i].getAttribute("cy"));
                 //console.log(testY + 'y');
                 console.log(xC + 'xc' + testR + 'testR' + testY + 'testY');

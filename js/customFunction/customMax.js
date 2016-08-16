@@ -1,7 +1,7 @@
 function arrangeOnMax() {
         var maxValueArray = [];
         object = range2;
-        for (var i = 0; i < obj.y_axis_map.length; i++) {
+        for (var i = 0; i < jsonData.y_axis_map.length; i++) {
             maxValueArray.push(object[i].max);
 
         }
@@ -16,11 +16,11 @@ function arrangeOnMax() {
             }
             if (max != i) { //After each pass, if the current min num != initial min num, exchange the position.
                 //Swap the numbers
-                var y_map_tmp = obj.y_axis_map[i];
+                var y_map_tmp = jsonData.y_axis_map[i];
                 var tmp = maxValueArray[i];
-                obj.y_axis_map[i] = obj.y_axis_map[max];
+                jsonData.y_axis_map[i] = jsonData.y_axis_map[max];
                 maxValueArray[i] = maxValueArray[max];
-                obj.y_axis_map[max] = y_map_tmp;
+                jsonData.y_axis_map[max] = y_map_tmp;
                 maxValueArray[max] = tmp;
             }
         }

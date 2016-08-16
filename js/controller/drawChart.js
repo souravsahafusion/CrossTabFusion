@@ -7,7 +7,7 @@ function DrawChart(instance, index) {
 DrawChart.prototype.addChartName = function(check) {
     var instance = this.instance;
     var draw = new PlotGraph(instance);
-    var chartName = obj.y_axis_map[this.index];
+    var chartName = jsonData.y_axis_map[this.index];
     var x = instance.chartLowBoundXCoor;
     var y = 0;
     if (check !== 2) {
@@ -36,9 +36,7 @@ DrawChart.prototype.addChartName = function(check) {
 };
 DrawChart.prototype.drawChartOutline = function() {
     var instance = this.instance;
-
-    console.log(numberOfColCharts);
-    var numberOfCharts = obj.y_axis_map.length;
+    var numberOfCharts = jsonData.y_axis_map.length;
 
     instance.chartId = document.getElementById("chart");
     instance.chartNo = this.index + 1;
@@ -59,23 +57,15 @@ DrawChart.prototype.drawChartOutline = function() {
 
 
 };
-DrawChart.prototype.createSVG = function() {
-    var instance = this.instance;
 
-    instance.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-
-    instance.svg.setAttribute("height", obj.chart.height);
-    instance.svg.setAttribute("width", obj.chart.width);
-    chartId = document.getElementById("chart");
-    instance.svg.setAttribute("class", "chartSVG");
-    chartId.appendChild(instance.svg);
-
-};
 DrawChart.prototype.initiateGraph = function() {
-    this.createSVG();
-    this.drawChartOutline();
     var instance = this.instance;
-    var expression = obj.chartType;
+    var plot = new PlotGraph();
+
+    instance.svg = plot.createSVG(jsonData.chart.width, jsonData.chart.height);
+    this.drawChartOutline();
+    
+    var expression = jsonData.chartType;
     switch (expression) {
         case "line":
             drawChart = new LineChart(instance);

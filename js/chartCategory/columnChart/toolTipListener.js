@@ -1,10 +1,10 @@
 function columnTrigger(event) {
-    var x = event.detail.x % obj.chart.width;
+    var x = event.detail.x % jsonData.chart.width;
 
     x = x - 8;
     var index = -1;
     //console.log(x);
-    var posScale = obj.scaleColChartFactor / 100 * widthEachChart;
+    var posScale = jsonData.scaleColChartFactor / 100 * widthEachChart;
 
     for (var i = posScale; i > 0; i--) {
         //console.log(i);
@@ -37,7 +37,7 @@ function columnTrigger(event) {
         var columnElement = document.getElementsByClassName("plotColumnGraph");
         for (var i = 0; i < columnElement.length; i++) {
             var test = Math.floor(columnElement[i].getAttribute("x"));
-            test = test + widthEachChart * obj.scaleColChartFactor / 100;
+            test = test + widthEachChart * jsonData.scaleColChartFactor / 100;
 
             if (test == x) {
                 //console.log(x);
@@ -48,8 +48,8 @@ function columnTrigger(event) {
 
         }
 
-        for (var i = 0; i < obj.y_axis_map.length; i++) {
-            //for(var j = 0; j < obj.data.length; j++){
+        for (var i = 0; i < jsonData.y_axis_map.length; i++) {
+            //for(var j = 0; j < jsonData.data.length; j++){
             if (typeof object[i].storeAncorPointsY[index] !== 'undefined') {
 
                 value = object[i].storeValue[index];
@@ -91,14 +91,7 @@ function columnTrigger(event) {
             }
         }
     } else {
-        /* for(var i = 0; i < obj.y_axis_map.length; i++){
-          
-                   
-                    var className = "toolTipText";
-                    var textElement = object[i].toolTipTextIns;                        
-                   textElement.setAttribute("visibility","hidden");
-             
-        }*/
+        
 
     }
 

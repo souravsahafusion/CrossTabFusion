@@ -1,4 +1,4 @@
-    function CrossTab(instance, input, index) {
+    function CrossTab(instance, input, index, productLen) {
         
         this.instance = instance;
         this.input = input;
@@ -10,44 +10,13 @@
         this.ChartIndex = 0;
         this.noofXTips = 0;
         this.sepSVG = '';
+        this.productLen = productLen;
 
 
 
 
     }
-    
-    CrossTab.prototype.createSVG = function(widthSVG, heightSVG) {
-        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        //var chartNo = this.chartNo;
-        svg.setAttribute("height", heightSVG) ;
-        svg.setAttribute("width", widthSVG);
-        chartId = document.getElementById("chart");
-        svg.setAttribute("class", "chartSVG");
-        //console.log(this.svg[index]);
-        chartId.appendChild(svg);
-        return svg;
-
-    };
-    
-    CrossTab.prototype.drawLine = function(sepSVG, x1, y1, x2, y2, style, className, visibility, strokedasharray) {
-        var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", x1);
-        line.setAttribute("y1", y1);
-        line.setAttribute("x2", x2);
-        line.setAttribute("y2", y2);
-        line.setAttribute("class", className);
-        //line.setAttribute("stroke-dasharray", strokedasharray);
-        line.setAttribute("style", style);
-        if (typeof visibility !== 'undefined') {
-            line.setAttribute("visibility", "hidden");
-
-        }
-        
-            sepSVG.appendChild(line); 
-       
-
-    };
-    
+   
     
     CrossTab.prototype.addText = function(x, y, textValue, fontSize,className,transform,  textElement,  style) {
 
@@ -66,7 +35,7 @@
     CrossTab.prototype.drawXAxis = function() {
         //var chartNo = this.chartNo;
 
-
+        var index = this.index;
         var x1 = 0;/*widthEachChart * distYAxisFromOr*/; // distance from the origin to the yaxis
         this.chartLowBoundXCoor = x1;
 
@@ -77,7 +46,8 @@
       var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         var className = "drawXAxis";
         var svg = this.svg[this.ChartIndex];
-        this.drawLine(svg, x1, y1, x2, y2, style, className);
+        var plot = new PlotGraph();
+        plot.drawLine(svg, x1, y1, x2, y2, style, className);
         
 
         this.lowLimitXAxis = x1; //setting the limits from the Tip value
@@ -87,34 +57,7 @@
         this.noofXTips = this.instance.productTypes.length;
         this.upLimitXAxis = x1;
 
-        /*for (i = 0; i < this.noofXTips; i++) {
-            x1 = temp_x1 + (widthEachChart / this.noofXTips) * (i);
-            x2 = temp_x1 + (widthEachChart / this.noofXTips) * (i);
-            
-            if (check !== 2) {
-                y1 = (heightEachChart * yShift) - 4;
-                y2 = (heightEachChart * yShift) + 4;
-            } else {
-                y1 = (heightEachChart * yShift) + (heightEachChart) - 4;
-                y2 = (heightEachChart * yShift) + (heightEachChart) + 4;
-            }
-            if (obj.chartType == "line") {
-                var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-                var className = "axisTicks";
-                //this.drawLine(x1, y1, x2, y2, style, className);
-
-            }
-
-            //put x-axis label 
-            if (check !== 2 && chartNo <= numberOfColCharts) {
-                //this.chartDivLabelX(obj.month[i], x1, y2, check);
-
-            }
-
-            if (check == 2 && chartNo > (numberOfCharts - numberOfColCharts)) {
-                //this.chartDivLabelX(obj.month[i], x1, y2, check);
-            }
-        }*/
+        
     };
     CrossTab.prototype.drawYAxis = function() {
 
@@ -128,8 +71,8 @@
         var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         var className = "axisDraw";
         var svg = this.svg[this.ChartIndex];
-        var plotGraph = new PlotGraph();
-        this.drawLine(svg, x1, y1, x2, y2, style, className);
+        var plot = new PlotGraph();
+        plot.drawLine(svg, x1, y1, x2, y2, style, className);
 
         //draw ticks
         //var noOfYTips = this.noOfYTips;
@@ -145,21 +88,14 @@
         
 
     };
-    CrossTab.prototype.calculateMappingPoint = function(value) {
-        var a = 0;
-        var b = maximum;
-        var c = 0/*this.upLimitYAxis*/;
-        var d = widthEachChart/*this.lowLimitYAxis*/;
-        return ((value - a) / (b - a) * (d - c));
-
-    };
+    
    CrossTab.prototype.genColor = function(ratio){
        if(ratio > 0){
-          var color1 = object.minProfitColor;
-          var color2 = object.maxProfitColor; 
+          var color1 = jsonData.minProfitColor;
+          var color2 = jsonData.maxProfitColor; 
        }else{
-           var color1 = object.minLossColor;
-          var color2 = object.maxLossColor; 
+           var color1 = jsonData.minLossColor;
+          var color2 = jsonData.maxLossColor; 
           //console.log(ratio);
           ratio = ratio * -1;
        }
@@ -180,17 +116,27 @@
 };
 
     CrossTab.prototype.plotColumnChart = function() {
-
+        var index = this.index;
+        var plot = new PlotGraph();
         for (var i = 0; i < this.instance.productTypes.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
             var value = this.instance.productIns[this.ChartIndex].sos[i];
-        var svg = this.svg[this.ChartIndex];
+            var svg = this.svg[this.ChartIndex];
+            console.log(this.ChartIndex);
             if (typeof value != 'undefined') {
-                scaleColChartFactor = object.scaleColChartFactor / 100;
+                scaleColChartFactor = jsonData.scaleColChartFactor / 100;
                 //console.log(value);
-
-                var yPointPlot = this.calculateMappingPoint(value);
+                var a = 0;
+                var b = maximum;
+                var c = 0;
+                var d = widthEachChart;
+                var chartFunc = new ChartFunc();
+                var yPointPlot = chartFunc.calculateMappingPoint(value, a, b, c, d);
+                 
                 //console.log(range.length); need to debug
                 //this.storeAncorPointsY[i] = yPointPlot;
+                if(yPointPlot < 2){
+                    yPointPlot = 2;
+                }
                 var xPointPlot = 0/*this.lowLimitXAxis + (widthEachChart / this.noofXTips) * (i)*/;
                 var valueProfit = this.instance.productIns[this.ChartIndex].sop[i];
                 var ratio = valueProfit / value;
@@ -198,7 +144,8 @@
                 var styleColor = this.genColor(ratio);
                 //storeAncorPointsX[i] = Math.floor(xPointPlot);
                 var x = 0/*xPointPlot - widthEachChart * scaleColChartFactor*/;
-                var y =  (heightEachChart / (this.noofXTips+1)) * (i);
+                var y =  (heightEachChart / (this.noofXTips)) * (i);
+                console.log(y + 'y' + this.noofXTips);
                 var heightRect = heightEachChart/*widthEachChart*/ * scaleColChartFactor * 2;
                 var widthRect = yPointPlot;
                 var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
@@ -217,7 +164,7 @@
         //add total column
         value = this.instance.productIns[this.ChartIndex].sosTotal;
         if (typeof value != 'undefined') {
-                scaleColChartFactor = object.scaleColChartFactor / 100;
+                scaleColChartFactor = jsonData.scaleColChartFactor / 100;
                 //console.log(value);
 
                 yPointPlot = this.calculateMappingPoint(value);
@@ -233,11 +180,11 @@
                 var className = "plotColumnGraph";
              
 
-                var rectIns = this.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
+                //var rectIns = this.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
         var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         className = "drawLine";
         svg = this.svg[this.ChartIndex];
-        this.drawLine(svg,0,heightEachChart,widthEachChart,heightEachChart,style,className);
+        plot.drawLine(svg,0,heightEachChart,widthEachChart,heightEachChart,style,className);
 
     };
 
@@ -297,7 +244,7 @@
         var index = this.index;
         var instance = this.instance;
         for(var i = 0; i < input.zone_map.length; i++){ 
-            for(var j = 0; j < instance.productTypes.length; j++){
+            for(var j = 0; j < instance.productIns[index].productTypes.length; j++){
                 /*if(instance.productIns[i].sos[j] == NaN || instance.productIns[i].sos[j] == undefined){
                     instance.productIns[i].sos[j] = 0;
                 }*/
@@ -311,7 +258,8 @@
     CrossTab.prototype.addHeader = function(){
         var div = document.getElementById("heading");
         document.body.removeChild(div);
-        var sepSVG = this.createSVG(window.innerWidth,30);
+        var plot = new PlotGraph();
+        var sepSVG = plot.createSVG(window.innerWidth,30);
         this.sepSVG = sepSVG;
         var textProductType = "Product Type";
         var textProduct = "Product";
@@ -320,21 +268,21 @@
         var fontSize  = widthEachChart * .06;
         var className = "addedText";
         this.addText(x, y, textProductType,fontSize);
-        x = Math.floor(window.innerWidth / (object.zone_map.length + 2));
+        x = Math.floor(window.innerWidth / (jsonData.zone_map.length + 2));
         this.addText(x / 2, y, textProduct,fontSize);
-        for(var i = 0; i < object.zone_map.length;i++){
+        for(var i = 0; i < jsonData.zone_map.length;i++){
             var x1 = x * (i+1);
             var x2 = x * (i+1);
             var y1 = 0;
             var y2 = 30;
             var style = "stroke:rgb(237, 237, 237);stroke-width:2;";
             
-            this.drawLine(sepSVG,x1,y1,x2,y2,style);
-            var textZone = object.zone_map[i];
+            plot.drawLine(sepSVG,x1,y1,x2,y2,style);
+            var textZone = jsonData.zone_map[i];
             this.addText(x1 + x * .3, y, textZone,fontSize);
 
         }
-        this.drawLine(sepSVG,x * (i+1),y1,x * (i+1),y2,style);
+        plot.drawLine(sepSVG,x * (i+1),y1,x * (i+1),y2,style);
 
 
 
@@ -342,25 +290,26 @@
     };
 CrossTab.prototype.addFooter = function(){
         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-       
-        var sepSVG = this.createSVG(window.innerWidth, 30);
+        var plot = new PlotGraph();
+        var sepSVG = plot.createSVG(window.innerWidth, 30);
         this.sepSVG =sepSVG;
-        x = widthEachChart/*Math.floor(window.innerWidth / (object.zone_map.length + 2))*/;
+        x = widthEachChart/*Math.floor(window.innerWidth / (jsondata.zone_map.length + 2))*/;
       
-        for(var i = 0; i < object.zone_map.length;i++){
+        for(var i = 0; i < jsonData.zone_map.length;i++){
             
             var x1 = x * (i+1);
             var x2 = x * (i+1);
             var y1 = 0;
             var y2 = 30;
             var style = "stroke:rgb(237, 237, 237);stroke-width:2;";
+            var plot = new PlotGraph();
             //zone separator lines
-            this.drawLine(sepSVG,x1,y1,x2,y2,style);
+            plot.drawLine(sepSVG,x1,y1,x2,y2,style);
             //console.log(noOfYTips);
             for(var j = 0;j < noOfYTips; j++){
                 var xLabelCoor = widthEachChart / noOfYTips;
                 //ticks 
-             this.drawLine(sepSVG, x1 +xLabelCoor *(j+1),0,x1 + xLabelCoor *(j+1),4,style);
+             plot.drawLine(sepSVG, x1 +xLabelCoor *(j+1),0,x1 + xLabelCoor *(j+1),4,style);
                 //console.log(x1 *(j+1));
              if(j==0){
                  
@@ -370,12 +319,12 @@ CrossTab.prototype.addFooter = function(){
                 this.addText(x1 +xLabelCoor *(j) - 10,16,tickValue+"K"); 
              }    
             }
-            this.addText(x1 + x * .3, 28, object.xAxisLabel);
+            this.addText(x1 + x * .3, 28, jsonData.xAxisLabel);
             
 
         }
         //last separator line 
-    this.drawLine(sepSVG, x * (i+1),y1,x * (i+1),y2,style);
+    plot.drawLine(sepSVG, x * (i+1),y1,x * (i+1),y2,style);
     
 
 
@@ -386,28 +335,38 @@ CrossTab.prototype.addFooter = function(){
 
     CrossTab.prototype.initiateDraw = function(){
         //this.printValues();
-        heightEachChart = (window.innerHeight - 100) / object.data.length;
-        widthEachChart = Math.floor(window.innerWidth / (object.zone_map.length + 2));
-        var sepSVG = this.createSVG(widthEachChart, heightEachChart);
-        this.sepSVG =sepSVG;
+        var instance = this.instance;
+        var index = this.index;
+        heightEachChart = (window.innerHeight - 100) / this.productLen; // 100 subtracted to compensate the 
+        widthEachChart = Math.floor(window.innerWidth / (jsonData.zone_map.length + 2));
+        //labelSVG box
+        var plot = new PlotGraph();
+        var sepSVG = plot.createSVG(widthEachChart, heightEachChart);
+        this.sepSVG = sepSVG;
         var productType = this.instance.model;
+
         var fontSize  = widthEachChart * .06
         this.addText(0, 12,productType);
-        
+        //console.log("hello" +this.instance.productTypes.length);
+        console.log(index);
+        console.log("hello"+this.instance.productTypes.length);
          for(var j = 0;j < this.instance.productTypes.length; j++){
             var x = widthEachChart / 2 ;
+            //console.log("loop");
             //var y = (heightEachChart / this.noofXTips) * (j) + 12;
-            //console.log(this.instance.productTypes[j] + 'y' +y);
+             //console.log(this.instance.productIns[index].productTypes[j]+'hello');
+            //console.log(this.instance.productIns[index].productTypes[j] );
             this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),this.instance.productTypes[j]);
          }
-        this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),"Total");
+        //this.addText(x, 12 + (j)* heightEachChart/(this.instance.productTypes.length+1),"Total");
         var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
-        this.drawLine(sepSVG, 0,0,widthEachChart,0,style); 
-        for(var i = 0; i < object.zone_map.length; i++){ 
+        var plot = new PlotGraph();
+        plot.drawLine(sepSVG, 0,0,widthEachChart,0,style); 
+        for(var i = 0; i < jsonData.zone_map.length; i++){ 
 
             this.ChartIndex = i;
             
-            this.svg[i] = this.createSVG(widthEachChart, heightEachChart);
+            this.svg[i] = plot.createSVG(widthEachChart, heightEachChart);
             this.drawChartOutline();
             this.plotColumnChart();
             
@@ -415,7 +374,7 @@ CrossTab.prototype.addFooter = function(){
         //draw boundary line at the end of product type
         var className = "drawLine";
         sepSVG = this.svg[this.ChartIndex];
-        this.drawLine(sepSVG, widthEachChart,0,widthEachChart,heightEachChart,style,className);
+        plot.drawLine(sepSVG, widthEachChart,0,widthEachChart,heightEachChart,style,className);
         //this.drawYAxis();
         
 

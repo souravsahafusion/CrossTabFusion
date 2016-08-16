@@ -12,8 +12,8 @@ function releaseColRect(event) {
 function dragColRect(event) {
     if (flag == 1) {
         var rect = this.selectRectIns;
-        var xC = event.clientX % obj.chart.width - 10;
-        var yC = event.pageY % obj.chart.height - heightEachChart * chartModel[0].yShift - 47;
+        var xC = event.clientX % jsonData.chart.width - 10;
+        var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 47;
         var xBeg = rect.getAttribute("x");
         var yBeg = rect.getAttribute("y");
         var width = Math.abs(xC - xBeg);
@@ -37,7 +37,7 @@ function dragColRect(event) {
         for (var i = 0; i < columnElement.length; i++) {
             var testX = Math.floor(columnElement[i].getAttribute("x"));
             //console.log(testX + testX);
-            testX = testX + widthEachChart * obj.scaleColChartFactor / 100;
+            testX = testX + widthEachChart * jsonData.scaleColChartFactor / 100;
             var testY = Math.floor(columnElement[i].getAttribute("y"));
             //console.log(testY + 'y');
 
@@ -63,9 +63,9 @@ function dragColRect(event) {
 
 function instantiateDragCol(event) {
     if (flagRemoveColor !== 1) {
-        var xC = event.clientX % obj.chart.width - 10;
-        var yC = event.pageY % obj.chart.height - heightEachChart * chartModel[0].yShift - 47;
-        console.log(xC + 'x ' + 'y ' + yC, obj.chart.width);
+        var xC = event.clientX % jsonData.chart.width - 10;
+        var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 47;
+        console.log(xC + 'x ' + 'y ' + yC, jsonData.chart.width);
         console.log(event.clientX + 'clientX' + event.clientY + 'clientY');
 
         var rect = this.selectRectIns;

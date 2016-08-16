@@ -16,12 +16,13 @@ ChartFunc.prototype.drawBoundRectangle = function(className) {
 
 };
 
-ChartFunc.prototype.calculateMappingPoint = function(value) {
-    var instance = this.instance;
-    var a = instance.minTipValue;
-    var b = instance.maxTipValue;
-    var c = instance.upLimitYAxis;
-    var d = instance.lowLimitYAxis;
-    return (d - (value - a) / (b - a) * (d - c));
+ChartFunc.prototype.calculateMappingPoint = function(value, a, b, c, d) {
+   
+    if(jsonData.chartType == "CrossTab"){
+       return ((value - a) / (b - a) * (d - c)); 
+    }else{
+         return (d - (value - a) / (b - a) * (d - c));
+    }
+   
 
 };
