@@ -36,38 +36,3 @@ Axis.prototype.plotAxis = function(){
 
 
 };
-Axis.prototype.verticalAxis = function(x1, y1){
-	var instance = this.instance;
-    var draw = new PlotGraph(instance);
-   
-	
-    var x2 = x1;
-    //console.log(chartNo + 'chartNo');
-    
-    var y2 = y1 + (heightEachChart);
-    var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-    var className = "axisDraw";
-    var svg = instance.svg;
-    this.drawLine(svg,x1, y1, x2, y2, style, className);
-    //instance.upLimitYAxis = y1;
-
-};
-Axis.prototype.horizontalAxis = function(x1, y1){
-	var instance = this.instance;
-    
-    
-
-    var x2 = x1 + widthEachChart ;//+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
-    
-    var y2 = y1;
-    
-    
-
-    
-    var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-    var className ="axisDraw";
-    var svg = instance.svg;
-    this.drawLine(svg,x1, y1, x2, y2, style, className);
-    //draw.drawLine(x1, y1, x2, y2, style, className);
-
-};
