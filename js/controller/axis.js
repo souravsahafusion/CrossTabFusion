@@ -37,3 +37,6 @@ Axis.prototype.plotAxis = function(){
 
 
 };
+Axis.prototype.drawTicks = function(){
+
+};
