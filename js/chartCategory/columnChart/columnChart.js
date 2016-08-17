@@ -16,6 +16,7 @@ ColumnChart.prototype.initiateDraw = function() {
 ColumnChart.prototype.plotColumnChart = function() {
     var instance = this.instance;
     var draw = new PlotGraph(instance);
+    var svg;
 
 
     for (i = 0; i < jsonData.data.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
@@ -41,8 +42,8 @@ ColumnChart.prototype.plotColumnChart = function() {
             var widthRect = widthEachChart * scaleColChartFactor * 2;
             var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
             var className = "plotColumnGraph";
-
-            var rectIns = draw.drawRectangle(x, yPointPlot, heightRect, widthRect, className, style);
+            svg = this.instance.svg;
+            var rectIns = draw.drawRectangle(svg, x, yPointPlot, heightRect, widthRect, className, style);
             this.columnChartListener(rectIns, className);
             instance.lastPlottedPointX = xPointPlot;
             instance.lastPlottedPointY = yPointPlot;

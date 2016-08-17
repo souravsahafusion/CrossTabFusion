@@ -37,7 +37,7 @@ PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, v
 
 };
 //svg, x, y, height, width, className, style,styleColor
-PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, style) {
+PlotGraph.prototype.drawRectangleSep = function(svg, x, y, height, width, className, style) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttributeNS(null, 'x', x);
     rect.setAttributeNS(null, 'y', y);
@@ -45,7 +45,27 @@ PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, sty
     rect.setAttributeNS(null, 'width', width);
     rect.setAttribute("class", className);
     rect.setAttribute("style", style);
-    this.instance.svg.appendChild(rect);
+    svg.appendChild(rect);
+    return rect;
+
+
+};
+PlotGraph.prototype.drawRectangle = function(svg, x, y, height, width, className, style, styleColor) {
+    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttributeNS(null, 'x', x);
+    rect.setAttributeNS(null, 'y', y);
+    rect.setAttributeNS(null, 'height', height);
+    rect.setAttributeNS(null, 'width', width);
+    rect.setAttribute("class", className);
+    if(typeof styleColor !== 'undefined'){
+        rect.setAttribute("fill", styleColor);
+        rect.setAttribute("stroke", styleColor);
+    }else{
+        rect.setAttribute("style", style);
+    }
+    
+    
+    svg.appendChild(rect);
     return rect;
 
 

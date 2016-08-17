@@ -10,6 +10,7 @@ DrawChart.prototype.addChartName = function(check) {
     var chartName = jsonData.y_axis_map[this.index];
     var x = instance.chartLowBoundXCoor;
     var y = 0;
+    var svg;
     if (check !== 2) {
         y = instance.lowLimitYAxis + heightEachChart * chartNameBoxShift; /*heightEachChart * .02; -> space between y-axis and the chartName box*/
         /*from where the chartName box rectangle will be plotted if the chart name lies below the chart*/
@@ -21,8 +22,8 @@ DrawChart.prototype.addChartName = function(check) {
     var width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
     var className = "chartName";
     var style = "fill:rgb(245,250,255);stroke:rgb(190,223,254);stroke-width:1;";
-
-    draw.drawRectangle(x, y, height, width, className, style);
+    svg = instance.svg;
+    draw.drawRectangle(svg, x, y, height, width, className, style);
     y = y + (height) * .6;
     x = (instance.chartLowBoundXCoor + instance.chartUpBoundXCoor) / 2 * .8; //font position determination horizontally
     style = "stroke:rgb(6,48,86);"

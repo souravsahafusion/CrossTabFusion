@@ -68,6 +68,7 @@
         for (var i = 0; i < this.instance.productTypes.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
             var value = this.instance.productIns[this.ChartIndex].sos[i];
             var svg = this.svg[this.ChartIndex];
+            var plot = new PlotGraph();
             
             if (typeof value != 'undefined') {
                 scaleColChartFactor = jsonData.scaleColChartFactor / 100;
@@ -100,7 +101,7 @@
                 var className = "plotColumnGraph";
                 console.log(styleColor);
                 
-                var rectIns = this.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
+                var rectIns = plot.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
 
                 //this.columnChartListener(rectIns, className);
                 //this.lastPlottedPointX = xPointPlot;
@@ -119,23 +120,6 @@
     };
 
     
-    CrossTab.prototype.drawRectangle = function(svg, x, y, height, width, className, style,styleColor) {
-        var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        rect.setAttributeNS(null, 'x', x);
-        rect.setAttributeNS(null, 'y', y);
-        rect.setAttributeNS(null, 'height', height);
-        rect.setAttributeNS(null, 'width', width);
-        rect.setAttribute("class", className);
-        //rect.setAttribute("style", style);
-        rect.setAttribute("fill", styleColor);
-        rect.setAttribute("stroke", styleColor);
-        
-        
-        svg.appendChild(rect);
-        return rect;
-
-
-    };
     
     
     CrossTab.prototype.drawChartOutline = function() {

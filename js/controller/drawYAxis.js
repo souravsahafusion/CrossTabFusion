@@ -17,6 +17,7 @@ DrawYAxis.prototype.drawYAxis = function() {
     var y1 = this.y1;
     var x2;
     var y2;
+    var svg;
 
     //draw ticks
     var noOfYTips = instance.noOfYTips;
@@ -53,7 +54,8 @@ DrawYAxis.prototype.drawYAxis = function() {
 
             className = "designRect";
             style = "fill:rgb(247,247,247);";
-            this.drawRectangle(xl, y1, height, width, className, style);
+            svg = instance.svg;
+            this.drawRectangle(svg, xl, y1, height, width, className, style);
         }
 
     }

@@ -10,7 +10,7 @@ ChartFunc.prototype.drawBoundRectangle = function(className) {
     var heightRect = instance.lowLimitYAxis - instance.upLimitYAxis;
 
     drawRect = new PlotGraph(instance);
-    var rectBound = drawRect.drawRectangle(instance.chartLowBoundXCoor, instance.upLimitYAxis, heightRect, widthRect, className, style);
+    var rectBound = drawRect.drawRectangle(instance.svg, instance.chartLowBoundXCoor, instance.upLimitYAxis, heightRect, widthRect, className, style);
 
     return rectBound;
 
