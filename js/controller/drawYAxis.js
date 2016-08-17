@@ -26,7 +26,6 @@ DrawYAxis.prototype.drawYAxis = function() {
     var temp_x1 = x1;
    
     /*assigning label text to divs + assigning tics and division draw + rectangle for coloring*/
-    
     var xl = instance.chartLowBoundXCoor;
     var width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
     var height = heightEachChart / noOfYTips;

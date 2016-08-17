@@ -33,35 +33,7 @@
 
     };
     
-    CrossTab.prototype.drawYAxis = function() {
-
-        //var chartNo = this.chartNo;
-        //var yShift = this.yShift;
-        var x1 = 0/*widthEachChart * distYAxisFromOr*/;
-        var x2 = widthEachChart/*widthEachChart * distYAxisFromOr*/;
-        //console.log(chartNo + 'chartNo');
-        var y1 = 0/*(heightEachChart * yShift)*/;
-        var y2 = 0/*(heightEachChart) * yShift) + (heightEachChart)*/;
-        var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
-        var className = "axisDraw";
-        var svg = this.svg[this.ChartIndex];
-        var plot = new PlotGraph();
-        plot.drawLine(svg, x1, y1, x2, y2, style, className);
-
-        //draw ticks
-        //var noOfYTips = this.noOfYTips;
-
-
-        //var heightEachChart = this.heightEachChart;
-        var temp_y1 = y1;
-        this.upLimitYAxis = y1; //setting the top limit value of y axis
-
-        var temp_x1 = x1;
-        var temp_x2 = x2;
-        /*assigning label text to divs + assigning tics and division draw + rectangle for coloring*/
-        
-
-    };
+   
     
    CrossTab.prototype.genColor = function(ratio){
        if(ratio > 0){
@@ -137,32 +109,7 @@
 
             }
         }
-        //add total column
-        value = this.instance.productIns[this.ChartIndex].sosTotal;
-        if (typeof value != 'undefined') {
-                scaleColChartFactor = jsonData.scaleColChartFactor / 100;
-                //console.log(value);
-                var a = 0;
-                var b = maximum;
-                var c = 0;
-                var d = widthEachChart;
-                var chartFunc = new ChartFunc();
-                var yPointPlot = chartFunc.calculateMappingPoint(value, a, b, c, d);
-
-                //yPointPlot = this.calculateMappingPoint(value);
-        }
-                valueProfit = this.instance.productIns[this.ChartIndex].sopTotal;
-                ratio = valueProfit / value;
-                styleColor = this.genColor(ratio);
-                var x = 0/*xPointPlot - widthEachChart * scaleColChartFactor*/;
-                var y =  (heightEachChart / (this.noofXTips+1)) * (i);
-                var heightRect = heightEachChart/*widthEachChart*/ * scaleColChartFactor * 2;
-                var widthRect = yPointPlot;
-                var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
-                var className = "plotColumnGraph";
-             
-
-                //var rectIns = this.drawRectangle(svg, x, y, heightRect, widthRect, className, style,styleColor);
+       
         var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
         className = "drawLine";
         svg = this.svg[this.ChartIndex];
