@@ -45,7 +45,8 @@
           //console.log(ratio);
           ratio = ratio * -1;
        }
-   
+   color2 = color2.slice(1,color2.length);
+   color1 = color1.slice(1,color1.length);
    
 
    var hex = function(x) {
@@ -58,7 +59,7 @@
    var b = Math.ceil(parseInt(color1.substring(4,6), 16) * ratio + parseInt(color2.substring(4,6), 16) * (1-ratio));
 
    var middle = hex(r) + hex(g) + hex(b);
-   return middle;
+   return "#"+middle;
 };
 
     CrossTab.prototype.plotColumnChart = function() {
@@ -126,8 +127,8 @@
         rect.setAttributeNS(null, 'width', width);
         rect.setAttribute("class", className);
         //rect.setAttribute("style", style);
-        rect.setAttribute("fill", "#"+styleColor);
-        rect.setAttribute("stroke", "#"+styleColor);
+        rect.setAttribute("fill", styleColor);
+        rect.setAttribute("stroke", styleColor);
         
         
         svg.appendChild(rect);

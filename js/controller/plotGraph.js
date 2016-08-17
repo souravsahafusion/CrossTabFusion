@@ -36,7 +36,7 @@ PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, v
     svg.appendChild(line);
 
 };
-
+//svg, x, y, height, width, className, style,styleColor
 PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, style) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttributeNS(null, 'x', x);

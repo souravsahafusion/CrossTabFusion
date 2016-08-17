@@ -28,6 +28,9 @@ ColumnChart.prototype.plotColumnChart = function() {
             var c = instance.upLimitYAxis;
             var d = instance.lowLimitYAxis;
             var yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
+            if(yPointPlot < 2){
+                    yPointPlot = 2;
+                }
             //console.log(range.length); need to debug
             instance.storeAncorPointsY[i] = yPointPlot;
             var xPointPlot = instance.lowLimitXAxis + (widthEachChart / instance.noofXTips) * (i);
