@@ -1,11 +1,14 @@
-function DrawYAxis(instance, x1, y1, inclination) {
-    Axis.call(this, instance, x1, y1, inclination);
+function DrawYAxis(instance, x1, y1, inclination, svg) {
+    Axis.call(this, instance, x1, y1, inclination, svg);
     this.instance = instance;
 
 }
 DrawYAxis.prototype=Object.create(Axis.prototype);
 DrawYAxis.prototype.constructor=DrawYAxis;
+DrawYAxis.prototype.drawAxis = function(){
+    this.plotAxis();
 
+};
 DrawYAxis.prototype.drawYAxis = function() {
     var instance = this.instance;
     
@@ -20,7 +23,7 @@ DrawYAxis.prototype.drawYAxis = function() {
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
     var className = "axisDraw";
    //this.verticalAxis(x1,y1);
-   this.plotAxis();
+   //this.plotAxis();
 
     //draw ticks
     var noOfYTips = instance.noOfYTips;

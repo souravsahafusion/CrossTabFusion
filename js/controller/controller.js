@@ -8,8 +8,8 @@ function parseData(input) {
     //console.log(chartType);
     //console.log(typeof input.zone_map);
     if(chartType == "CrossTab"){
-        if(typeof input.zone_map !== 'undefined'){
-            var ctrl = new ParsingData();
+        //if(typeof input.zone_map !== 'undefined'){
+            var ctrl = new Parsing();
     var instanceArray = ctrl.setValues(input);
    
     var productLen  = instanceArray.length;
@@ -26,17 +26,25 @@ function parseData(input) {
     }
    
     addChartText.addFooter();  
-}else{
+/*}else{
     document.getElementById("heading").innerHTML = "Chart type not supported";
-}
+}*/
    
     }else{
-        if(typeof input.y_axis_map !== 'undefined'){
+
+        //if(typeof input.y_axis_map !== 'undefined'){
              var chartBound = new CalValues();
+             var instance;
+              
     chartBound.calculateChartOutLines(input);
+    if(input.chart_map == "false"){
+            chartBound.setZone();
+        }else{
+            chartBound.setKeys();
+        }
     var numberOfCharts = jsonData.y_axis_map.length;
     var chartArrange = new CalValues();
-    chartArrange.customChartArrange();
+ /*   chartArrange.customChartArrange();
     
     var expression = jsonData.chart_order_func;
         switch (expression) {
@@ -47,21 +55,29 @@ function parseData(input) {
                 arrangeOnMax();
                 break;
 
-        }
+        }*/
     for (var i = 0; i < numberOfCharts; i++) {
         var tempMap = jsonData.y_axis_map[i];
         //console.log(tempMap+ 'first step');
         var range = [];
-        range[i] = new CalValues();
-        var instance = range[i].setChartValues(tempMap, i);
+        if(input.chart_map == "false"){
+            range[i] = new ParsingData();
+            console.log("false");
+            instance = range[i].setChartValues(tempMap, i);
+        }else{
+            console.log("true");
+            range[i] = new CalValues();
+            instance = range[i].setChartValues(tempMap, i);
+        }
+        
 
         range[i] = new DrawChart(instance, i);
         range[i].initiateGraph();
 
     }  
-        }else{
+        /*}else{
     document.getElementById("heading").innerHTML = "Chart type not supported";
-}
+}*/
      
     }
     

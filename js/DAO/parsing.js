@@ -1,5 +1,5 @@
 "use strict";
-function ParsingData(){
+function Parsing(){
     this.instance = '';
     this.input = '';
     this.index = 0;
@@ -122,7 +122,7 @@ function findYTipsModified(diffTenthPow) {
     //console.log(maximum + 'maximum' + diffBwTips + 'diffBwTips' + noOfYTips);
 }
 
-ParsingData.prototype.setZoneAndProduct = function(){
+Parsing.prototype.setZoneAndProduct = function(){
    var value;
    var pdts = [];
    
@@ -132,8 +132,8 @@ ParsingData.prototype.setZoneAndProduct = function(){
     //console.log(object.data[i].values.length);
     
         value = jsonData.data[i].zone;
-        if(jsonData.zone_map.indexOf(value) < 0){
-            jsonData.zone_map.push(value);
+        if(jsonData.y_axis_map.indexOf(value) < 0){
+            jsonData.y_axis_map.push(value);
 
 
             //console.log(value);
@@ -148,11 +148,11 @@ ParsingData.prototype.setZoneAndProduct = function(){
 
 
  }
-jsonData.zone_map.sort(); 
+jsonData.y_axis_map.sort(); 
 this.pdts.sort();
 
 };
-ParsingData.prototype.setProductTypes = function(){
+Parsing.prototype.setProductTypes = function(){
 var indexProduct;
 var indexZone;
 var productName;
@@ -164,7 +164,7 @@ for(var i = 0; i < jsonData.data.length; i++){
       
     indexProduct = this.pdts.indexOf(jsonData.data[i].product);
     //console.log(jsonData.data[i]["product"]);
-    indexZone = jsonData.zone_map.indexOf(jsonData.data[i].zone);
+    indexZone = jsonData.y_axis_map.indexOf(jsonData.data[i].zone);
     productType = jsonData.data[i].productType;
     //console.log(productType);
     if(this.pdtsIns[indexProduct].productTypes.indexOf(productType) < 0){
@@ -189,7 +189,7 @@ for(var i = 0; i < jsonData.data.length; i++){
     
 
 };
-ParsingData.prototype.setValues = function(input){
+Parsing.prototype.setValues = function(input){
  //var instance = this.instance;
  jsonData =  input;
  var range = [];
@@ -208,7 +208,7 @@ ParsingData.prototype.setValues = function(input){
     pdtsIns.model = this.pdts[i];
     range[i] = pdtsIns;
 
-    for(var j = 0; j < jsonData.zone_map.length; j++){
+    for(var j = 0; j < jsonData.y_axis_map.length; j++){
         //creating a object of the model ProductType for each zone viz. west, east
         
         pdtsIns.productIns[j] = new ProductType();

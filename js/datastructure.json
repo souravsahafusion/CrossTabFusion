@@ -9,6 +9,7 @@ var json = {
 
 
     },
+    "chart_map" : "date",
     "chart_order_func" : "minimum",
     "scaleColChartFactor" : 4,
     "chartType" : "column",   

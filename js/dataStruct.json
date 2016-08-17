@@ -1,14 +1,24 @@
 json = {
-    
+    "chart": {
+        
+        "width": 600,
+        "height":300
+
+
+    },
     "chart_order_func": "minimum",
     "scaleColChartFactor": 4,
     "chartType": "CrossTab",
-    "zone_map": [],
+    "y_axis_map": [],
     "minProfitColor" : "DCDCDC" ,
     "maxProfitColor" : "000000",
     "minLossColor" : "8B0000" ,
     "maxLossColor" : "FFA07A",
     "xAxisLabel" : "Sum of sales",
+    "month" : [],
+    "chart_map" : "false",
+    "productChoose" : "Coffee",
+    "chartSelect" : "zone",
     "data":[
         {
             "product":"Coffee",
