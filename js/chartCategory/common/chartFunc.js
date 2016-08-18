@@ -26,12 +26,12 @@ ChartFunc.prototype.drawBoundRectangle = function(className) {
 };
 
 ChartFunc.prototype.calculateMappingPoint = function(value, a, b, c, d) {
-   
-    if(jsonData.chartType == "CrossTab"){
-       return ((value - a) / (b - a) * (d - c)); 
-    }else{
-         return (d - (value - a) / (b - a) * (d - c));
+
+    if (jsonData.chartType == "CrossTab") {
+        return ((value - a) / (b - a) * (d - c));
+    } else {
+        return (d - (value - a) / (b - a) * (d - c));
     }
-   
+
 
 };

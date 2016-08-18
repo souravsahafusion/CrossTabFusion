@@ -12,20 +12,20 @@ function releaseColRect(event) {
 function dragColRect(event) {
     if (flag == 1) {
         var rect = this.selectRectIns,
-        xC = event.clientX % jsonData.chart.width - 10,
-        yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 47,
-        xBeg = rect.getAttribute("x"),
-        yBeg = rect.getAttribute("y"),
-        width = Math.abs(xC - xBeg),
-        height = Math.abs(yBeg - yC),
-        i,
-        loopLen,
-        testX,
-        testY,
-        columnElement;
-       
-      
-        
+            xC = event.clientX % jsonData.chart.width - 10,
+            yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 47,
+            xBeg = rect.getAttribute("x"),
+            yBeg = rect.getAttribute("y"),
+            width = Math.abs(xC - xBeg),
+            height = Math.abs(yBeg - yC),
+            i,
+            loopLen,
+            testX,
+            testY,
+            columnElement;
+
+
+
         /*if(xBeg < x){
             rect.setAttributeNS(null, 'x', xC );
             rect.setAttributeNS(null, 'y', yC );
@@ -82,7 +82,7 @@ function instantiateDragCol(event) {
         rect.setAttribute("class", "selectRect");
         rect.setAttribute("style", "fill:transparent;stroke:rgb(0,0,0)");
         flag = 1;
-        
+
         //console.log(parameter);
         //this.svg.appendChild(rect);
     } else {

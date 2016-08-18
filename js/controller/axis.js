@@ -37,9 +37,3 @@ Axis.prototype.plotAxis = function(){
 
 
 };
-<<<<<<< HEAD
-=======
-Axis.prototype.drawTicks = function(){
-
-};
->>>>>>> inheritance

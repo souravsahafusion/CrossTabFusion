@@ -13,8 +13,8 @@ function columnTrigger(event) {
         textElement,
         toolTipRect;
     x = x - 8;
-    
-    
+
+
     posScale = jsonData.scaleColChartFactor / 100 * widthEachChart;
 
     for (i = posScale; i > 0; i--) {
@@ -93,7 +93,7 @@ function columnTrigger(event) {
             }
         }
     } else {
-        
+
 
     }
 

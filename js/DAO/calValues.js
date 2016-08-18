@@ -205,29 +205,29 @@ CalValues.prototype.findMonth = function(index) {
     var date = jsonData.data[index][chart_map];
     dateObject = new Date(date);
     //console.log(jsonData.month[index]);
-    if(dateObject.toString() === "Invalid Date"){
+    if (dateObject.toString() === "Invalid Date") {
         jsonData.month[index] = jsonData.data[index][chart_map];
         return index;
 
-        
-      //console.log(date + 'hello');
-    }else{
+
+        //console.log(date + 'hello');
+    } else {
         return dateObject.getMonth();
     }
-   
-    
+
+
 };
-CalValues.prototype.setZone = function(){
-   var value; 
- for(var i = 0; i < jsonData.data.length; i++){
+CalValues.prototype.setZone = function() {
+    var value;
+    for (var i = 0; i < jsonData.data.length; i++) {
         value = jsonData.data[i].zone;
-        if(jsonData.y_axis_map.indexOf(value) < 0){
+        if (jsonData.y_axis_map.indexOf(value) < 0) {
             jsonData.y_axis_map.push(value);
-        } 
-}
-jsonData.y_axis_map.sort(); 
+        }
+    }
+    jsonData.y_axis_map.sort();
 };
-CalValues.prototype.setKeys = function(){
+CalValues.prototype.setKeys = function() {
     var noOfDatas = jsonData.data.length;
 
     if (jsonData.y_axis_map.length < 1) {
@@ -252,8 +252,8 @@ CalValues.prototype.setKeys = function(){
 
 };
 CalValues.prototype.calculateChartOutLines = function(input) {
-    
-   
+
+
     jsonData = input;
 
     widthEachChart = jsonData.chart.width - (jsonData.chart.width * .5); //kept global
@@ -291,7 +291,7 @@ CalValues.prototype.SetDataValueCrossTab = function(tempMap) {
         //setting value to the jsonDataect
         var monthValue = this.findMonth(i);
         //will return month index if date is provided else return the index       
-        
+
         instance.storeValue[monthValue] = jsonData.data[i][tempMap];
         if (jsonData.data[i][tempMap] < minimum) {
             minimum = jsonData.data[i][tempMap];
@@ -325,7 +325,7 @@ CalValues.prototype.findMinAndSetDataValue = function(tempMap) {
         //setting value to the jsonDataect
         var monthValue = this.findMonth(i);
         //will return month index if date is provided else return the index       
-        
+
         instance.storeValue[monthValue] = jsonData.data[i][tempMap];
         if (jsonData.data[i][tempMap] < minimum) {
             minimum = jsonData.data[i][tempMap];
@@ -343,26 +343,26 @@ CalValues.prototype.setChartValues = function(tempMap, i) {
     chartModel[i].max = this.findMax(tempMap);
     this.positionValues();
     this.findRangeModified();
-   
+
     return this.instance;
 
 
 };
 
 CalValues.prototype.customChartArrange = function() {
-    
-    
+
+
     for (var i = 0; i < jsonData.y_axis_map.length; i++) {
-            var tempMap = jsonData.y_axis_map[i];
-            //console.log(tempMap+ 'first step');
-        
-            range2[i] = new ChartModel();
-            this.instance = range2[i];
-            range2[i].min = this.findMinAndSetDataValue(tempMap);
-            //console.log(range[i].min + 'minimum calculated from different data values');
-            range2[i].max = this.findMax(tempMap, i);
-        }
-    
+        var tempMap = jsonData.y_axis_map[i];
+        //console.log(tempMap+ 'first step');
+
+        range2[i] = new ChartModel();
+        this.instance = range2[i];
+        range2[i].min = this.findMinAndSetDataValue(tempMap);
+        //console.log(range[i].min + 'minimum calculated from different data values');
+        range2[i].max = this.findMax(tempMap, i);
+    }
+
 };
 var numberOfColCharts = 0;
 var chartModel = [];

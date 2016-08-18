@@ -8,9 +8,9 @@ ColumnChart.prototype.initiateDraw = function() {
     var instance = this.instance,
         className = "plotColumnBound",
         bound = new ChartFunc(instance);
-        rectIns =  bound.drawBoundRectangle(className);
+    rectIns = bound.drawBoundRectangle(className);
 
-   
+
     instance.chartType = "column";
     this.plotColumnChart();
     this.selectChartListener(rectIns);
@@ -38,7 +38,7 @@ ColumnChart.prototype.plotColumnChart = function() {
 
 
     for (i = 0; i < dataLen; i++) {
-        value = instance.storeValue[i];         
+        value = instance.storeValue[i];
         if (typeof value != 'undefined') {
             scaleColChartFactor = scale / 100;
             calculate = new ChartFunc(instance);
@@ -47,9 +47,9 @@ ColumnChart.prototype.plotColumnChart = function() {
             c = instance.upLimitYAxis;
             d = instance.lowLimitYAxis;
             yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
-            if(yPointPlot < 2){
-                    yPointPlot = 2;
-                }
+            if (yPointPlot < 2) {
+                yPointPlot = 2;
+            }
             //console.log(range.length); need to debug
             instance.storeAncorPointsY[i] = yPointPlot;
             xPointPlot = instance.lowLimitXAxis + (widthEachChart / instance.noofXTips) * (i);
@@ -99,6 +99,6 @@ ColumnChart.prototype.selectChartListener = function(rectIns) {
     rectIns.addEventListener("mousemove", dragColRect.bind(_this));
     rectIns.addEventListener("mouseup", releaseColRect.bind(_this));
 
-    
+
 
 };

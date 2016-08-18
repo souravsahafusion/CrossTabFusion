@@ -192,17 +192,17 @@ ParsingData.prototype.findMax = function(tempMap) {
     }*/
 
     for (var i = 0; i < jsonData.data.length; i++) {
-        if(jsonData.data[i].product == productChoose && jsonData.data[i].zone == tempMap){ 
-        //need to change the zone to selectType because zone is specific
-            
+        if (jsonData.data[i].product == productChoose && jsonData.data[i].zone == tempMap) {
+            //need to change the zone to selectType because zone is specific
+
             //console.log(jsonData.xAxisTicksLabel[count]); 
             if (jsonData.data[i].sos > maximum) {
-            maximum = jsonData.data[i].sos;
+                maximum = jsonData.data[i].sos;
+
+            }
 
         }
 
-        }
-        
     }
     return maximum;
 
@@ -213,29 +213,29 @@ ParsingData.prototype.findMonth = function(index) {
     var date = jsonData.data[index][chart_map];
     dateObject = new Date(date);
     //console.log(jsonData.month[index]);
-    if(dateObject.toString() === "Invalid Date"){
+    if (dateObject.toString() === "Invalid Date") {
         jsonData.month[index] = jsonData.data[index][chart_map];
         return index;
 
-        
-      //console.log(date + 'hello');
-    }else{
+
+        //console.log(date + 'hello');
+    } else {
         return dateObject.getMonth();
     }
-   
-    
+
+
 };
-ParsingData.prototype.setZone = function(){
-   var value; 
- for(var i = 0; i < jsonData.data.length; i++){
+ParsingData.prototype.setZone = function() {
+    var value;
+    for (var i = 0; i < jsonData.data.length; i++) {
         value = jsonData.data[i].zone;
-        if(jsonData.y_axis_map.indexOf(value) < 0){
+        if (jsonData.y_axis_map.indexOf(value) < 0) {
             jsonData.y_axis_map.push(value);
-        } 
-}
-jsonData.y_axis_map.sort(); 
+        }
+    }
+    jsonData.y_axis_map.sort();
 };
-ParsingData.prototype.setKeys = function(){
+ParsingData.prototype.setKeys = function() {
     var noOfDatas = jsonData.data.length;
 
     if (jsonData.y_axis_map.length < 1) {
@@ -259,8 +259,8 @@ ParsingData.prototype.setKeys = function(){
     }
 
 };
-ParsingData.prototype.setXAxisTicksLabel = function(){
-    
+ParsingData.prototype.setXAxisTicksLabel = function() {
+
     var productChoose = jsonData.productChoose;
     var selectType = jsonData.chartSelect;
     var value;
@@ -269,23 +269,23 @@ ParsingData.prototype.setXAxisTicksLabel = function(){
         //var monthValue = this.findMonth(i);
         //will return month index if date is provided else return the index       
         value = jsonData.data[i].productType;
-        if(jsonData.data[i].product == productChoose){ 
-        //need to change the zone to selectType because zone is specific
-            if(jsonData.month.indexOf(value) < 0)
-            jsonData.month.push(value); 
-            
+        if (jsonData.data[i].product == productChoose) {
+            //need to change the zone to selectType because zone is specific
+            if (jsonData.month.indexOf(value) < 0)
+                jsonData.month.push(value);
+
             //console.log(jsonData.xAxisTicksLabel[count]); 
-           
+
 
         }
-        
-           
+
+
     }
 
 };
 ParsingData.prototype.calculateChartOutLines = function(input) {
-    
-   
+
+
     jsonData = input;
 
     widthEachChart = jsonData.chart.width - (jsonData.chart.width * .5); //kept global
@@ -304,9 +304,9 @@ ParsingData.prototype.findMinAndSetDataValue = function(tempMap) {
     var instance = this.instance;
     var productChoose = jsonData.productChoose;
     var selectType = jsonData.chartSelect;
-    
 
-    var minimum = 0/*jsonData.data[0][tempMap]*/;//would not work for negative values
+
+    var minimum = 0 /*jsonData.data[0][tempMap]*/ ; //would not work for negative values
     var i = 0;
     /*if (typeof minimum == 'undefined') {
 
@@ -325,16 +325,16 @@ ParsingData.prototype.findMinAndSetDataValue = function(tempMap) {
         //setting value to the jsonDataect
         //var monthValue = this.findMonth(i);
         //will return month index if date is provided else return the index       
-        if(jsonData.data[i].product == productChoose && jsonData.data[i].zone == tempMap){ 
-        //need to change the zone to selectType because zone is specific
+        if (jsonData.data[i].product == productChoose && jsonData.data[i].zone == tempMap) {
+            //need to change the zone to selectType because zone is specific
             //jsonData.month[count] = jsonData.data[i].productType;
             instance.storeValue[count] = jsonData.data[i].sos; //need to provide index of sos instead of key
             //console.log(jsonData.xAxisTicksLabel[count]); 
             count++;
 
         }
-        
-           
+
+
     }
     return minimum;
 
@@ -348,26 +348,26 @@ ParsingData.prototype.setChartValues = function(tempMap, i) {
     chartModel[i].max = this.findMax(tempMap);
     this.positionValues();
     this.findRangeModified();
-   
+
     return this.instance;
 
 
 };
 
 ParsingData.prototype.customChartArrange = function() {
-    
-    
+
+
     for (var i = 0; i < jsonData.y_axis_map.length; i++) {
-            var tempMap = jsonData.y_axis_map[i];
-            //console.log(tempMap+ 'first step');
-        
-            range2[i] = new ChartModel();
-            this.instance = range2[i];
-            range2[i].min = this.findMinAndSetDataValue(tempMap);
-            //console.log(range[i].min + 'minimum calculated from different data values');
-            range2[i].max = this.findMax(tempMap, i);
-        }
-    
+        var tempMap = jsonData.y_axis_map[i];
+        //console.log(tempMap+ 'first step');
+
+        range2[i] = new ChartModel();
+        this.instance = range2[i];
+        range2[i].min = this.findMinAndSetDataValue(tempMap);
+        //console.log(range[i].min + 'minimum calculated from different data values');
+        range2[i].max = this.findMax(tempMap, i);
+    }
+
 };
 var numberOfColCharts = 0;
 var chartModel = [];

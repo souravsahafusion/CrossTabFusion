@@ -32,7 +32,7 @@ DrawChart.prototype.addChartName = function(check) {
     var className = "textAdd";
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");;
     //
-    draw.addTextSVG(svg, x, y, chartName, textElement,className, transform, fontSize, style);
+    draw.addTextSVG(svg, x, y, chartName, textElement, className, transform, fontSize, style);
 
 };
 DrawChart.prototype.drawChartOutline = function() {
@@ -63,7 +63,7 @@ DrawChart.prototype.drawChartOutline = function() {
     //var yShift = instance.yShift;
     var x1 = widthEachChart * distYAxisFromOr; // distance from the origin to the yaxis
     instance.chartLowBoundXCoor = x1;
-    var x2 = x1 + widthEachChart ;//+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
+    var x2 = x1 + widthEachChart; //+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
     instance.chartUpBoundXCoor = x2;
     //var y1 = (heightEachChart * yShift);;
     var inclination = "horizontal";
@@ -96,7 +96,7 @@ DrawChart.prototype.initiateGraph = function() {
 
     instance.svg = plot.createSVG(jsonData.chart.width, jsonData.chart.height);
     this.drawChartOutline();
-    
+
     var expression = jsonData.chartType;
     switch (expression) {
         case "line":

@@ -5,9 +5,9 @@ function DrawYAxis(instance, x1, y1, inclination, svg) {
     this.y1 = y1;
 
 }
-DrawYAxis.prototype=Object.create(Axis.prototype);
-DrawYAxis.prototype.constructor=DrawYAxis;
-DrawYAxis.prototype.drawAxis = function(){
+DrawYAxis.prototype = Object.create(Axis.prototype);
+DrawYAxis.prototype.constructor = DrawYAxis;
+DrawYAxis.prototype.drawAxis = function() {
     this.plotAxis();
 
 };
@@ -25,7 +25,7 @@ DrawYAxis.prototype.drawYAxis = function() {
     instance.upLimitYAxis = y1; //setting the top limit value of y axis
 
     var temp_x1 = x1;
-   
+
     /*assigning label text to divs + assigning tics and division draw + rectangle for coloring*/
     var xl = instance.chartLowBoundXCoor;
     var width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
@@ -40,13 +40,13 @@ DrawYAxis.prototype.drawYAxis = function() {
         var style = "";
         var className = "axisTicks";
         var svg = instance.svg;
-        this.drawLine(svg,x1, y1, x2, y2, style, className);
+        this.drawLine(svg, x1, y1, x2, y2, style, className);
         //draw.drawLine(x1, y1, x2, y2, style, className);
         //drawing divs
         var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
         className = "divLines";
         x2 = widthEachChart + (widthEachChart * distYAxisFromOr);
-        this.drawLine(svg,x1, y1, x2 , y2, style, className);
+        this.drawLine(svg, x1, y1, x2, y2, style, className);
         //writing the labels
 
         //drawing the rect
