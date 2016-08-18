@@ -5,45 +5,63 @@ function ColumnChart(instance) {
 }
 
 ColumnChart.prototype.initiateDraw = function() {
-    var instance = this.instance;
-    className = "plotColumnBound";
-    var bound = new ChartFunc(instance);
-    var rectIns = bound.drawBoundRectangle(className);
+    var instance = this.instance,
+        className = "plotColumnBound",
+        bound = new ChartFunc(instance);
+        rectIns =  bound.drawBoundRectangle(className);
+
+   
     instance.chartType = "column";
     this.plotColumnChart();
     this.selectChartListener(rectIns);
 };
 ColumnChart.prototype.plotColumnChart = function() {
-    var instance = this.instance;
-    var draw = new PlotGraph(instance);
-    var svg;
+    var instance = this.instance,
+        draw = new PlotGraph(instance),
+        svg,
+        calculate,
+        i,
+        a,
+        b,
+        c,
+        d,
+        yPointPlot,
+        value,
+        dataLen = jsonData.data.length,
+        scale = jsonData.scaleColChartFactor,
+        xPointPlot,
+        x,
+        y,
+        widthRect,
+        heightRect,
+        rectIns;
 
 
-    for (i = 0; i < jsonData.data.length; i++) { /*to be changed later '12' for any number of data i.e. find the last index of the storevalue array*/
-        var value = instance.storeValue[i];
+    for (i = 0; i < dataLen; i++) {
+        value = instance.storeValue[i];         
         if (typeof value != 'undefined') {
-            scaleColChartFactor = jsonData.scaleColChartFactor / 100;
-            var calculate = new ChartFunc(instance);
-            var a = instance.minTipValue;
-            var b = instance.maxTipValue;
-            var c = instance.upLimitYAxis;
-            var d = instance.lowLimitYAxis;
-            var yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
+            scaleColChartFactor = scale / 100;
+            calculate = new ChartFunc(instance);
+            a = instance.minTipValue;
+            b = instance.maxTipValue;
+            c = instance.upLimitYAxis;
+            d = instance.lowLimitYAxis;
+            yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
             if(yPointPlot < 2){
                     yPointPlot = 2;
                 }
             //console.log(range.length); need to debug
             instance.storeAncorPointsY[i] = yPointPlot;
-            var xPointPlot = instance.lowLimitXAxis + (widthEachChart / instance.noofXTips) * (i);
+            xPointPlot = instance.lowLimitXAxis + (widthEachChart / instance.noofXTips) * (i);
             storeAncorPointsX[i] = Math.floor(xPointPlot);
-            var x = xPointPlot - widthEachChart * scaleColChartFactor;
-            var y = instance.lowLimitYAxis;
-            var heightRect = y - yPointPlot;
-            var widthRect = widthEachChart * scaleColChartFactor * 2;
+            x = xPointPlot - widthEachChart * scaleColChartFactor;
+            y = instance.lowLimitYAxis;
+            heightRect = y - yPointPlot;
+            widthRect = widthEachChart * scaleColChartFactor * 2;
             var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
             var className = "plotColumnGraph";
             svg = this.instance.svg;
-            var rectIns = draw.drawRectangle(svg, x, yPointPlot, heightRect, widthRect, className, style);
+            rectIns = draw.drawRectangle(svg, x, yPointPlot, heightRect, widthRect, className, style);
             this.columnChartListener(rectIns, className);
             instance.lastPlottedPointX = xPointPlot;
             instance.lastPlottedPointY = yPointPlot;
@@ -60,9 +78,6 @@ ColumnChart.prototype.columnChartListener = function(rectIns, className) {
     var instance = this.instance;
 
     rectIns.addEventListener("mousemove", entercoordinates.bind(instance, className));
-    /*rectIns.addEventListener("mousemove", function () {
-        entercoordinates.call(this, className);  
-    });*/
 
     rectIns.addEventListener("syncCrossHair", columnTrigger);
     rectIns.addEventListener("mouseout", removeToolTip);
@@ -75,14 +90,15 @@ ColumnChart.prototype.columnChartListener = function(rectIns, className) {
 };
 
 ColumnChart.prototype.selectChartListener = function(rectIns) {
-    var instance = this.instance;
+    var instance = this.instance,
+        _this = instance;
     instance.selectRectIns = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    var _this = instance;
     instance.svg.appendChild(instance.selectRectIns)
 
     rectIns.addEventListener("mousedown", instantiateDragCol.bind(_this));
     rectIns.addEventListener("mousemove", dragColRect.bind(_this));
     rectIns.addEventListener("mouseup", releaseColRect.bind(_this));
+
     
 
 };

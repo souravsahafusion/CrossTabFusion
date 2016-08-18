@@ -64,12 +64,11 @@
                 var ratio = valueProfit / value;
                 var generateColor = new GenColor();
                 var styleColor = generateColor.genColor(ratio);
-                console.log(ratio+ 'ratio');
-                //storeAncorPointsX[i] = Math.floor(xPointPlot);
-                var x = 0/*xPointPlot - widthEachChart * scaleColChartFactor*/;
+                
+                var x = 0;
                 var y =  (heightEachChart / (this.noofXTips)) * (i);
                 //console.log(y + 'y' + this.noofXTips);
-                var heightRect = heightEachChart/*widthEachChart*/ * scaleColChartFactor * 2;
+                var heightRect = heightEachChart * scaleColChartFactor * 2;
                 var widthRect = yPointPlot;
                 var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
                 var className = "plotColumnGraph";
@@ -128,32 +127,7 @@
    
     var heightEachChart = 0;
     var widthEachChart = 0;
-    //var crossHairInstance = '';
-    var storeAncorPointsX = [];
-    var flag = 0;
-    //var flagRemoveColor = 0;
-    var shiftXTipLine = 0; //first point plot shift on x-axis from y-axis for column chart
-    var shiftXTipCol = 0; //first point plot shift on x-axis from y-axis for column chart
-    //var distYAxisFromOr = .2; //widthEachChart * distYAxisFromOr
-    //var yShiftPer = .25;
-    //var chartNameBoxShift = .03;
-    //var chartNameBoxHtFactor = .15;
-    CrossTab.prototype.printValues = function(){
-        var input = this.input;
-        var index = this.index;
-        var instance = this.instance;
-        for(var i = 0; i < input.y_axis_map.length; i++){ 
-            for(var j = 0; j < instance.productIns[index].productTypes.length; j++){
-                /*if(instance.productIns[i].sos[j] == NaN || instance.productIns[i].sos[j] == undefined){
-                    instance.productIns[i].sos[j] = 0;
-                }*/
-                //console.log(instance.productIns[i].sos[j] + instance.productIns[i].productName[j]+ ' '+instance.model+ ' '+input.zone_map[i]);
-            }
-            
-        }
-
-
-    };
+    
     CrossTab.prototype.addHeader = function(){
         var div = document.getElementById("heading");
         document.body.removeChild(div);
