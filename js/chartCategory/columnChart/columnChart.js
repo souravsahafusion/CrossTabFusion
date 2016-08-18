@@ -1,3 +1,4 @@
+"use strict";
 function ColumnChart(instance) {
 
     this.instance = instance;
@@ -7,8 +8,8 @@ function ColumnChart(instance) {
 ColumnChart.prototype.initiateDraw = function() {
     var instance = this.instance,
         className = "plotColumnBound",
-        bound = new ChartFunc(instance);
-    rectIns = bound.drawBoundRectangle(className);
+        bound = new ChartFunc(instance),
+        rectIns = bound.drawBoundRectangle(className);
 
 
     instance.chartType = "column";
@@ -18,7 +19,6 @@ ColumnChart.prototype.initiateDraw = function() {
 ColumnChart.prototype.plotColumnChart = function() {
     var instance = this.instance,
         draw = new PlotGraph(instance),
-        svg,
         calculate,
         i,
         a,
@@ -34,7 +34,13 @@ ColumnChart.prototype.plotColumnChart = function() {
         y,
         widthRect,
         heightRect,
-        rectIns;
+        rectIns,
+        noofXTips = instance.noofXTips,
+        lowLimitXAxis = instance.lowLimitXAxis,
+        lowLimitYAxis = instance.lowLimitYAxis,
+        svg = instance.svg,
+        className,
+        scaleColChartFactor;
 
 
     for (i = 0; i < dataLen; i++) {
@@ -50,17 +56,15 @@ ColumnChart.prototype.plotColumnChart = function() {
             if (yPointPlot < 2) {
                 yPointPlot = 2;
             }
-            //console.log(range.length); need to debug
             instance.storeAncorPointsY[i] = yPointPlot;
-            xPointPlot = instance.lowLimitXAxis + (widthEachChart / instance.noofXTips) * (i);
+            xPointPlot = lowLimitXAxis + (widthEachChart / noofXTips) * (i);
             storeAncorPointsX[i] = Math.floor(xPointPlot);
             x = xPointPlot - widthEachChart * scaleColChartFactor;
-            y = instance.lowLimitYAxis;
+            y = lowLimitYAxis;
             heightRect = y - yPointPlot;
             widthRect = widthEachChart * scaleColChartFactor * 2;
             var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
-            var className = "plotColumnGraph";
-            svg = this.instance.svg;
+            className = "plotColumnGraph";
             rectIns = draw.drawRectangle(svg, x, yPointPlot, heightRect, widthRect, className, style);
             this.columnChartListener(rectIns, className);
             instance.lastPlottedPointX = xPointPlot;
@@ -93,7 +97,7 @@ ColumnChart.prototype.selectChartListener = function(rectIns) {
     var instance = this.instance,
         _this = instance;
     instance.selectRectIns = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    instance.svg.appendChild(instance.selectRectIns)
+    instance.svg.appendChild(instance.selectRectIns);
 
     rectIns.addEventListener("mousedown", instantiateDragCol.bind(_this));
     rectIns.addEventListener("mousemove", dragColRect.bind(_this));
