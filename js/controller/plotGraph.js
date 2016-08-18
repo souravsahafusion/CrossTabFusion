@@ -78,7 +78,7 @@ PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
     circleTip.setAttribute("cy", yPointPlot); // coordinates
     circleTip.setAttribute("r", 5);
     circleTip.setAttribute("class", "ancorTipCicle");
-    style = "stroke:blue; stroke-width:2;fill:white;";
+    var style = "stroke:blue; stroke-width:2;fill:white;";
     circleTip.setAttribute("style", style);
     this.instance.svg.appendChild(circleTip);
 
@@ -122,8 +122,8 @@ PlotGraph.prototype.addText = function(x, y, textValue, transform, className, te
 PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
 
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    var x = x - (widthEachChart / 70);
-    var y = y + (heightEachChart / 40);
+    x = x - (widthEachChart / 70);
+    y = y + (heightEachChart / 40);
 
     var transform = '';
 
@@ -146,7 +146,7 @@ PlotGraph.prototype.chartDivLabelY = function(y, index) {
     var instance = this.instance;
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     var x = widthEachChart / 16;
-    var y = y;
+    y = y;
     var fontSize = widthEachChart * .04;
     var textValue = instance.maxTipValue - (instance.diffBwTips * index / instance.noOfYTips);
     if (instance.mulTiplyFactor == 10000) {

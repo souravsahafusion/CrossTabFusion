@@ -12,7 +12,7 @@ var json = {
     "chart_map" : "date",
     "chart_order_func" : "minimum",
     "scaleColChartFactor" : 4,
-    "chartType" : "column",   
+    "chartType" : "line",   
     "month": ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
     "y_axis_map": [],
     "data": [{

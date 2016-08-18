@@ -1,3 +1,4 @@
+"use strict";
 function LineChart(instance) {
 
     this.instance = instance;

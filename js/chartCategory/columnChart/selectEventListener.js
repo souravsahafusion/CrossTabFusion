@@ -13,6 +13,7 @@ function dragColRect(event) {
     if (flag == 1) {
         var rect = this.selectRectIns,
             xC = event.clientX % jsonData.chart.width - 10,
+            //need to shorten YC value
             yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 47,
             xBeg = rect.getAttribute("x"),
             yBeg = rect.getAttribute("y"),
@@ -48,8 +49,6 @@ function dragColRect(event) {
             //console.log(testX + testX);
             testX = testX + widthEachChart * jsonData.scaleColChartFactor / 100;
             testY = Math.floor(columnElement[i].getAttribute("y"));
-            //console.log(testY + 'y');
-
             if (testX <= xC && testX >= xBeg && testY <= yC && testY >= yBeg) {
                 //console.log(x);
                 columnElement[i].style.fill = "red";
@@ -57,13 +56,7 @@ function dragColRect(event) {
 
             }
 
-
-            //console.log(xPrev+ 'xPrev ' + yPrev + " yPrev ");  
-
         }
-
-
-
     }
 };
 
