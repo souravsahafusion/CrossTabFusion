@@ -1,20 +1,34 @@
+"use strict";
 function showCoords(event) {
     //console.log(this);
-    var x = event.detail.x % jsonData.chart.width;
+    var x = event.detail.x % jsonData.chart.width,
+        index = -1,
+        i,
+        check1,
+        check2,
+        object,
+        loopLen,
+        value,
+        y,
+        toolTipRect,
+        textElement,
+        className;
     x = x - 8;
-    var index = -1;
+   
 
     //for loop might not be the best solution for finding the range
-    for (var i = 5; i > 0; i--) {
+    for (i = 5; i > 0; i--) {
+        check1 = storeAncorPointsX.indexOf(x + i);
+        check2 = storeAncorPointsX.indexOf(x - i);
 
-        if (storeAncorPointsX.indexOf(x + i) !== -1 || storeAncorPointsX.indexOf(x - i) !== -1) {
+        if (check1 !== -1 || check2 !== -1) {
             //index = 0;  //find better way for choosing index
-            if (storeAncorPointsX.indexOf(x + i) !== -1) {
-                index = storeAncorPointsX.indexOf(x + i);
+            if (check1 !== -1) {
+                index = check1;
                 x = x + i;
             }
-            if (storeAncorPointsX.indexOf(x - i) !== -1) {
-                index = storeAncorPointsX.indexOf(x - i);
+            if (check2 !== -1) {
+                index = check2;
                 x = x - i;
             }
             //console.log(index);
@@ -23,20 +37,21 @@ function showCoords(event) {
 
     }
 
-    var object = chartModel;
+    object = chartModel;
     if (index !== -1) {
 
-        var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        for (var i = 0; i < object.length; i++) {
+        textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        loopLen = object.length;
+        for (i = 0; i < loopLen; i++) {
 
             if (typeof object[i].storeAncorPointsY[index] !== 'undefined') {
                 value = object[i].storeValue[index];
-                var y = object[i].storeAncorPointsY[index];
+                y = object[i].storeAncorPointsY[index];
 
                 var transform = "rotate(0 " + x + "," + y + ")";
-                var className = "toolTipText";
-                var textElement = object[i].toolTipTextIns;
-                var toolTipRect = object[i].toolTipBoxIns;
+                className = "toolTipText";
+                textElement = object[i].toolTipTextIns;
+                toolTipRect = object[i].toolTipBoxIns;
 
                 //object[i].addText(x, y, value, transform, className, textElement);
                 //function call is costly hence avoided
@@ -66,11 +81,12 @@ function showCoords(event) {
 
         }
     } else {
-        for (var i = 0; i < object.length; i++) {
+        loopLen = object.length;
+        for (i = 0; i < loopLen; i++) {
 
-            var toolTipRect = object[i].toolTipBoxIns;
+            toolTipRect = object[i].toolTipBoxIns;
             toolTipRect.setAttribute("visibility", "hidden");
-            var textElement = object[i].toolTipTextIns;
+            textElement = object[i].toolTipTextIns;
             textElement.setAttribute("visibility", "hidden");
 
         }
@@ -78,19 +94,24 @@ function showCoords(event) {
     }
 
 
-};
+}
 
 function clearcoor(event) {
 
 
-    var object = chartModel;
-    for (var i = 0; i < object.length; i++) {
+    var object = chartModel,
+        i,
+        loopLen,
+        toolTipRect,
+        textElement;
+    loopLen = object.length;    
+    for (i = 0; i < loopLen; i++) {
 
-        var toolTipRect = object[i].toolTipBoxIns;
+        toolTipRect = object[i].toolTipBoxIns;
         toolTipRect.setAttribute("visibility", "hidden");
-        var textElement = object[i].toolTipTextIns;
+        textElement = object[i].toolTipTextIns;
         textElement.setAttribute("visibility", "hidden");
 
 
     }
-};
+}

@@ -12,11 +12,11 @@ function Axis(instance, x1, y1, inclination, svg){
 Axis.prototype = Object.create(PlotGraph.prototype);
 Axis.prototype.constructor = Axis;
 Axis.prototype.plotAxis = function(){
-    var draw = new PlotGraph(instance);
-    var instance = this.instance,
-        x1 = /*instance &&*/ this.x1,
-        y1 = /*instance &&*/ this.y1,
-        inclination = /*instance &&*/ this.inclinationAxis,
+    var draw = new PlotGraph(instance),
+        instance = this.instance,
+        x1 = this.x1,
+        y1 = this.y1,
+        inclination = this.inclinationAxis,
         x2,
         y2;
     if(inclination == "vertical"){
@@ -24,11 +24,11 @@ Axis.prototype.plotAxis = function(){
         y2 = y1 + (heightEachChart);
 
     }else if(inclination == "horizontal"){
-        x2 = x1 + widthEachChart ;//+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
+        x2 = x1 + widthEachChart ;
         y2 = y1;
 
     } 
-    //console.log(x1, x2, y1, y2, inclination);
+    
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
     var className = "axisDraw";
     var svg = this.svg;
