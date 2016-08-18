@@ -12,7 +12,7 @@ LineChart.prototype.initiateDraw = function() {
         draw = new CrossHair(instance);
     instance.chartType = "line";
     this.plotLineChart();
-    this.drawDivRectangle(i); /*rectangle is not required since we don't need to restrict the crooshair, infact no crosshair is there*/
+    this.drawDivRectangle(); /*rectangle is not required since we don't need to restrict the crooshair, infact no crosshair is there*/
     
     draw.drawCrossHair();
 };
@@ -34,7 +34,10 @@ LineChart.prototype.plotLineChart = function() {
         yPointPlot,
         lastPlottedPointX = instance.lastPlottedPointX,
         lastPlottedPointY = instance.lastPlottedPointY,
-        noofXTips = instance.noofXTips;
+        noofXTips = instance.noofXTips,
+        xPointPlot,
+        svg = instance.svg,
+        className;
 
     loopLen = jsonData.data.length;
     for (i = 0; i < loopLen; i++) { 
@@ -43,16 +46,16 @@ LineChart.prototype.plotLineChart = function() {
             
             
             yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
-            //console.log(range.length); need to debug
+         
             instance.storeAncorPointsY[i] = yPointPlot;
-            var xPointPlot = lowLimitXAxis + (widthEachChart / noofXTips) * (i);
+            xPointPlot = lowLimitXAxis + (widthEachChart / noofXTips) * (i);
             storeAncorPointsX[i] = Math.floor(xPointPlot);
 
             if (flagFirstPoint !== 0) //skipping the first plot
             {
                 var style = "stroke:rgb(29, 121, 204);stroke-width:6";
-                var className = "plotGraph";
-                var svg = instance.svg;
+                className = "plotGraph";
+                
                 draw.drawLine(svg, lastPlottedPointX, lastPlottedPointY, xPointPlot, yPointPlot, style, className);
                 className = "ancorTipCicle";
 
@@ -75,7 +78,7 @@ LineChart.prototype.plotLineChart = function() {
 };
 
 
-LineChart.prototype.drawDivRectangle = function(index) {
+LineChart.prototype.drawDivRectangle = function() {
     /*var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");*/
     var instance = this.instance,
         draw = new PlotGraph(instance),
@@ -90,9 +93,6 @@ LineChart.prototype.drawDivRectangle = function(index) {
         rect = draw.drawRectangle(svg, x, y, heightRect, widthRect, rectangleDiv, style);
 
     rect.addEventListener("mousemove", entercoordinates.bind(instance, rectangleDiv));
-    /*rect.addEventListener("mousemove", function () {
-            entercoordinates.call(this, rectangleId);  
-        });*/
     rect.addEventListener("syncCrossHair", showCoords, false);
     rect.addEventListener("syncCrossHair", displayCrossHair, false);
     //divNames[i].addEventListener("mousemove", showCoords,false);
@@ -103,14 +103,10 @@ LineChart.prototype.drawDivRectangle = function(index) {
 
     instance.selectRectIns = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     
-    instance.svg.appendChild(instance.selectRectIns);
+    svg.appendChild(instance.selectRectIns);
 
     rect.addEventListener("mousedown", instantiateDragLine.bind(_this));
     rect.addEventListener("mousemove", dragLineRect.bind(_this));
     rect.addEventListener("mouseup", releaseLineRect.bind(_this));
-
-
-    //svg chart area bound with x y axis
-    /**/
 
 };

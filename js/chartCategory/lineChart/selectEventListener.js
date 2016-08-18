@@ -1,10 +1,10 @@
+"use strict";
 function instantiateDragLine(event) {
 
     if (flagRemoveColor !== 1) {
         var xC = event.clientX % jsonData.chart.width - 10;
         var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49;
-        console.log(xC + 'x ' + 'y ' + yC, jsonData.chart.width);
-        console.log(event.clientX + 'clientX' + event.clientY + 'clientY');
+        
 
         var rect = this.selectRectIns;
         rect.setAttributeNS(null, 'x', xC);
@@ -14,8 +14,7 @@ function instantiateDragLine(event) {
         rect.setAttribute("class", "selectRect");
         rect.setAttribute("style", "fill:transparent;stroke:rgb(0,0,0)");
         flag = 1;
-        //console.log(parameter);
-        //this.svg.appendChild(rect);
+        
 
     } else {
 
@@ -32,19 +31,26 @@ function instantiateDragLine(event) {
 
     }
 
-};
+}
 
 function dragLineRect(event) {
 
 
     if (flag == 1) {
-        var rect = this.selectRectIns;
-        var xC = event.clientX % jsonData.chart.width - 10;
-        var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49;
-        var xBeg = rect.getAttribute("x");
-        var yBeg = rect.getAttribute("y");
-        var width = Math.abs(xC - xBeg);
-        var height = Math.abs(yBeg - yC);
+        var rect = this.selectRectIns,
+            xC = event.clientX % jsonData.chart.width - 10,
+            yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49,
+            xBeg = rect.getAttribute("x"),
+            yBeg = rect.getAttribute("y"),
+            width = Math.abs(xC - xBeg),
+            height = Math.abs(yBeg - yC),
+            i,
+            loopLen,
+            columnElement,
+            testX,
+            testY,
+            testR,
+            scale = jsonData.scaleColChartFactor / 100;
         flagRemoveColor = 1;
         /*if(xBeg < x){
             rect.setAttributeNS(null, 'x', xC );
@@ -60,16 +66,15 @@ function dragLineRect(event) {
 
         rect.setAttributeNS(null, 'width', width);
         rect.setAttributeNS(null, 'height', height);
-        var columnElement = document.getElementsByClassName("ancorTipCicle");
-        console.log(columnElement.length + 'length');
-        for (var i = 0; i < columnElement.length; i++) {
-            var testX = Math.floor(columnElement[i].getAttribute("cx"));
-            var testR = columnElement[i].getAttribute("r");
+        columnElement = document.getElementsByClassName("ancorTipCicle");
+        loopLen = columnElement.length;
+        for (i = 0; i < loopLen; i++) {
+            testX = Math.floor(columnElement[i].getAttribute("cx"));
+            testR = columnElement[i].getAttribute("r");
 
-            testX = testX + widthEachChart * jsonData.scaleColChartFactor / 100;
-            var testY = Math.floor(columnElement[i].getAttribute("cy"));
-            //console.log(testY + 'y');
-            console.log(xC + 'xc' + testR + 'testR' + testY + 'testY');
+            testX = testX + widthEachChart * scale;
+            testY = Math.floor(columnElement[i].getAttribute("cy"));
+            
 
 
 
@@ -80,18 +85,14 @@ function dragLineRect(event) {
 
             }
 
-
-            //console.log(xPrev+ 'xPrev ' + yPrev + " yPrev ");  
-
         }
 
 
 
     }
-};
+}
 
 function releaseLineRect(event) {
-    console.log("releaseLineRect");
     var rect = this.selectRectIns;
 
     rect.setAttributeNS(null, 'height', 0);
@@ -99,12 +100,10 @@ function releaseLineRect(event) {
 
     flag = 0;
 
-
-};
+}
 
 
 function outLineRect(event) {
-    console.log("releaseLineRect");
     var rect = this.selectRectIns;
 
     rect.setAttributeNS(null, 'height', 0);
@@ -113,4 +112,4 @@ function outLineRect(event) {
     flag = 0;
 
 
-};
+}
