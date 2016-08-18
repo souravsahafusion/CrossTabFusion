@@ -21,10 +21,10 @@ ColumnChart.prototype.plotColumnChart = function() {
         draw = new PlotGraph(instance),
         calculate,
         i,
-        a,
-        b,
-        c,
-        d,
+        a = instance.minTipValue,
+        b = instance.maxTipValue,
+        c = instance.upLimitYAxis,
+        d = instance.lowLimitYAxis,
         yPointPlot,
         value,
         dataLen = jsonData.data.length,
@@ -48,10 +48,7 @@ ColumnChart.prototype.plotColumnChart = function() {
         if (typeof value != 'undefined') {
             scaleColChartFactor = scale / 100;
             calculate = new ChartFunc(instance);
-            a = instance.minTipValue;
-            b = instance.maxTipValue;
-            c = instance.upLimitYAxis;
-            d = instance.lowLimitYAxis;
+           
             yPointPlot = calculate.calculateMappingPoint(value, a, b, c, d);
             if (yPointPlot < 2) {
                 yPointPlot = 2;
