@@ -194,11 +194,8 @@ ParsingData.prototype.findMax = function(tempMap) {
     for (var i = 0; i < jsonData.data.length; i++) {
         if (jsonData.data[i].product == productChoose && jsonData.data[i].zone == tempMap) {
             //need to change the zone to selectType because zone is specific
-
-            //console.log(jsonData.xAxisTicksLabel[count]); 
             if (jsonData.data[i].sos > maximum) {
                 maximum = jsonData.data[i].sos;
-
             }
 
         }
@@ -216,14 +213,9 @@ ParsingData.prototype.findMonth = function(index) {
     if (dateObject.toString() === "Invalid Date") {
         jsonData.month[index] = jsonData.data[index][chart_map];
         return index;
-
-
-        //console.log(date + 'hello');
     } else {
         return dateObject.getMonth();
     }
-
-
 };
 ParsingData.prototype.setZone = function() {
     var value;
@@ -242,14 +234,12 @@ ParsingData.prototype.setKeys = function() {
         var arr = [];
         for (var i = 0; i < noOfDatas; i++) {
             arr[i] = Object.keys(jsonData.data[i]);
-
         }
         for (var i = 0; i < noOfDatas; i++) {
             for (var j = 0; j < arr[i].length - 1; j++) {
                 var value = arr[i][j];
                 if (jsonData.y_axis_map.indexOf(value) < 0) {
                     jsonData.y_axis_map.push(arr[i][j]);
-
                 }
 
             }
@@ -273,10 +263,6 @@ ParsingData.prototype.setXAxisTicksLabel = function() {
             //need to change the zone to selectType because zone is specific
             if (jsonData.month.indexOf(value) < 0)
                 jsonData.month.push(value);
-
-            //console.log(jsonData.xAxisTicksLabel[count]); 
-
-
         }
 
 
@@ -290,8 +276,6 @@ ParsingData.prototype.calculateChartOutLines = function(input) {
 
     widthEachChart = jsonData.chart.width - (jsonData.chart.width * .5); //kept global
     heightEachChart = jsonData.chart.height * 0.65; //kept global
-
-
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
     var chartWidth = jsonData.chart.width;

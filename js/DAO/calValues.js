@@ -183,7 +183,6 @@ CalValues.prototype.findMax = function(tempMap) {
             i++;
             maximum = jsonData.data[i][tempMap];
             if (typeof maximum !== 'undefined') {
-                console.log(maximum + 'initial minimum value');
                 break;
             }
 
@@ -204,13 +203,9 @@ CalValues.prototype.findMonth = function(index) {
     var chart_map = jsonData.chart_map;
     var date = jsonData.data[index][chart_map];
     dateObject = new Date(date);
-    //console.log(jsonData.month[index]);
     if (dateObject.toString() === "Invalid Date") {
         jsonData.month[index] = jsonData.data[index][chart_map];
         return index;
-
-
-        //console.log(date + 'hello');
     } else {
         return dateObject.getMonth();
     }
@@ -354,12 +349,9 @@ CalValues.prototype.customChartArrange = function() {
 
     for (var i = 0; i < jsonData.y_axis_map.length; i++) {
         var tempMap = jsonData.y_axis_map[i];
-        //console.log(tempMap+ 'first step');
-
         range2[i] = new ChartModel();
         this.instance = range2[i];
         range2[i].min = this.findMinAndSetDataValue(tempMap);
-        //console.log(range[i].min + 'minimum calculated from different data values');
         range2[i].max = this.findMax(tempMap, i);
     }
 

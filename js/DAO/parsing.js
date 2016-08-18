@@ -10,8 +10,6 @@ function Parsing() {
 }
 
 function findRangeModified(instance) {
-
-    //var instance = this.instance;
     var minValue = 0;
     var maxValue;
     var lastDigit;
@@ -34,7 +32,7 @@ function findRangeModified(instance) {
     }
     if (lastDigit !== 0) {
 
-        maxValue = maxValue + (10 - lastDigit) /** Math.pow(-1, instance.changeFactorMax)*/ ;
+        maxValue = maxValue + (10 - lastDigit);
 
     }
 
@@ -58,9 +56,6 @@ function findRangeModified(instance) {
     } else if (padding < 1) {
         diffTenthPow = 0;
     }
-
-    //var remMinValue = minValue % (Math.pow(10, diffTenthPow));
-    //instance.minTipValue = 0/*minValue - remMinValue * Math.pow(-1, instance.changeFactorMin)*/;
     var remMaxValue = maxValue % (Math.pow(10, diffTenthPow));
 
     if (remMaxValue !== 0) {
@@ -76,9 +71,6 @@ function findRangeModified(instance) {
 }
 
 function findYTipsModified(diffTenthPow) {
-
-    //var instance = this.instance;
-
     var minValue = 0;
     var maxValue = maximum;
     var diff = diffBwTips;
@@ -119,10 +111,8 @@ function findYTipsModified(diffTenthPow) {
 
         diff = diff + Math.pow(10, diffTenthPow);
     }
-    maximum = (maximum + (diff - diffBwTips)) /*/ instance.mulTiplyFactor*/ ;
-    diffBwTips = diff /*/ instance.mulTiplyFactor*/ ;
-    //instance.minTipValue = instance.minTipValue /*/ instance.mulTiplyFactor*/;
-    //console.log(maximum + 'maximum' + diffBwTips + 'diffBwTips' + noOfYTips);
+    maximum = (maximum + (diff - diffBwTips));
+    diffBwTips = diff;
 }
 
 Parsing.prototype.setZoneAndProduct = function() {
@@ -132,14 +122,9 @@ Parsing.prototype.setZoneAndProduct = function() {
 
 
     for (var i = 0; i < jsonData.data.length; i++) {
-        //console.log(object.data[i].values.length);
-
         value = jsonData.data[i].zone;
         if (jsonData.y_axis_map.indexOf(value) < 0) {
             jsonData.y_axis_map.push(value);
-
-
-            //console.log(value);
         }
         value = jsonData.data[i].product;
 
@@ -166,13 +151,10 @@ Parsing.prototype.setProductTypes = function() {
     for (var i = 0; i < jsonData.data.length; i++) {
 
         indexProduct = this.pdts.indexOf(jsonData.data[i].product);
-        //console.log(jsonData.data[i]["product"]);
         indexZone = jsonData.y_axis_map.indexOf(jsonData.data[i].zone);
         productType = jsonData.data[i].productType;
-        //console.log(productType);
         if (this.pdtsIns[indexProduct].productTypes.indexOf(productType) < 0) {
             this.pdtsIns[indexProduct].productTypes.push(productType);
-            //console.log(this.pdtsIns[indexProduct].productIns[indexZone].productName[1]+'productName');
         }
         sosVal = jsonData.data[i].sos;
         sopVal = jsonData.data[i].sop;
@@ -183,23 +165,14 @@ Parsing.prototype.setProductTypes = function() {
         if (sosVal > maximum) {
             maximum = sosVal;
         }
-        //console.log(this.pdtsIns[indexProduct].productIns[indexZone].sop[indexProductType]);
-
-
     }
-    //this.pdtsIns[indexProduct].productTypes.sort();
-
-
-
 };
 Parsing.prototype.setValues = function(input) {
-    //var instance = this.instance;
     jsonData = input;
     var range = [];
 
     this.setZoneAndProduct();
     var productLen = this.pdts.length;
-
     var pdtsIns;
 
     for (var i = 0; i < productLen; i++) {
@@ -216,12 +189,8 @@ Parsing.prototype.setValues = function(input) {
 
             pdtsIns.productIns[j] = new ProductType();
         }
-
     }
-    //console.log(pdtIns.productIns);
-
     this.setProductTypes();
-
     return range;
 };
 
