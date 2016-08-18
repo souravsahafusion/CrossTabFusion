@@ -36,8 +36,8 @@ PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, v
     svg.appendChild(line);
 
 };
-
-PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, style) {
+//svg, x, y, height, width, className, style,styleColor
+PlotGraph.prototype.drawRectangleSep = function(svg, x, y, height, width, className, style) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttributeNS(null, 'x', x);
     rect.setAttributeNS(null, 'y', y);
@@ -45,7 +45,27 @@ PlotGraph.prototype.drawRectangle = function(x, y, height, width, className, sty
     rect.setAttributeNS(null, 'width', width);
     rect.setAttribute("class", className);
     rect.setAttribute("style", style);
-    this.instance.svg.appendChild(rect);
+    svg.appendChild(rect);
+    return rect;
+
+
+};
+PlotGraph.prototype.drawRectangle = function(svg, x, y, height, width, className, style, styleColor) {
+    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttributeNS(null, 'x', x);
+    rect.setAttributeNS(null, 'y', y);
+    rect.setAttributeNS(null, 'height', height);
+    rect.setAttributeNS(null, 'width', width);
+    rect.setAttribute("class", className);
+    if(typeof styleColor !== 'undefined'){
+        rect.setAttribute("fill", styleColor);
+        rect.setAttribute("stroke", styleColor);
+    }else{
+        rect.setAttribute("style", style);
+    }
+    
+    
+    svg.appendChild(rect);
     return rect;
 
 
@@ -62,12 +82,30 @@ PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
     this.instance.svg.appendChild(circleTip);
 
 };
-PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
 
-    if (typeof textElement == 'undefined') {
+PlotGraph.prototype.addTextSVG = function(svg, x, y, textValue, textElement, className, transform, fontSize, style) {
+
+   /* if (typeof textElement == 'undefined') {
         textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
 
-    }
+    }*/
+
+    textElement.setAttribute("x", x);
+    textElement.setAttribute("y", y);
+    textElement.innerHTML = textValue;
+    //var fontSize  = heightEachChart * .04;
+    textElement.setAttribute("font-size", fontSize);
+    textElement.setAttribute("transform", transform);
+    textElement.setAttribute("style", style);
+    svg.appendChild(textElement);
+
+};
+PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
+
+   /* if (typeof textElement == 'undefined') {
+        textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+    }*/
 
     textElement.setAttribute("x", x);
     textElement.setAttribute("y", y);
@@ -79,6 +117,7 @@ PlotGraph.prototype.addText = function(x, y, textValue, transform, className, te
     this.instance.svg.appendChild(textElement);
 
 };
+
 PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
 
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");

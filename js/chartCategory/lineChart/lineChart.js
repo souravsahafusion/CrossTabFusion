@@ -70,8 +70,8 @@ LineChart.prototype.drawDivRectangle = function(index) {
     var widthRect = instance.upLimitXAxis - instance.lowLimitXAxis;
     var rectangleDiv = 'svgDivs';
     style = "fill:transparent";
-
-    var rect = draw.drawRectangle(x, y, heightRect, widthRect, rectangleDiv, style);
+    var svg = instance.svg;
+    var rect = draw.drawRectangle(svg, x, y, heightRect, widthRect, rectangleDiv, style);
 
     rect.addEventListener("mousemove", entercoordinates.bind(instance, rectangleDiv));
     /*rect.addEventListener("mousemove", function () {

@@ -1,45 +1,38 @@
-function DrawYAxis(instance, x1, y1, inclination) {
-    Axis.call(this, instance, x1, y1, inclination);
+function DrawYAxis(instance, x1, y1, inclination, svg) {
+    Axis.call(this, instance, x1, y1, inclination, svg);
     this.instance = instance;
+    this.x1 = x1;
+    this.y1 = y1;
 
 }
 DrawYAxis.prototype=Object.create(Axis.prototype);
 DrawYAxis.prototype.constructor=DrawYAxis;
+DrawYAxis.prototype.drawAxis = function(){
+    this.plotAxis();
 
+};
 DrawYAxis.prototype.drawYAxis = function() {
     var instance = this.instance;
-    
-    
-    var chartNo = instance.chartNo;
-    var yShift = instance.yShift;
-    var x1 = widthEachChart * distYAxisFromOr;
-    var x2 = widthEachChart * distYAxisFromOr;
-    //console.log(chartNo + 'chartNo');
-    var y1 = (heightEachChart * yShift);
-    var y2 = y1 + (heightEachChart);
-    var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
-    var className = "axisDraw";
-   //this.verticalAxis(x1,y1);
-   this.plotAxis();
+    var x1 = this.x1;
+    var y1 = this.y1;
+    var x2;
+    var y2;
+    var svg;
 
     //draw ticks
     var noOfYTips = instance.noOfYTips;
-
-
-    //var heightEachChart = this.heightEachChart;
     var temp_y1 = y1;
     instance.upLimitYAxis = y1; //setting the top limit value of y axis
 
     var temp_x1 = x1;
-    var temp_x2 = x2;
+   
     /*assigning label text to divs + assigning tics and division draw + rectangle for coloring*/
-    instance.textLabelId = document.getElementById("text");
     var xl = instance.chartLowBoundXCoor;
     var width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
     var height = heightEachChart / noOfYTips;
     for (i = 0; i < noOfYTips; i++) {
         x1 = temp_x1 - 4;
-        x2 = temp_x2 + 4;
+        x2 = x1;
         y1 = temp_y1 + (heightEachChart / noOfYTips) * (i);
         y2 = temp_y1 + (heightEachChart / noOfYTips) * (i);
 
@@ -52,7 +45,8 @@ DrawYAxis.prototype.drawYAxis = function() {
         //drawing divs
         var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
         className = "divLines";
-        this.drawLine(svg,x1, y1, widthEachChart + (widthEachChart * distYAxisFromOr) /* + (widthEachChart / 20)*/ , y2, style, className);
+        x2 = widthEachChart + (widthEachChart * distYAxisFromOr);
+        this.drawLine(svg,x1, y1, x2 , y2, style, className);
         //writing the labels
 
         //drawing the rect
@@ -60,7 +54,8 @@ DrawYAxis.prototype.drawYAxis = function() {
 
             className = "designRect";
             style = "fill:rgb(247,247,247);";
-            this.drawRectangle(xl, y1, height, width, className, style);
+            svg = instance.svg;
+            this.drawRectangle(svg, xl, y1, height, width, className, style);
         }
 
     }

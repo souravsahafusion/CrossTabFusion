@@ -25,9 +25,4 @@ function arrangeOnMax() {
             }
         }
 
-        for (var i = 0; i < length; i++) {
-            //console.log(maxValueArray[i]);
-            //console.log(obj.y_axis_map[i]);
-        }
-
     };

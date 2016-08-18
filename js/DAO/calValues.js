@@ -201,11 +201,12 @@ CalValues.prototype.findMax = function(tempMap) {
 };
 CalValues.prototype.findMonth = function(index) {
 
-    var date = jsonData.data[index]["date"];
+    var chart_map = jsonData.chart_map;
+    var date = jsonData.data[index][chart_map];
     dateObject = new Date(date);
     //console.log(jsonData.month[index]);
     if(dateObject.toString() === "Invalid Date"){
-        jsonData.month[index] = jsonData.data[index]["date"];
+        jsonData.month[index] = jsonData.data[index][chart_map];
         return index;
 
         
@@ -216,9 +217,17 @@ CalValues.prototype.findMonth = function(index) {
    
     
 };
-CalValues.prototype.calculateChartOutLines = function(input) {
-    var instance = this.instance;
-    jsonData = input;
+CalValues.prototype.setZone = function(){
+   var value; 
+ for(var i = 0; i < jsonData.data.length; i++){
+        value = jsonData.data[i].zone;
+        if(jsonData.y_axis_map.indexOf(value) < 0){
+            jsonData.y_axis_map.push(value);
+        } 
+}
+jsonData.y_axis_map.sort(); 
+};
+CalValues.prototype.setKeys = function(){
     var noOfDatas = jsonData.data.length;
 
     if (jsonData.y_axis_map.length < 1) {
@@ -241,6 +250,12 @@ CalValues.prototype.calculateChartOutLines = function(input) {
 
     }
 
+};
+CalValues.prototype.calculateChartOutLines = function(input) {
+    
+   
+    jsonData = input;
+
     widthEachChart = jsonData.chart.width - (jsonData.chart.width * .5); //kept global
     heightEachChart = jsonData.chart.height * 0.65; //kept global
 
@@ -250,6 +265,40 @@ CalValues.prototype.calculateChartOutLines = function(input) {
     var chartWidth = jsonData.chart.width;
     var chartHeight = jsonData.chart.height;
     numberOfColCharts = Math.floor(windowWidth / chartWidth);
+
+};
+CalValues.prototype.SetDataValueCrossTab = function(tempMap) {
+    var instance = this.instance;
+
+
+
+    var minimum = jsonData.data[0][tempMap];
+    var i = 0;
+    if (typeof minimum == 'undefined') {
+
+        while (true) {
+            i++;
+            minimum = jsonData.data[i][tempMap];
+            if (typeof minimum !== 'undefined') {
+                break;
+            }
+
+        }
+    }
+    instance.tempMap = tempMap;
+
+    for (var i = 0; i < jsonData.data.length; i++) {
+        //setting value to the jsonDataect
+        var monthValue = this.findMonth(i);
+        //will return month index if date is provided else return the index       
+        
+        instance.storeValue[monthValue] = jsonData.data[i][tempMap];
+        if (jsonData.data[i][tempMap] < minimum) {
+            minimum = jsonData.data[i][tempMap];
+
+        }
+    }
+    return minimum;
 
 };
 CalValues.prototype.findMinAndSetDataValue = function(tempMap) {
@@ -275,6 +324,7 @@ CalValues.prototype.findMinAndSetDataValue = function(tempMap) {
     for (var i = 0; i < jsonData.data.length; i++) {
         //setting value to the jsonDataect
         var monthValue = this.findMonth(i);
+        //will return month index if date is provided else return the index       
         
         instance.storeValue[monthValue] = jsonData.data[i][tempMap];
         if (jsonData.data[i][tempMap] < minimum) {

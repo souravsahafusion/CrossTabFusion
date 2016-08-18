@@ -1,43 +1,49 @@
 function columnTrigger(event) {
-    var x = event.detail.x % jsonData.chart.width;
-
+    var x = event.detail.x % jsonData.chart.width,
+        index = -1,
+        posScale,
+        i,
+        object,
+        value,
+        columnElement,
+        loopLen,
+        test,
+        scale,
+        y,
+        textElement,
+        toolTipRect;
     x = x - 8;
-    var index = -1;
-    //console.log(x);
-    var posScale = jsonData.scaleColChartFactor / 100 * widthEachChart;
+    
+    
+    posScale = jsonData.scaleColChartFactor / 100 * widthEachChart;
 
-    for (var i = posScale; i > 0; i--) {
-        //console.log(i);
-        //console.log(x+i);
+    for (i = posScale; i > 0; i--) {
         storeAncorPointsX.indexOf(x + i);
 
         if (storeAncorPointsX.indexOf(x + i) !== -1 || storeAncorPointsX.indexOf(x - i) !== -1) {
             //index = 0;  //find better way for choosing index
-            //console.log(x+i);
             if (storeAncorPointsX.indexOf(x + i) !== -1) {
-                // console.log(x+posScale);
                 index = storeAncorPointsX.indexOf(x + i);
                 x = x + i;
             }
             if (storeAncorPointsX.indexOf(x - i) !== -1) {
-                //console.log(x-posScale);
                 index = storeAncorPointsX.indexOf(x - i);
                 x = x - i;
             }
-            //console.log(index);
-
         }
 
     }
 
-    var object = chartModel;
-    var value = 0;
-    //console.log(index);
+    object = chartModel;
+    value = 0;
+
+    scale = jsonData.scaleColChartFactor;
     if (index !== -1) {
-        var columnElement = document.getElementsByClassName("plotColumnGraph");
-        for (var i = 0; i < columnElement.length; i++) {
-            var test = Math.floor(columnElement[i].getAttribute("x"));
-            test = test + widthEachChart * jsonData.scaleColChartFactor / 100;
+        columnElement = document.getElementsByClassName("plotColumnGraph");
+        loopLen = columnElement.length;
+        for (i = 0; i < loopLen; i++) {
+            test = Math.floor(columnElement[i].getAttribute("x"));
+            test = test + widthEachChart * scale / 100;
 
             if (test == x) {
                 //console.log(x);
@@ -47,22 +53,18 @@ function columnTrigger(event) {
             }
 
         }
+        loopLen = jsonData.y_axis_map.length;
 
-        for (var i = 0; i < jsonData.y_axis_map.length; i++) {
+        for (i = 0; i < loopLen; i++) {
             //for(var j = 0; j < jsonData.data.length; j++){
             if (typeof object[i].storeAncorPointsY[index] !== 'undefined') {
 
                 value = object[i].storeValue[index];
-                var y = object[i].storeAncorPointsY[index];
-                /*var transform = "rotate(0 " + x + "," + y + ")";
-                var className = "toolTipText";
-                var textElement = object[i].toolTipTextIns;
-                object[i].addText(x, y,value, transform,className,textElement);
-                textElement.setAttribute("visibility","visible");*/
+                y = object[i].storeAncorPointsY[index];
                 var transform = "rotate(0 " + x + "," + y + ")";
                 var className = "toolTipText";
-                var textElement = object[i].toolTipTextIns;
-                var toolTipRect = object[i].toolTipBoxIns;
+                textElement = object[i].toolTipTextIns;
+                toolTipRect = object[i].toolTipBoxIns;
 
                 //object[i].addText(x, y, value, transform, className, textElement);
                 //function call is costly hence avoided
@@ -102,22 +104,26 @@ function columnTrigger(event) {
 
 
 function removeToolTip(event) {
-    var object = chartModel;
+    var object = chartModel,
+        columnElement = document.getElementsByClassName("plotColumnGraph"),
+        i,
+        loopLen = columnElement.length,
+        toolTipRect,
+        textElement;
     if (flagRemoveColor !== 1) {
-        var columnElement = document.getElementsByClassName("plotColumnGraph");
-        for (var i = 0; i < columnElement.length; i++) {
+        for (i = 0; i < loopLen; i++) {
 
             columnElement[i].style.fill = "rgb(30, 122, 205)";
             columnElement[i].style.stroke = "rgb(30, 122, 205)";
 
         }
     }
-
-    for (var i = 0; i < object.length; i++) {
+    loopLen = object.length;
+    for (i = 0; i < loopLen; i++) {
         //console.log("removed");
-        var toolTipRect = object[i].toolTipBoxIns;
+        toolTipRect = object[i].toolTipBoxIns;
         toolTipRect.setAttribute("visibility", "hidden");
-        var textElement = object[i].toolTipTextIns;
+        textElement = object[i].toolTipTextIns;
         textElement.setAttribute("visibility", "hidden");
 
 

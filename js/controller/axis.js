@@ -1,9 +1,10 @@
 "use strict";
-function Axis(instance, x1, y1, inclination){ 
+function Axis(instance, x1, y1, inclination, svg){ 
 	this.instance = instance;
     this.x1 = x1;
     this.y1 = y1;
     this.inclinationAxis = inclination;
+    this.svg = svg;
     
     PlotGraph.call(this);
   
@@ -27,12 +28,18 @@ Axis.prototype.plotAxis = function(){
         y2 = y1;
 
     } 
-    console.log(x1, x2, y1, y2, inclination);
+    //console.log(x1, x2, y1, y2, inclination);
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
     var className = "axisDraw";
-    var svg = instance.svg;
-    //this.drawLine(svg,x1, y1, x2, y2, style, className);   
+    var svg = this.svg;
+    this.drawLine(svg,x1, y1, x2, y2, style, className);   
 
 
 
 };
+<<<<<<< HEAD
+=======
+Axis.prototype.drawTicks = function(){
+
+};
+>>>>>>> inheritance

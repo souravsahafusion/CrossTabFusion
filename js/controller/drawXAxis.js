@@ -1,40 +1,26 @@
-function DrawXAxis(instance, x1, y1, inclination) {
-    Axis.call(this, instance, x1, y1, inclination);
+function DrawXAxis(instance, x1, y1, inclination,svg) {
+    Axis.call(this, instance, x1, y1, inclination,svg);
     this.instance = instance;
+    this.x1 = x1;
+    this.y1 = y1;
+
     
 }
 DrawXAxis.prototype = Object.create(Axis.prototype);
 DrawXAxis.prototype.constructor = DrawXAxis;
-DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
+DrawXAxis.prototype.drawAxis =function(){
+    this.plotAxis();
+
+};
+DrawXAxis.prototype.drawXAxisComp = function(check, numberOfCharts) {
     var instance = this.instance;
     var chartNo = instance.chartNo;
-   
-
-
-
-
-    var x1 = widthEachChart * distYAxisFromOr; // distance from the origin to the yaxis
-    instance.chartLowBoundXCoor = x1;
-
-    var x2 = x1 + widthEachChart ;//+ (widthEachChart * distYAxisFromOr) /*+ (widthEachChart / 20)*/ ; //the extra divided by 20 added to keep some extra space
-    instance.chartUpBoundXCoor = x2;
-    var y1 = 0;
-    var y2 = 0;
-    if (check !== 2) { //check is being calculated many number of times
-        instance.yShift = yShiftPer;
-        var yShift = instance.yShift;
-        y1 = (heightEachChart * yShift);
-        //y2 = (heightEachChart * yShift);
-    } else {
-        instance.yShift = yShiftPer;
-        var yShift = instance.yShift;
-        y1 = (heightEachChart * yShift) + (heightEachChart);
-        //y2 = (heightEachChart * yShift) + (heightEachChart);
-    }
-   
-    //this.horizontalAxis(x1, y1);
-    this.plotAxis();
-    
+    var yShift = instance.yShift,
+        x1 = this.x1,
+        y1 = this.y1,
+        x2,
+        y2,
+        noofXTips;
     //drawTicks
     var numberOfTicks = jsonData.data.length;
     if (jsonData.chartType == "line") {
@@ -48,11 +34,12 @@ DrawXAxis.prototype.drawXAxis = function(check, numberOfCharts) {
     /*
      */
     instance.noofXTips = instance.storeValue.length;
+    noofXTips = instance.noofXTips;
     //end of horizontal axis draw
-    for (i = 0; i < instance.noofXTips; i++) {
+    for (i = 0; i < noofXTips; i++) {
         //console.log(instance.noofXTips + 'noofXTips');
-        x1 = temp_x1 + (widthEachChart / instance.noofXTips) * (i);
-        x2 = temp_x1 + (widthEachChart / instance.noofXTips) * (i);
+        x1 = temp_x1 + (widthEachChart / noofXTips) * (i);
+        x2 = temp_x1 + (widthEachChart / noofXTips) * (i);
         instance.upLimitXAxis = x1;
         if (check !== 2) {
             y1 = (heightEachChart * yShift) - 4;
