@@ -32,7 +32,7 @@ DrawChart.prototype.addChartName = function(check) {
     var className = "textAdd";
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");;
     //
-    draw.addText(x, y, chartName, transform, className, textElement, fontSize, style);
+    draw.addTextSVG(svg, x, y, chartName, textElement,className, transform, fontSize, style);
 
 };
 DrawChart.prototype.drawChartOutline = function() {

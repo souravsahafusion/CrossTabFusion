@@ -82,12 +82,30 @@ PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
     this.instance.svg.appendChild(circleTip);
 
 };
-PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
 
-    if (typeof textElement == 'undefined') {
+PlotGraph.prototype.addTextSVG = function(svg, x, y, textValue, textElement, className, transform, fontSize, style) {
+
+   /* if (typeof textElement == 'undefined') {
         textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
 
-    }
+    }*/
+
+    textElement.setAttribute("x", x);
+    textElement.setAttribute("y", y);
+    textElement.innerHTML = textValue;
+    //var fontSize  = heightEachChart * .04;
+    textElement.setAttribute("font-size", fontSize);
+    textElement.setAttribute("transform", transform);
+    textElement.setAttribute("style", style);
+    svg.appendChild(textElement);
+
+};
+PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
+
+   /* if (typeof textElement == 'undefined') {
+        textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+    }*/
 
     textElement.setAttribute("x", x);
     textElement.setAttribute("y", y);
@@ -99,6 +117,7 @@ PlotGraph.prototype.addText = function(x, y, textValue, transform, className, te
     this.instance.svg.appendChild(textElement);
 
 };
+
 PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
 
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");

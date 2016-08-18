@@ -41,21 +41,23 @@ function parseData(input) {
             chartBound.setZone();
         }else{
             chartBound.setKeys();
+            var chartArrange = new CalValues();
+            chartArrange.customChartArrange();
+            
+            var expression = jsonData.chart_order_func;
+                switch (expression) {
+                    case "minimum":
+                        arrangeOnMin();
+                        break;
+                    case "maximum":
+                        arrangeOnMax();
+                        break;
+
+                }
+            
         }
     var numberOfCharts = jsonData.y_axis_map.length;
-    var chartArrange = new CalValues();
- /*   chartArrange.customChartArrange();
     
-    var expression = jsonData.chart_order_func;
-        switch (expression) {
-            case "minimum":
-                arrangeOnMin();
-                break;
-            case "maximum":
-                arrangeOnMax();
-                break;
-
-        }*/
     for (var i = 0; i < numberOfCharts; i++) {
         var tempMap = jsonData.y_axis_map[i];
         //console.log(tempMap+ 'first step');
