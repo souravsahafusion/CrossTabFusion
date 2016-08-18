@@ -8,7 +8,7 @@ json = {
     },
     "chart_order_func": "minimum",
     "scaleColChartFactor": 4,
-    "chartType": "column",
+    "chartType": "CrossTab",
     "y_axis_map": [],
     "minProfitColor" : "#DCDCDC" ,
     "maxProfitColor" : "#000000",
