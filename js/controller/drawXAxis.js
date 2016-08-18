@@ -1,3 +1,4 @@
+
 function DrawXAxis(instance, x1, y1, inclination, svg) {
     Axis.call(this, instance, x1, y1, inclination, svg);
     this.instance = instance;
