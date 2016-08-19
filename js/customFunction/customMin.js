@@ -1,3 +1,4 @@
+"use strict";
 function arrangeOnMin() {
     var minValueArray = [];
     
@@ -26,10 +27,7 @@ function arrangeOnMin() {
         }
     }
 
-    for (var i = 0; i < length; i++) {
-        //console.log(minValueArray[i]);
-        //console.log(obj.y_axis_map[i]);
-    }
+    
 
 
 };
