@@ -1,3 +1,4 @@
+"use strict";
 function ProductType(){
 	this.model = '';
 	this.productTypes = []; //amereto
