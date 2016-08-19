@@ -1,0 +1,38 @@
+.circleTipHighlight{
+	stroke:red; 
+	stroke-width:2;
+	fill:white;
+}
+.axisTicks{
+	stroke:#1e7ac9;
+	stroke-width:1;
+	
+}
+body{
+background-color: ;
+}
+.divLines{
+
+}
+.drawCrossHairLines{
+	fill:black;
+}
+.axisDraw{
+	stroke:rgb(255,0,0);
+	stroke-width:1;
+	
+}
+.divLines{
+	stroke:rgb(0,0,230);
+	stroke-width:1;
+
+}
+.plotGraph{
+	stroke:rgb(105,105,105);
+	stroke-width:3;
+}
+
+.drawXAxis{
+	stroke:rgb(237, 237, 237);
+	stroke-width:1;
+}

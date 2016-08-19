@@ -12,7 +12,9 @@
   },
   "devDependencies": {
     "gulp": "~3.9.1",
-    "gulp-util": "~3.0.7"
+    "gulp-util": "~3.0.7",
+    "gulp-iife": "~0.3.0",
+    "gulp-html-replace": "~1.6.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
