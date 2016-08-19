@@ -1,3 +1,4 @@
+"use strict";
 function ChartModel() {
     this.chartType = '';
     this.min = 0;
