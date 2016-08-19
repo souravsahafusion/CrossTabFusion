@@ -133,7 +133,7 @@ DrawChart.prototype.initiateGraph = function() {
 
 };
 
-var crossHairInstance = '';
+//var crossHairInstance = '';
 var storeAncorPointsX = [];
 var flag = 0;
 var flagRemoveColor = 0;
