@@ -1,3 +1,4 @@
+"use strict";
 function DrawYAxis(instance, x1, y1, inclination, svg) {
     Axis.call(this, instance, x1, y1, inclination, svg);
     this.instance = instance;
@@ -5,31 +6,39 @@ function DrawYAxis(instance, x1, y1, inclination, svg) {
     this.y1 = y1;
 
 }
-DrawYAxis.prototype=Object.create(Axis.prototype);
-DrawYAxis.prototype.constructor=DrawYAxis;
-DrawYAxis.prototype.drawAxis = function(){
+DrawYAxis.prototype = Object.create(Axis.prototype);
+DrawYAxis.prototype.constructor = DrawYAxis;
+DrawYAxis.prototype.drawAxis = function() {
     this.plotAxis();
 
 };
 DrawYAxis.prototype.drawYAxis = function() {
-    var instance = this.instance;
-    var x1 = this.x1;
-    var y1 = this.y1;
-    var x2;
-    var y2;
-    var svg;
+    var instance = this.instance,
+        x1 = this.x1,
+        y1 = this.y1,
+        x2,
+        y2,
+        svg = instance.svg,
+        noOfYTips = instance.noOfYTips,
+        temp_y1 = y1,
+        temp_x1 = x1,
+        chartLowBoundXCoor = instance.chartLowBoundXCoor,
+        chartUpBoundXCoor = instance.chartUpBoundXCoor,
+        xl = chartLowBoundXCoor,
+        width,
+        height,
+        i;
 
     //draw ticks
-    var noOfYTips = instance.noOfYTips;
-    var temp_y1 = y1;
+    
+   
     instance.upLimitYAxis = y1; //setting the top limit value of y axis
 
-    var temp_x1 = x1;
-   
+    
     /*assigning label text to divs + assigning tics and division draw + rectangle for coloring*/
-    var xl = instance.chartLowBoundXCoor;
-    var width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
-    var height = heightEachChart / noOfYTips;
+    
+    width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
+    height = heightEachChart / noOfYTips;
     for (i = 0; i < noOfYTips; i++) {
         x1 = temp_x1 - 4;
         x2 = x1;
@@ -39,14 +48,13 @@ DrawYAxis.prototype.drawYAxis = function() {
         //drawing ticks
         var style = "";
         var className = "axisTicks";
-        var svg = instance.svg;
-        this.drawLine(svg,x1, y1, x2, y2, style, className);
+        this.drawLine(svg, x1, y1, x2, y2, style, className);
         //draw.drawLine(x1, y1, x2, y2, style, className);
         //drawing divs
         var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
         className = "divLines";
         x2 = widthEachChart + (widthEachChart * distYAxisFromOr);
-        this.drawLine(svg,x1, y1, x2 , y2, style, className);
+        this.drawLine(svg, x1, y1, x2, y2, style, className);
         //writing the labels
 
         //drawing the rect

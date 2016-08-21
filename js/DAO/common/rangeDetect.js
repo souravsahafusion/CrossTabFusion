@@ -1,5 +1,5 @@
-function RangeDetect(){
-	this.instance = instance;
+function RangeDetect() {
+    this.instance = instance;
 }
 RangeDetect.prototype.findYTipsModified = function(diffTenthPow) {
 

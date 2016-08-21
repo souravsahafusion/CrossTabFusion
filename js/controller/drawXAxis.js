@@ -1,14 +1,15 @@
-function DrawXAxis(instance, x1, y1, inclination,svg) {
-    Axis.call(this, instance, x1, y1, inclination,svg);
+
+function DrawXAxis(instance, x1, y1, inclination, svg) {
+    Axis.call(this, instance, x1, y1, inclination, svg);
     this.instance = instance;
     this.x1 = x1;
     this.y1 = y1;
 
-    
+
 }
 DrawXAxis.prototype = Object.create(Axis.prototype);
 DrawXAxis.prototype.constructor = DrawXAxis;
-DrawXAxis.prototype.drawAxis =function(){
+DrawXAxis.prototype.drawAxis = function() {
     this.plotAxis();
 
 };
@@ -54,7 +55,7 @@ DrawXAxis.prototype.drawXAxisComp = function(check, numberOfCharts) {
 
             var svg = instance.svg;
             this.drawLine(svg, x1, y1, x2, y2, style, className);
-            
+
 
         }
 

@@ -1,0 +1,318 @@
+json = {
+    "chart": {
+        
+        "width": 600,
+        "height":300
+
+
+    },
+    "chart_order_func": "minimum",
+    "scaleColChartFactor": 4,
+    "chartType": "CrossTab",
+    "y_axis_map": [],
+    "minProfitColor" : "#DCDCDC" ,
+    "maxProfitColor" : "#000000",
+    "minLossColor" : "#8B0000" ,
+    "maxLossColor" : "#FFA07A",
+    "xAxisLabel" : "Sum of sales",
+    "month" : [],
+    "chart_map" : "false",
+    "productChoose" : "Coffee",
+    "chartSelect" : "zone",
+    "data":[
+        {
+            "product":"Coffee",
+            "productType":"Amaretto",
+            "zone":"Central",
+            "sop":5105,
+            "sos":14011
+        },  
+        {
+            "product":"Coffee",
+            "productType":"Amaretto",                          
+            "zone":"East",
+            "sop":1009,
+            "sos":2993
+        },
+        {
+            "product":"Coffee",
+            "productType":"Amaretto",  
+            "zone":"West",
+            "sop":-1225,
+            "sos":9265
+        },
+        {
+            "product":"Coffee",
+            "productType":"Columbian",                             
+            "zone":"Central",
+            "sop":8528,
+            "sos":28913
+        },  
+        {
+            "product":"Coffee",
+            "productType":"Columbian",                                 
+            "zone":"East",
+            "sop":27253,
+            "sos":47386
+        },
+        {
+            "product":"Coffee",
+            "productType":"Columbian",                                 
+            "zone":"South",
+            "sop":8767,
+            "sos":21664
+        },
+        {
+            "product":"Coffee",
+            "productType":"Columbian",                                 
+            "zone":"West",
+            "sop":11253,
+            "sos":30357
+        },
+        {
+            "product":"Coffee",
+            "productType":"Decaf Irish Cream",                                 
+            "zone":"Central",
+            "sop":9632,
+            "sos":26155
+        },  
+        {
+            "product":"Coffee",
+            "productType":"Decaf Irish Cream",                             
+            "zone":"East",
+            "sop":2727,
+            "sos":6261
+        },
+        {
+            "product":"Coffee",
+            "productType":"Decaf Irish Cream",                             
+            "zone":"South",
+            "sop":2933,
+            "sos":11592
+        },
+        {
+            "product":"Coffee",
+            "productType":"Decaf Irish Cream",                             
+            "zone":"West",
+            "sop":-1305,
+            "sos":18235
+        },
+        {
+            "product":"Espresso",
+            "productType":"Caffe Latte",                           
+            "zone":"South",
+            "sop":3872,
+            "sos":15442
+        },                      
+        {
+            "product":"Espresso",
+            "productType":"Caffe Latte",                           
+            "zone":"West",
+            "sop":7502,
+            "sos":20458
+        },
+        {
+            "product":"Espresso",
+            "productType":"Caffe Mocha",                           
+            "zone":"Central",
+            "sop":14640,
+            "sos":36570
+        },  
+        {
+            "product":"Espresso",
+            "productType":"Caffe Mocha",                               
+            "zone":"East",
+            "sop":-6230,
+            "sos":16646
+        },
+        {
+            "product":"Espresso",
+            "productType":"Caffe Mocha",                               
+            "zone":"South",
+            "sop":5201,
+            "sos":14163
+        },
+        {
+            "product":"Espresso",
+            "productType":"Caffe Mocha",                               
+            "zone":"West",
+            "sop":4064,
+            "sos":18876
+        },
+        {
+            "product":"Espresso",
+            "productType":"Decaf Espresso",                            
+            "zone":"Central",
+            "sop":8860,
+            "sos":24485
+        },  
+        {
+            "product":"Espresso",
+            "productType":"Decaf Espresso",                            
+            "zone":"East",
+            "sop":2410,
+            "sos":7722
+        },
+        {
+            "product":"Espresso",
+            "productType":"Decaf Espresso",                            
+            "zone":"South",
+            "sop":5930,
+            "sos":15384
+        },
+        {
+            "product":"Espresso",
+            "productType":"Decaf Espresso",                            
+            "zone":"West",
+            "sop":12302,
+            "sos":30578
+        },              
+        {
+            "product":"Espresso",
+            "productType":"Regular Espresso",                          
+            "zone":"East",
+            "sop":10062,
+            "sos":24036
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Chamomile",                         
+            "zone":"Central",
+            "sop":14434,
+            "sos":36570
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Chamomile",                             
+            "zone":"East",
+            "sop":765,
+            "sos":2194
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Chamomile",                             
+            "zone":"South",
+            "sop":3180,
+            "sos":11186
+        },                      
+        {
+            "product":"Herbal Tea",
+            "productType":"Chamomile",                             
+            "zone":"West",
+            "sop":8852,
+            "sos":25632
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Lemon",                             
+            "zone":"Central",
+            "sop":6251,
+            "sos":21978
+        },  
+        {
+            "product":"Herbal Tea",
+            "productType":"Lemon",                             
+            "zone":"East",
+            "sop":7901,
+            "sos":27176
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Lemon",                             
+            "zone":"South",
+            "sop":2593,
+            "sos":14497
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Lemon",                             
+            "zone":"West",
+            "sop":13120,
+            "sos":32274
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Mint",                              
+            "zone":"Central",
+            "sop":4069,
+            "sos":93637
+        },  
+        {
+            "product":"Herbal Tea",
+            "productType":"Mint",                                  
+            "zone":"East",
+            "sop":-2242,
+            "sos":11992
+        },
+        {
+            "product":"Herbal Tea",
+            "productType":"Mint",                                  
+            "zone":"West",
+            "sop":4330,
+            "sos":14380
+        },
+        {
+            "product":"Tea",
+            "productType":"Darjeeling",                                    
+            "zone":"Central",
+            "sop":10772,
+            "sos":30289
+        },  
+        {
+            "product":"Tea",
+            "productType":"Darjeeling",                                
+            "zone":"East",
+            "sop":6497,
+            "sos":14096
+        },
+        {
+            "product":"Tea",
+            "productType":"Darjeeling",                                
+            "zone":"West",
+            "sop":11780,
+            "sos":28769
+        },
+        {
+            "product":"Tea",
+            "productType":"Earl Grey",                             
+            "zone":"Central",
+            "sop":10331,
+            "sos":32881
+        },  
+        {
+            "product":"Tea",
+            "productType":"Earl Grey",                             
+            "zone":"East",
+            "sop":6497,
+            "sos":14096
+        },
+        {
+            "product":"Tea",
+            "productType":"Earl Grey",                             
+            "zone":"West",
+            "sop":10425,
+            "sos":27387
+        },
+        {
+            "product":"Tea",
+            "productType":"Green Tea",                             
+            "zone":"Central",
+            "sop":1227,
+            "sos":5211
+        },  
+        {
+            "product":"Tea",
+            "productType":"Green Tea",                             
+            "zone":"East",
+            "sop":5654,
+            "sos":11571
+        },
+        {
+            "product":"Tea",
+            "productType":"Green Tea",                             
+            "zone":"West",
+            "sop":-7109,
+            "sos":16063
+        }
+    ]                   
+};

@@ -1,0 +1,36 @@
+{
+  "name": "chart",
+  "version": "0.3.8",
+  "description": "treilis and crosstab chart implemented",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "~3.9.1",
+    "gulp-concat": "~2.6.0",
+    "gulp-install": "~0.6.0",
+    "gulp-uglify": "~2.0.0",
+    "gulp-util": "~3.0.7"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.1",
+    "gulp-util": "~3.0.7",
+    "gulp-iife": "~0.3.0",
+    "gulp-html-replace": "~1.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/souravsahafusion/CrossTabFusion.git"
+  },
+  "keywords": [
+    "crosstab",
+    "line",
+    "column"
+  ],
+  "author": "sourav saha",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/souravsahafusion/CrossTabFusion/issues"
+  }
+}

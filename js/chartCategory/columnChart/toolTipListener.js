@@ -1,3 +1,4 @@
+"use strict";
 function columnTrigger(event) {
     var x = event.detail.x % jsonData.chart.width,
         index = -1,
@@ -11,22 +12,27 @@ function columnTrigger(event) {
         scale,
         y,
         textElement,
-        toolTipRect;
+        toolTipRect,
+        toolTipX,
+        toolTipY,
+        check1,
+        check2;
     x = x - 8;
-    
-    
+
+
     posScale = jsonData.scaleColChartFactor / 100 * widthEachChart;
 
     for (i = posScale; i > 0; i--) {
         storeAncorPointsX.indexOf(x + i);
-
-        if (storeAncorPointsX.indexOf(x + i) !== -1 || storeAncorPointsX.indexOf(x - i) !== -1) {
+        check1 = storeAncorPointsX.indexOf(x + i); 
+        check2 = storeAncorPointsX.indexOf(x - i); 
+        if (check1 !== -1 || check2 !== -1) {
             //index = 0;  //find better way for choosing index
-            if (storeAncorPointsX.indexOf(x + i) !== -1) {
+            if (check1 !== -1) {
                 index = storeAncorPointsX.indexOf(x + i);
                 x = x + i;
             }
-            if (storeAncorPointsX.indexOf(x - i) !== -1) {
+            if (check2 !== -1) {
                 index = storeAncorPointsX.indexOf(x - i);
                 x = x - i;
             }
@@ -68,8 +74,10 @@ function columnTrigger(event) {
 
                 //object[i].addText(x, y, value, transform, className, textElement);
                 //function call is costly hence avoided
-                toolTipRect.setAttributeNS(null, 'x', x + widthEachChart * shiftXTipLine);
-                toolTipRect.setAttributeNS(null, 'y', y - heightEachChart * .1);
+                toolTipX  = x + widthEachChart * shiftXTipLine;
+                toolTipY = y - heightEachChart * .1;
+                toolTipRect.setAttributeNS(null, 'x', toolTipX);
+                toolTipRect.setAttributeNS(null, 'y', toolTipY);
                 toolTipRect.setAttributeNS(null, 'height', heightEachChart * .1);
                 toolTipRect.setAttributeNS(null, 'width', widthEachChart * .25);
                 toolTipRect.setAttribute("class", "toolTipRect");
@@ -93,13 +101,13 @@ function columnTrigger(event) {
             }
         }
     } else {
-        
+
 
     }
 
 
 
-};
+}
 
 
 
@@ -131,4 +139,4 @@ function removeToolTip(event) {
 
 
 
-};
+}

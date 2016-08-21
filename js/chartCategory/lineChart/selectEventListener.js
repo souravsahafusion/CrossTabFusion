@@ -1,118 +1,115 @@
-
-
-
-
+"use strict";
 function instantiateDragLine(event) {
-    
+
     if (flagRemoveColor !== 1) {
-            var xC = event.clientX % jsonData.chart.width - 10;
-            var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49;
-            console.log(xC + 'x ' + 'y ' + yC, jsonData.chart.width);
-            console.log(event.clientX + 'clientX' + event.clientY + 'clientY');
+        var xC = event.clientX % jsonData.chart.width - 10;
+        var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49;
+        
 
-            var rect = this.selectRectIns;
-            rect.setAttributeNS(null, 'x', xC);
-            rect.setAttributeNS(null, 'y', yC);
-            rect.setAttributeNS(null, 'height', 1);
-            rect.setAttributeNS(null, 'width', 1);
-            rect.setAttribute("class", "selectRect");
-            rect.setAttribute("style", "fill:transparent;stroke:rgb(0,0,0)");
-            flag = 1;
-            //console.log(parameter);
-            //this.svg.appendChild(rect);
-            
-        } else {
+        var rect = this.selectRectIns;
+        rect.setAttributeNS(null, 'x', xC);
+        rect.setAttributeNS(null, 'y', yC);
+        rect.setAttributeNS(null, 'height', 1);
+        rect.setAttributeNS(null, 'width', 1);
+        rect.setAttribute("class", "selectRect");
+        rect.setAttribute("style", "fill:transparent;stroke:rgb(0,0,0)");
+        flag = 1;
+        
+
+    } else {
 
 
-            var columnElement = document.getElementsByClassName("ancorTipCicle");
-            //console.log(flagRemoveColor + 'flagRemoveColor');
-            for (var i = 0; i < columnElement.length; i++) {
+        var columnElement = document.getElementsByClassName("ancorTipCicle");
+        //console.log(flagRemoveColor + 'flagRemoveColor');
+        for (var i = 0; i < columnElement.length; i++) {
 
-                columnElement[i].style.fill = "white";
-                columnElement[i].style.stroke = "rgb(30, 122, 205)";
-
-            }
-            flagRemoveColor = 0;
+            columnElement[i].style.fill = "white";
+            columnElement[i].style.stroke = "rgb(30, 122, 205)";
 
         }
+        flagRemoveColor = 0;
 
-};
+    }
+
+}
+
 function dragLineRect(event) {
-   
+
 
     if (flag == 1) {
-            var rect = this.selectRectIns;
-            var xC = event.clientX % jsonData.chart.width - 10;
-            var yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49 ;
-            var xBeg = rect.getAttribute("x");
-            var yBeg = rect.getAttribute("y");
-            var width = Math.abs(xC - xBeg);
-            var height = Math.abs(yBeg - yC);
-            flagRemoveColor = 1;
-            /*if(xBeg < x){
-                rect.setAttributeNS(null, 'x', xC );
-                rect.setAttributeNS(null, 'y', yC );
-            }*/
-            /*if((xC - xPrev) < 0){
-                rect.setAttributeNS(null, 'x', xC );
-
-            }
-            if((yc - yPrev) < 0){
-                rect.setAttributeNS(null, 'y', yC );
-            }   */
-
-            rect.setAttributeNS(null, 'width', width);
-            rect.setAttributeNS(null, 'height', height);
-            var columnElement = document.getElementsByClassName("ancorTipCicle");
-            console.log(columnElement.length + 'length');
-            for (var i = 0; i < columnElement.length; i++) {
-                var testX = Math.floor(columnElement[i].getAttribute("cx"));
-                var testR = columnElement[i].getAttribute("r");
-
-                testX = testX + widthEachChart * jsonData.scaleColChartFactor / 100;
-                var testY = Math.floor(columnElement[i].getAttribute("cy"));
-                //console.log(testY + 'y');
-                console.log(xC + 'xc' + testR + 'testR' + testY + 'testY');
-
-
-
-                if (testX <= xC && testX >= xBeg && testY <= yC && testY >= yBeg) {
-
-                    columnElement[i].style.fill = "red";
-                    columnElement[i].style.stroke = "red";
-
-                }
-
-
-                //console.log(xPrev+ 'xPrev ' + yPrev + " yPrev ");  
-
-            }
-
-
+        var rect = this.selectRectIns,
+            xC = event.clientX % jsonData.chart.width - 10,
+            yC = event.pageY % jsonData.chart.height - heightEachChart * chartModel[0].yShift - 49,
+            xBeg = rect.getAttribute("x"),
+            yBeg = rect.getAttribute("y"),
+            width = Math.abs(xC - xBeg),
+            height = Math.abs(yBeg - yC),
+            i,
+            loopLen,
+            columnElement,
+            testX,
+            testY,
+            testR,
+            scale = jsonData.scaleColChartFactor / 100;
+        flagRemoveColor = 1;
+        /*if(xBeg < x){
+            rect.setAttributeNS(null, 'x', xC );
+            rect.setAttributeNS(null, 'y', yC );
+        }*/
+        /*if((xC - xPrev) < 0){
+            rect.setAttributeNS(null, 'x', xC );
 
         }
-};
+        if((yc - yPrev) < 0){
+            rect.setAttributeNS(null, 'y', yC );
+        }   */
+
+        rect.setAttributeNS(null, 'width', width);
+        rect.setAttributeNS(null, 'height', height);
+        columnElement = document.getElementsByClassName("ancorTipCicle");
+        loopLen = columnElement.length;
+        for (i = 0; i < loopLen; i++) {
+            testX = Math.floor(columnElement[i].getAttribute("cx"));
+            testR = columnElement[i].getAttribute("r");
+
+            testX = testX + widthEachChart * scale;
+            testY = Math.floor(columnElement[i].getAttribute("cy"));
+            
+
+
+
+            if (testX <= xC && testX >= xBeg && testY <= yC && testY >= yBeg) {
+
+                columnElement[i].style.fill = "red";
+                columnElement[i].style.stroke = "red";
+
+            }
+
+        }
+
+
+
+    }
+}
+
 function releaseLineRect(event) {
-    console.log("releaseLineRect");
     var rect = this.selectRectIns;
 
     rect.setAttributeNS(null, 'height', 0);
     rect.setAttributeNS(null, 'width', 0);
-    
+
     flag = 0;
 
-
-};
+}
 
 
 function outLineRect(event) {
-    console.log("releaseLineRect");
     var rect = this.selectRectIns;
 
     rect.setAttributeNS(null, 'height', 0);
     rect.setAttributeNS(null, 'width', 0);
-    
+
     flag = 0;
 
 
-};
+}

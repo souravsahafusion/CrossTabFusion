@@ -1,3 +1,4 @@
+"use strict";
 function ChartFunc(instance) {
     this.instance = instance;
 }
@@ -10,15 +11,16 @@ ChartFunc.prototype.drawBoundRectangle = function(className) {
         chartUpBoundXCoor = instance.chartUpBoundXCoor,
         lowLimitYAxis = instance.lowLimitYAxis,
         upLimitYAxis = instance.upLimitYAxis,
-        rectBound;
+        rectBound,
+        drawRect = new PlotGraph(instance);
 
 
 
-    style = "stroke:rgb(237, 237, 237);stroke-width:1;fill:transparent";
+    var style = "stroke:rgb(237, 237, 237);stroke-width:1;fill:transparent";
     widthRect = chartUpBoundXCoor - chartLowBoundXCoor;
     heightRect = lowLimitYAxis - upLimitYAxis;
 
-    drawRect = new PlotGraph(instance);
+    
     rectBound = drawRect.drawRectangle(instance.svg, chartLowBoundXCoor, upLimitYAxis, heightRect, widthRect, className, style);
 
     return rectBound;
@@ -26,12 +28,12 @@ ChartFunc.prototype.drawBoundRectangle = function(className) {
 };
 
 ChartFunc.prototype.calculateMappingPoint = function(value, a, b, c, d) {
-   
-    if(jsonData.chartType == "CrossTab"){
-       return ((value - a) / (b - a) * (d - c)); 
-    }else{
-         return (d - (value - a) / (b - a) * (d - c));
+
+    if (jsonData.chartType == "CrossTab") {
+        return ((value - a) / (b - a) * (d - c));
+    } else {
+        return (d - (value - a) / (b - a) * (d - c));
     }
-   
+
 
 };
