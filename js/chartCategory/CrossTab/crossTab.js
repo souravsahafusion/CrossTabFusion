@@ -17,20 +17,6 @@ function CrossTab(instance, input, index, productLen) {
 }
 
 
-CrossTab.prototype.addText = function(x, y, textValue, parameterPass) {
-    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    /*if (typeof parameterPass.textElement == 'undefined') {
-       
-
-    }*/
-
-    textElement.setAttribute("x", x);
-    textElement.setAttribute("y", y);
-    textElement.innerHTML = textValue;
-    textElement.setAttribute("class", "addedText");
-    parameterPass.svg.appendChild(textElement);
-
-};
 
 
 
