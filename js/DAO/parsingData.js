@@ -304,7 +304,7 @@ ParsingData.prototype.findMinAndSetDataValue = function(tempMap) {
         }
     }*/
     instance.tempMap = tempMap;
-    console.log(tempMap);
+    
     for (var i = 0, count = 0; i < jsonData.data.length; i++) {
         //setting value to the jsonDataect
         //var monthValue = this.findMonth(i);

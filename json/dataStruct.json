@@ -19,6 +19,7 @@ json = {
     "chart_map" : "false",
     "productChoose" : "Coffee",
     "chartSelect" : "zone",
+    "cmpArr" : "true",
     "data":[
         {
             "product":"Coffee",

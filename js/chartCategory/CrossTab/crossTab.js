@@ -1,7 +1,7 @@
 "use strict";
 
 function CrossTab(instance, input, index, productLen) {
-
+    PlotColumnBar.call(this, instance);
     this.instance = instance;
     this.input = input;
     this.index = index;
@@ -15,85 +15,8 @@ function CrossTab(instance, input, index, productLen) {
     this.productLen = productLen;
 
 }
-
-
-
-
-
-
-CrossTab.prototype.plotColumnChart = function() {
-
-    var instance = this.instance,
-        svg,
-        scaleColChartFactor,
-        i,
-        loopLen = instance.productTypes.length,
-        value,
-        a = 0,
-        b = maximum,
-        c = 0,
-        d = widthEachChart,
-        chartFunc = new ChartFunc(),
-        yPointPlot,
-        valueProfit,
-        ratio,
-        generateColor = new GenColor(),
-        styleColor,
-        x,
-        y,
-        heightRect,
-        widthRect,
-        rectIns,
-        plot = new PlotGraph(),
-        className,
-        scale = jsonData.scaleColChartFactor,
-        argumentText,
-        argumentRect;
-    for (i = 0; i < loopLen; i++) { 
-        value = instance.productIns[this.ChartIndex].sos[i];
-        svg = this.svg[this.ChartIndex];
-       
-
-        if (typeof value != 'undefined') {
-            scaleColChartFactor = scale / 100;
-
-           
-            yPointPlot = chartFunc.calculateMappingPoint(value, a, b, c, d);
-            if (yPointPlot < 2) {
-                yPointPlot = 2;
-            }
-            valueProfit = this.instance.productIns[this.ChartIndex].sop[i];
-            ratio = valueProfit / value;
-            styleColor = generateColor.genColor(ratio);
-
-            x = 0;
-            y = (heightEachChart / (this.noofXTips)) * (i);
-            heightRect = heightEachChart * scaleColChartFactor * 2;
-            widthRect = yPointPlot;
-            var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
-            className = "plotColumnGraph";
-            argumentRect = {
-            "svg" : svg,
-            "className" : className,
-            "style" : style,
-            "styleColor" : styleColor
-            };
-
-            rectIns = plot.drawRectangle(x, y, heightRect, widthRect, argumentRect);
-
-            //skipping the 2D array for storing x-y w.r.t month and instead storing the previous x-y coordinates
-
-        }
-    }
-
-    style = "stroke:rgb(237, 237, 237);stroke-width:3;";
-    className = "drawLine";
-    svg = this.svg[this.ChartIndex];
-    plot.drawLine(svg, 0, heightEachChart, widthEachChart, heightEachChart, style, className);
-
-};
-
-
+CrossTab.prototype = Object.create(PlotColumnBar.prototype);
+CrossTab.prototype.constructor = CrossTab;
 
 
 CrossTab.prototype.drawChartOutline = function() {
@@ -105,8 +28,7 @@ CrossTab.prototype.drawChartOutline = function() {
         inclination,
         svg,
         xAxis,
-        yAxis;        ;
-    //this.chartNo = chartNo + 1;
+        yAxis;       
     x1 = 0;
     this.chartLowBoundXCoor = x1;
 
@@ -133,7 +55,8 @@ var heightEachChart = 0;
 var widthEachChart = 0;
 
 CrossTab.prototype.addHeader = function() {
-    var div = document.getElementById("heading");
+    var div = document.getElementById("heading"),
+        argumentText;
     document.body.removeChild(div);
 
     var plot = new PlotGraph(),
@@ -150,9 +73,7 @@ CrossTab.prototype.addHeader = function() {
         textZone,
         xTemp,
         sepSVG = plot.createSVG(window.innerWidth, 30),
-        loopLen = jsonData.y_axis_map.length,
-        argumentText,
-        argumentRect;
+        loopLen = jsonData.y_axis_map.length;
     this.sepSVG = sepSVG;
     textProductType = "Product Type";
     textProduct = "Product";
@@ -175,7 +96,7 @@ CrossTab.prototype.addHeader = function() {
         x2 = x * (i + 1);
         y1 = 0;
         y2 = 30;
-        var style = "stroke:rgb(237, 237, 237);stroke-width:2;";
+        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
 
         plot.drawLine(sepSVG, x1, y1, x2, y2, style);
         textZone = jsonData.y_axis_map[i];
@@ -203,24 +124,29 @@ CrossTab.prototype.addFooter = function() {
         j,
         y_axis_map_len = jsonData.y_axis_map.length,
         sepSVG = plot.createSVG(window.innerWidth, 30),
+        className,
         argumentText;
     var style;
     
     this.sepSVG = sepSVG;
     x = widthEachChart;
+    style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+    className = "drawLineend";
+    //sepSVG = this.svg[this.ChartIndex];
+    plot.drawLine(sepSVG, widthEachChart, 0, widthEachChart * (jsonData.y_axis_map.length+1) , 0, style, className);
     argumentText = {
-        "svg" : sepSVG
+        "svg" : sepSVG,
+        "className" : "addedText"
         
 
     };
-
     for (i = 0; i < y_axis_map_len; i++) {
 
         x1 = x * (i + 1);
         x2 = x * (i + 1);
         y1 = 0;
         y2 = 30;
-        style = "stroke:rgb(237, 237, 237);stroke-width:2;";
+        style = "stroke:rgb(237, 237, 237);stroke-width:1;";
 
         //zone separator lines
         plot.drawLine(sepSVG, x1, y1, x2, y2, style);
@@ -231,9 +157,8 @@ CrossTab.prototype.addFooter = function() {
             plot.drawLine(sepSVG, tempx1, 0, tempx1, 4, style);
             
             if (j === 0) {
-                tempx1 = x1 + xLabelCoor * (j) + 5;
 
-                plot.addText(tempx1, 16, 0 + "K", argumentText);
+                plot.addText(x1 + xLabelCoor * (j), 16, 0 + "K", argumentText);
             } else if (j != noOfYTips) {
                 tickValue = maximum / noOfYTips * j / 1000;
                 tempx1 = x1 + xLabelCoor * (j) - 10;
@@ -248,14 +173,14 @@ CrossTab.prototype.addFooter = function() {
     //last separator line 
     x1 = x * (i + 1);
     x2 = x * (i + 1);
-    plot.drawLine(sepSVG, x1, y1, x2, y2, style);
+    plot.addText(tempx1, 28, jsonData.xAxisLabel, argumentText);
 
 
 
 
 };
 
-
+CrossTab.prototype.setColumnChartAttr = function(){}
 CrossTab.prototype.initiateDraw = function() {
     var instance = this.instance,
         plot = new PlotGraph(),
@@ -267,7 +192,14 @@ CrossTab.prototype.initiateDraw = function() {
         i,
         y_axis_mapLen = jsonData.y_axis_map.length,
         className,
-        argumentText;
+        drawColumnBar,
+        a = 0,
+        b = maximum,
+        c = 0,
+        d = widthEachChart,
+        argumentText,
+        plotArr,
+        cmpArr;
 
     heightEachChart = (window.innerHeight - 100) / this.productLen; // 100 subtracted to compensate the 
     widthEachChart = Math.floor(window.innerWidth / (y_axis_mapLen + 2));
@@ -276,13 +208,14 @@ CrossTab.prototype.initiateDraw = function() {
     sepSVG = plot.createSVG(widthEachChart, heightEachChart);
     this.sepSVG = sepSVG;
     productType = instance.model;
+
+
     argumentText = {
-        "svg" : sepSVG
+        "svg" : sepSVG,
+        "className" : "addedText"
         
 
     };
-
-
     plot.addText(0, 12, productType, argumentText);
     loopLen = instance.productTypes.length;
     for (i = 0; i < loopLen; i++) {
@@ -291,7 +224,7 @@ CrossTab.prototype.initiateDraw = function() {
         plot.addText(x, y, instance.productTypes[i], argumentText);
     }
     
-    var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
+    var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
 
     plot.drawLine(sepSVG, 0, 0, widthEachChart, 0, style);
     for (i = 0; i < y_axis_mapLen; i++) {
@@ -300,12 +233,20 @@ CrossTab.prototype.initiateDraw = function() {
 
         this.svg[i] = plot.createSVG(widthEachChart, heightEachChart);
         this.drawChartOutline();
-        this.plotColumnChart();
+        this.setColumnChartAttr();
+        plotArr = instance.productIns[this.ChartIndex].sos;
+        cmpArr =  instance.productIns[this.ChartIndex].sop;
+        /*inherited the plotColumnChart method of PlotColumnBar*/
+        this.plotColumnChart(plotArr, this.svg[i], cmpArr, loopLen);
+        
 
     }
+    
     //draw boundary line at the end of product type
     className = "drawLine";
     sepSVG = this.svg[this.ChartIndex];
+
+    //vertical line at the end of each row 
     plot.drawLine(sepSVG, widthEachChart, 0, widthEachChart, heightEachChart, style, className);
     
 };

@@ -1,16 +1,15 @@
 function PlotColumnBar(instance, loopLen){
-	this.instance = instance;
-	this.loopLen = loopLen;
-	this.alignment = alignment;
+    this.instance = instance;
+    //this.loopLen = loopLen;
+    //this.alignment = alignment;
 }
 
-PlotColumnBar.prototype.plotColumnChart = function(plotArr, svg, cmpArr){
+PlotColumnBar.prototype.plotColumnChart = function(plotArr, svg, cmpArr, loopLen){
 
   var instance = this.instance,
         //svg,
         scaleColChartFactor,
         i,
-        loopLen = this.loopLen,
         value,
         a,
         b,
@@ -29,6 +28,7 @@ PlotColumnBar.prototype.plotColumnChart = function(plotArr, svg, cmpArr){
         rectIns,
         plot = new PlotGraph(),
         className,
+        argumentRect,
         scale = jsonData.scaleColChartFactor;
     for (i = 0; i < loopLen; i++) { 
         value = plotArr[i];
@@ -60,7 +60,14 @@ PlotColumnBar.prototype.plotColumnChart = function(plotArr, svg, cmpArr){
             var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
             className = "plotColumnGraph";
 
-            rectIns = plot.drawRectangle(svg, x, y, heightRect, widthRect, className, style, styleColor);
+            argumentRect = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style,
+            "styleColor" : styleColor
+            };
+
+            rectIns = plot.drawRectangle(x, y, heightRect, widthRect, argumentRect);
 
             //skipping the 2D array for storing x-y w.r.t month and instead storing the previous x-y coordinates
 
