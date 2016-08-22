@@ -10,9 +10,12 @@ function Parsing() {
 }
 
 function findRangeModified(instance) {
-    var minValue = 0;
-    var maxValue;
-    var lastDigit;
+    var minValue = 0,
+        maxValue,
+        padding,
+        lastDigit,
+        diffTenthPow,
+        remMaxValue;
     if (jsonData.minYTickValue === true && typeof instance !== 'undefined') {
         minValue = instance.min;
         lastDigit = minValue % 10;
@@ -37,8 +40,8 @@ function findRangeModified(instance) {
     }
 
     diffBwTips = (maxValue - minValue); // difference negative for negative values
-    var padding = diffBwTips / 10;
-    var diffTenthPow = 0;
+    padding = diffBwTips / 10;
+    diffTenthPow = 0;
 
     while (true) {
         if (Math.pow(10, diffTenthPow) < padding) {
@@ -56,7 +59,7 @@ function findRangeModified(instance) {
     } else if (padding < 1) {
         diffTenthPow = 0;
     }
-    var remMaxValue = maxValue % (Math.pow(10, diffTenthPow));
+    remMaxValue = maxValue % (Math.pow(10, diffTenthPow));
 
     if (remMaxValue !== 0) {
 
@@ -71,12 +74,13 @@ function findRangeModified(instance) {
 }
 
 function findYTipsModified(diffTenthPow) {
-    var minValue = 0;
-    var maxValue = maximum;
-    var diff = diffBwTips;
+    
+    var diff = diffBwTips,
+        i,
+        flag;
 
-    for (var i = 0; i < 10; i++) {
-        var flag = 0;
+    for (i = 0; i < 10; i++) {
+        flag = 0;
         if (((diff / 5) % (Math.pow(10, diffTenthPow))) === 0) {
 
             noOfYTips = 5;
@@ -116,12 +120,13 @@ function findYTipsModified(diffTenthPow) {
 }
 
 Parsing.prototype.setZoneAndProduct = function() {
-    var value;
-    var pdts = [];
+    var value,
+        pdts = [],
+        i;
 
 
 
-    for (var i = 0; i < jsonData.data.length; i++) {
+    for ( i = 0; i < jsonData.data.length; i++) {
         value = jsonData.data[i].zone;
         if (jsonData.y_axis_map.indexOf(value) < 0) {
             jsonData.y_axis_map.push(value);
@@ -141,14 +146,15 @@ Parsing.prototype.setZoneAndProduct = function() {
 
 };
 Parsing.prototype.setProductTypes = function() {
-    var indexProduct;
-    var indexZone;
-    var productName;
-    var sosVal;
-    var sopVal;
-    var indexProductType;
-    var productType;
-    for (var i = 0; i < jsonData.data.length; i++) {
+    var indexProduct,
+        indexZone,
+        productName,
+        sosVal,
+        sopVal,
+        indexProductType,
+        productType,
+        i;
+    for ( i = 0; i < jsonData.data.length; i++) {
 
         indexProduct = this.pdts.indexOf(jsonData.data[i].product);
         indexZone = jsonData.y_axis_map.indexOf(jsonData.data[i].zone);
@@ -169,13 +175,16 @@ Parsing.prototype.setProductTypes = function() {
 };
 Parsing.prototype.setValues = function(input) {
     jsonData = input;
-    var range = [];
+    var range = [],
+        productLen,
+        pdtsIns,
+        i;
 
     this.setZoneAndProduct();
-    var productLen = this.pdts.length;
-    var pdtsIns;
+    productLen = this.pdts.length;
+    
 
-    for (var i = 0; i < productLen; i++) {
+    for (i = 0; i < productLen; i++) {
 
         //creating a object of the model ProductType for each product viz. coffee, tea
 

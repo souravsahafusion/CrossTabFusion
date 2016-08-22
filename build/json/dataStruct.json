@@ -8,7 +8,7 @@ json = {
     },
     "chart_order_func": "minimum",
     "scaleColChartFactor": 4,
-    "chartType": "CrossTab",
+    "chartType": "line",
     "y_axis_map": [],
     "minProfitColor" : "#DCDCDC" ,
     "maxProfitColor" : "#000000",
@@ -19,6 +19,7 @@ json = {
     "chart_map" : "false",
     "productChoose" : "Coffee",
     "chartSelect" : "zone",
+    "cmpArr" : "true",
     "data":[
         {
             "product":"Coffee",

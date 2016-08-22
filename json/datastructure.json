@@ -17,10 +17,11 @@ var json = {
     "y_axis_map": [],
     "data": [{
             "axis1": 15600, //value for month june""""""""""
-            "sales": -.753,
-            "visited": .7759,
+            "sales": -0.753,
+            "visited": 0.7759,
             "axis4": -193,
             "axis": 759,
+            "pratyush" :3,
             "date": "Jan"
 
         },{
@@ -28,6 +29,7 @@ var json = {
             "sales": .7,
             "visited": .7761,
             "axis4": 159,
+            "pratyush" : 2,
             "date": "Feb"
 
         },{
