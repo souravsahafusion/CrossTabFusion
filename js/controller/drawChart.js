@@ -49,10 +49,10 @@ DrawChart.prototype.addChartName = function(check) {
     //textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     argumentText = {
         "svg" : svg,
-
+        
 
     };
-    draw.addTextSVG(x, y, chartName, textElement, className, transform, fontSize, style);
+    draw.addTextSVG(svg, x, y, chartName, textElement, className, transform, fontSize, style);
 
 };
 DrawChart.prototype.drawChartOutline = function() {
