@@ -38,12 +38,12 @@ PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, v
 
 };
 //svg, x, y, height, width, className, style,styleColor
-PlotGraph.prototype.drawRectangleSep = function(parameterPass) {
+PlotGraph.prototype.drawRectangleSep = function(x, y, height, width, parameterPass) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttributeNS(null, 'x', parameterPass.x);
-    rect.setAttributeNS(null, 'y', parameterPass.y);
-    rect.setAttributeNS(null, 'height', parameterPass.height);
-    rect.setAttributeNS(null, 'width', parameterPass.width);
+    rect.setAttributeNS(null, 'x', x);
+    rect.setAttributeNS(null, 'y', y);
+    rect.setAttributeNS(null, 'height', height);
+    rect.setAttributeNS(null, 'width', width);
     rect.setAttribute("class", parameterPass.className);
     rect.setAttribute("style", parameterPass.style);
     parameterPass.svg.appendChild(rect);

@@ -82,7 +82,7 @@ DrawYAxis.prototype.drawYAxis = function() {
             "className" : className,
             "style" : style
             };
-            this.drawRectangleSep(argumentPass);
+            this.drawRectangleSep(xl, y1, height, width, argumentPass);
         }
 
     }
