@@ -43,10 +43,10 @@ CrossTab.prototype.plotColumnChart = function() {
         i,
         loopLen = instance.productTypes.length,
         value,
-        a,
-        b,
-        c,
-        d,
+        a = 0,
+        b = maximum,
+        c = 0,
+        d = widthEachChart,
         chartFunc = new ChartFunc(),
         yPointPlot,
         valueProfit,
@@ -69,10 +69,7 @@ CrossTab.prototype.plotColumnChart = function() {
         if (typeof value != 'undefined') {
             scaleColChartFactor = scale / 100;
 
-            a = 0;
-            b = maximum;
-            c = 0;
-            d = widthEachChart;
+           
             yPointPlot = chartFunc.calculateMappingPoint(value, a, b, c, d);
             if (yPointPlot < 2) {
                 yPointPlot = 2;

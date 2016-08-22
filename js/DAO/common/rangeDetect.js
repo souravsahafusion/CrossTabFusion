@@ -1,4 +1,4 @@
-function RangeDetect() {
+/*function RangeDetect() {
     this.instance = instance;
 }
 RangeDetect.prototype.findYTipsModified = function(diffTenthPow) {
@@ -107,4 +107,4 @@ RangeDetect.prototype.findRangeModified = function() {
 
     instance.diffBwTips = instance.maxTipValue - instance.minTipValue;
     this.findYTipsModified(diffTenthPow);
-};
+};*/
