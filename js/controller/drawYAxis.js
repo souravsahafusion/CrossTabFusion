@@ -27,7 +27,12 @@ DrawYAxis.prototype.drawYAxis = function() {
         xl = chartLowBoundXCoor,
         width,
         height,
+<<<<<<< HEAD
         i;
+=======
+        i,
+        argumentPass;
+>>>>>>> argumentObject
 
     //draw ticks
     
@@ -37,7 +42,11 @@ DrawYAxis.prototype.drawYAxis = function() {
     
     /*assigning label text to divs + assigning tics and division draw + rectangle for coloring*/
     
+<<<<<<< HEAD
     width = instance.chartUpBoundXCoor - instance.chartLowBoundXCoor;
+=======
+    width = chartUpBoundXCoor - chartLowBoundXCoor;
+>>>>>>> argumentObject
     height = heightEachChart / noOfYTips;
     for (i = 0; i < noOfYTips; i++) {
         x1 = temp_x1 - 4;
@@ -46,14 +55,29 @@ DrawYAxis.prototype.drawYAxis = function() {
         y2 = temp_y1 + (heightEachChart / noOfYTips) * (i);
 
         //drawing ticks
-        var style = "";
+        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
         var className = "axisTicks";
+<<<<<<< HEAD
+=======
+        argumentPass = {
+            "svg" : svg,
+            "x1" : x1,
+            "y1" : y1,
+            "x2" : x2,
+            "y2" : y2,
+            "className" : className
+        };
+>>>>>>> argumentObject
         this.drawLine(svg, x1, y1, x2, y2, style, className);
         //draw.drawLine(x1, y1, x2, y2, style, className);
         //drawing divs
-        var style = "stroke:rgb(237, 237, 237);stroke-width:1;";
+        
         className = "divLines";
         x2 = widthEachChart + (widthEachChart * distYAxisFromOr);
+<<<<<<< HEAD
+=======
+
+>>>>>>> argumentObject
         this.drawLine(svg, x1, y1, x2, y2, style, className);
         //writing the labels
 
@@ -63,7 +87,12 @@ DrawYAxis.prototype.drawYAxis = function() {
             className = "designRect";
             style = "fill:rgb(247,247,247);";
             svg = instance.svg;
-            this.drawRectangle(svg, xl, y1, height, width, className, style);
+            argumentPass = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style
+            };
+            this.drawRectangle(xl, y1, height, width, argumentPass);
         }
 
     }

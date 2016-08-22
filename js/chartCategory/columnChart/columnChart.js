@@ -40,7 +40,12 @@ ColumnChart.prototype.plotColumnChart = function() {
         lowLimitYAxis = instance.lowLimitYAxis,
         svg = instance.svg,
         className,
+<<<<<<< HEAD
         scaleColChartFactor;
+=======
+        scaleColChartFactor,
+        argumentPass;
+>>>>>>> argumentObject
 
 
     for (i = 0; i < dataLen; i++) {
@@ -53,10 +58,15 @@ ColumnChart.prototype.plotColumnChart = function() {
             if (yPointPlot < 2) {
                 yPointPlot = 2;
             }
+<<<<<<< HEAD
             instance.storeAncorPointsY[i] = yPointPlot; 
             /*to store the y plotted point to draw the tooltip in that position*/
             xPointPlot = lowLimitXAxis + (widthEachChart / noofXTips) * (i);
 
+=======
+            instance.storeAncorPointsY[i] = yPointPlot;
+            xPointPlot = lowLimitXAxis + (widthEachChart / noofXTips) * (i);
+>>>>>>> argumentObject
             storeAncorPointsX[i] = Math.floor(xPointPlot);
             /*to store the x plotted point for drawing the tooltip*/
             x = xPointPlot - widthEachChart * scaleColChartFactor;
@@ -65,7 +75,16 @@ ColumnChart.prototype.plotColumnChart = function() {
             widthRect = widthEachChart * scaleColChartFactor * 2;
             var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
             className = "plotColumnGraph";
+<<<<<<< HEAD
             rectIns = draw.drawRectangle(svg, x, yPointPlot, heightRect, widthRect, className, style);
+=======
+            argumentPass = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style
+            };
+            rectIns = draw.drawRectangle(x, yPointPlot, heightRect, widthRect, argumentPass);
+>>>>>>> argumentObject
             this.columnChartListener(rectIns, className);
             //instance.lastPlottedPointX = xPointPlot;
             //instance.lastPlottedPointY = yPointPlot;

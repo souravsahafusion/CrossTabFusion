@@ -1,3 +1,4 @@
+/*"use strict";*/
 function CalValues() {
     this.instance = '';
 
@@ -7,39 +8,41 @@ var widthEachChart = 0;
 var heightEachChart = 0;
 CalValues.prototype.findYTipsModified = function(diffTenthPow) {
 
-    var instance = this.instance;
-
-    var minValue = instance.minTipValue;
-    var maxValue = instance.maxTipValue;
-    var diff = instance.diffBwTips;
-
+    var instance = this.instance,
+        minValue = instance.minTipValue,
+        maxValue = instance.maxTipValue,
+        diff = instance.diffBwTips,
+        i,
+        flag,
+        mulTiplyFactor = instance.mulTiplyFactor;
+    //console.log(diff+ 'first');
     for (i = 0; i < 10; i++) {
-        var flag = 0;
-        if (((diff / 5) % (Math.pow(10, diffTenthPow))) == 0) {
+        flag = 0;
+        if (((diff / 5) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 5;
             flag = 1;
             break;
 
-        } else if (((diff / 3) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 3) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 3;
             flag = 1;
             break;
 
-        } else if (((diff / 4) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 4) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 4;
             flag = 1;
             break;
 
-        } else if (((diff / 6) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 6) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 6;
             flag = 1;
             break;
 
-        } else if (((diff / 7) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 7) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 7;
             flag = 1;
@@ -49,30 +52,34 @@ CalValues.prototype.findYTipsModified = function(diffTenthPow) {
 
         diff = diff + Math.pow(10, diffTenthPow);
     }
-    instance.maxTipValue = (instance.maxTipValue + (diff - instance.diffBwTips)) / instance.mulTiplyFactor;
-    instance.diffBwTips = diff / instance.mulTiplyFactor;
-    instance.minTipValue = instance.minTipValue / instance.mulTiplyFactor;
+    //console.log(diff + 'second'+Math.pow(10, diffTenthPow));
+    //might need a little change in logic
+    instance.maxTipValue = (maxValue + (diff - instance.diffBwTips)) / mulTiplyFactor;
+    instance.diffBwTips = diff / mulTiplyFactor;
+    instance.minTipValue = minValue / mulTiplyFactor;
 };
 CalValues.prototype.findRangeModified = function() {
 
-    var instance = this.instance;
+    var instance = this.instance,
+        minValue = instance.min,
+        lastDigit = minValue % 10,
+        maxValue = instance.max,
+        changeFactorMax = instance.changeFactorMax;
 
-    var minValue = instance.min;
-    var lastDigit = minValue % 10;
     if (lastDigit < 0) {
         lastDigit = 10 + lastDigit;
     }
 
     minValue = minValue - lastDigit;
-    var maxValue = instance.max;
-    var lastDigit = maxValue % 10;
+  
+    lastDigit = maxValue % 10;
 
     if (lastDigit < 0) {
         lastDigit = 10 - lastDigit;
     }
     if (lastDigit !== 0) {
 
-        maxValue = maxValue + (10 - lastDigit) * Math.pow(-1, instance.changeFactorMax);
+        maxValue = maxValue + (10 - lastDigit) * Math.pow(-1, changeFactorMax);
 
     }
 

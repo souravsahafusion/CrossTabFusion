@@ -43,8 +43,12 @@ function parseData(input) {
             instance,
             chartArrange,
             expression,
+<<<<<<< HEAD
             numberOfCharts,
             range = [];
+=======
+            numberOfCharts;
+>>>>>>> argumentObject
         
 
         chartBound.calculateChartOutLines(input);
@@ -100,4 +104,8 @@ function parseData(input) {
 parseData(json);
 window.onresize = function() {
     location.reload();
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> argumentObject

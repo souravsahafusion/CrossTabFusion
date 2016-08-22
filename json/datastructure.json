@@ -10,7 +10,11 @@ var json = {
 
     },
     "chart_map" : "date",
+<<<<<<< HEAD
     "chart_order_func" : "minimum",
+=======
+    "chart_order_func" : "maximum",
+>>>>>>> argumentObject
     "scaleColChartFactor" : 4,
     "chartType" : "column",   
     "month": ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],

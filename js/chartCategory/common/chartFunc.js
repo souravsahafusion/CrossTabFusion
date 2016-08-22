@@ -12,16 +12,30 @@ ChartFunc.prototype.drawBoundRectangle = function(className) {
         lowLimitYAxis = instance.lowLimitYAxis,
         upLimitYAxis = instance.upLimitYAxis,
         rectBound,
+<<<<<<< HEAD
         drawRect = new PlotGraph(instance);
+=======
+        drawRect = new PlotGraph(instance),
+        argumentPass;
+>>>>>>> argumentObject
 
 
 
     var style = "stroke:rgb(237, 237, 237);stroke-width:1;fill:transparent";
     widthRect = chartUpBoundXCoor - chartLowBoundXCoor;
     heightRect = lowLimitYAxis - upLimitYAxis;
+    argumentPass = {
+            "svg" : instance.svg,
+            "className" : className,
+            "style" : style
+            };
 
     
+<<<<<<< HEAD
     rectBound = drawRect.drawRectangle(instance.svg, chartLowBoundXCoor, upLimitYAxis, heightRect, widthRect, className, style);
+=======
+    rectBound = drawRect.drawRectangle(chartLowBoundXCoor, upLimitYAxis, heightRect, widthRect, argumentPass);
+>>>>>>> argumentObject
 
     return rectBound;
 

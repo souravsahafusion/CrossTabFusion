@@ -38,25 +38,13 @@ PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, v
 
 };
 //svg, x, y, height, width, className, style,styleColor
-PlotGraph.prototype.drawRectangleSep = function(svg, x, y, height, width, className, style) {
+PlotGraph.prototype.drawRectangle = function(x, y, height, width, parameterPass) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttributeNS(null, 'x', x);
     rect.setAttributeNS(null, 'y', y);
     rect.setAttributeNS(null, 'height', height);
     rect.setAttributeNS(null, 'width', width);
-    rect.setAttribute("class", className);
-    rect.setAttribute("style", style);
-    svg.appendChild(rect);
-    return rect;
-
-
-};
-PlotGraph.prototype.drawRectangle = function(svg, x, y, height, width, className, style, styleColor) {
-    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttributeNS(null, 'x', x);
-    rect.setAttributeNS(null, 'y', y);
-    rect.setAttributeNS(null, 'height', height);
-    rect.setAttributeNS(null, 'width', width);
+<<<<<<< HEAD
     rect.setAttribute("class", className);
     if (typeof styleColor !== 'undefined') {
         rect.setAttribute("fill", styleColor);
@@ -67,10 +55,21 @@ PlotGraph.prototype.drawRectangle = function(svg, x, y, height, width, className
 
 
     svg.appendChild(rect);
+=======
+    rect.setAttribute("class", parameterPass.className);
+    if (typeof parameterPass.styleColor !== 'undefined') {
+        rect.setAttribute("fill", parameterPass.styleColor);
+        rect.setAttribute("stroke", parameterPass.styleColor);
+    } else {
+        rect.setAttribute("style", parameterPass.style);
+    }
+    parameterPass.svg.appendChild(rect);
+>>>>>>> argumentObject
     return rect;
 
 
 };
+
 PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
     var circleTip = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circleTip.setAttribute("cx", xPointPlot); // setting circle 
@@ -84,25 +83,29 @@ PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
 
 };
 
-PlotGraph.prototype.addTextSVG = function(svg, x, y, textValue, textElement, className, transform, fontSize, style) {
 
+<<<<<<< HEAD
     /* if (typeof textElement == 'undefined') {
          textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+=======
+PlotGraph.prototype.addText = function(x, y, textValue, parameterPass) {
+    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    /*if (typeof parameterPass.textElement == 'undefined') {
+       
+>>>>>>> argumentObject
 
      }*/
 
     textElement.setAttribute("x", x);
     textElement.setAttribute("y", y);
     textElement.innerHTML = textValue;
-    //var fontSize  = heightEachChart * .04;
-    textElement.setAttribute("font-size", fontSize);
-    textElement.setAttribute("transform", transform);
-    textElement.setAttribute("style", style);
-    svg.appendChild(textElement);
+    textElement.setAttribute("class", parameterPass.className);
+    textElement.setAttribute("font-size", parameterPass.fontSize);
+    textElement.setAttribute("transform", parameterPass.transform);
+    textElement.setAttribute("style", parameterPass.style);
+    parameterPass.svg.appendChild(textElement);
 
-};
-PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
-
+<<<<<<< HEAD
     /* if (typeof textElement == 'undefined') {
          textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
 
@@ -116,35 +119,60 @@ PlotGraph.prototype.addText = function(x, y, textValue, transform, className, te
     textElement.setAttribute("transform", transform);
     textElement.setAttribute("style", style);
     this.instance.svg.appendChild(textElement);
+=======
+>>>>>>> argumentObject
 
 };
 
+
 PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
 
+<<<<<<< HEAD
     var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     x = x - (widthEachChart / 70);
     y = y + (heightEachChart / 40);
 
     var transform = '';
 
+=======
+    //var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var argumentText;
+    x = x - (widthEachChart / 70);
+    y = y + (heightEachChart / 40);
+
+    //var transform = '';
+
+>>>>>>> argumentObject
     if (check !== 2) {
         y = y - 20;
-        transform = "rotate(0 " + x + "," + y + ")";
+        //transform = "rotate(0 " + x + "," + y + ")";
 
     } else {
-        transform = "rotate(90 " + x + "," + y + ")";
+        //transform = "rotate(90 " + x + "," + y + ")";
     }
 
     var className = "chartDivLabelX";
     var fontSize = heightEachChart * .05;
+<<<<<<< HEAD
 
     this.addText(x, y, textValue, transform, className, textElement, fontSize);
+=======
+    argumentText = {
+        "fontSize" : fontSize,
+        "className" : className,
+        "svg" : this.instance.svg
+
+    };
+
+    this.addText(x, y, textValue, argumentText);
+>>>>>>> argumentObject
 
 
 };
 PlotGraph.prototype.chartDivLabelY = function(y, index) {
-    var instance = this.instance;
-    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var instance = this.instance,
+        argumentText;
+    //var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     var x = widthEachChart / 16;
     y = y;
     var fontSize = widthEachChart * .04;
@@ -156,8 +184,20 @@ PlotGraph.prototype.chartDivLabelY = function(y, index) {
     }
 
     var className = "chartDivLabelY";
+<<<<<<< HEAD
     var transform = "rotate(0 " + x + "," + y + ")"; // not required only given to match the order, need to remove it
     this.addText(x, y, textValue, transform, className, textElement, fontSize);
+=======
+    argumentText = {
+        "className" : className,
+        "fontSize" : fontSize,
+        "svg" : this.instance.svg
+
+
+    };
+    //var transform = "rotate(0 " + x + "," + y + ")"; // not required only given to match the order, need to remove it
+    this.addText(x, y, textValue, argumentText);
+>>>>>>> argumentObject
 
 
 };

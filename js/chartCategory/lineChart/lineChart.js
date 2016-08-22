@@ -90,7 +90,16 @@ LineChart.prototype.drawDivRectangle = function() {
         style = "fill:transparent",
         svg = instance.svg,
         _this = instance,
+<<<<<<< HEAD
         rect = draw.drawRectangle(svg, x, y, heightRect, widthRect, rectangleDiv, style);
+=======
+        argumentPass = {
+            "svg" : svg,
+            "className" : rectangleDiv,
+            "style" : style
+            },
+        rect = draw.drawRectangle(x, y, heightRect, widthRect, argumentPass);
+>>>>>>> argumentObject
 
     rect.addEventListener("mousemove", entercoordinates.bind(instance, rectangleDiv));
     rect.addEventListener("syncCrossHair", showCoords, false);

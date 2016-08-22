@@ -20,7 +20,13 @@ DrawChart.prototype.addChartName = function(check) {
         height = heightEachChart * chartNameBoxHtFactor,//chart name box
         width = chartUpBoundXCoor - chartLowBoundXCoor,
         className,
+<<<<<<< HEAD
         textElement;// chart name box
+=======
+        textElement,
+        argumentRect,
+        argumentText;// chart name box
+>>>>>>> argumentObject
 
     if (check !== 2) {
         y = lowLimitYAxis + commonShift; /*heightEachChart * .02; -> space between y-axis and the chartName box*/
@@ -32,16 +38,38 @@ DrawChart.prototype.addChartName = function(check) {
     
     className = "chartName";
     var style = "fill:rgb(245,250,255);stroke:rgb(190,223,254);stroke-width:1;";
+<<<<<<< HEAD
     draw.drawRectangle(svg, x, y, height, width, className, style);
+=======
+    argumentRect = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style
+            };
+    draw.drawRectangle(x, y, height, width, argumentRect);
+>>>>>>> argumentObject
     y = y + (height) * 0.6;
     x = (chartLowBoundXCoor + chartUpBoundXCoor) / 2 * 0.8; //font position determination horizontally
     style = "stroke:rgb(6,48,86);"
     var fontSize = heightEachChart * 0.1; //font position determination vertically within the box
     var transform = "rotate(0 " + x + "," + y + ")";
     className = "textAdd";
+<<<<<<< HEAD
     textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     //
     draw.addTextSVG(svg, x, y, chartName, textElement, className, transform, fontSize, style);
+=======
+    //textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    argumentText = {
+        "svg" : svg,
+        "className": className,
+        "fontSize" : fontSize,
+        "style" : style
+
+
+    };
+    draw.addText(x, y, chartName, argumentText);
+>>>>>>> argumentObject
 
 };
 DrawChart.prototype.drawChartOutline = function() {
@@ -133,7 +161,7 @@ DrawChart.prototype.initiateGraph = function() {
 
 };
 
-var crossHairInstance = '';
+//var crossHairInstance = '';
 var storeAncorPointsX = [];
 var flag = 0;
 var flagRemoveColor = 0;
