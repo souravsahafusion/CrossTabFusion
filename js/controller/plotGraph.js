@@ -87,12 +87,27 @@ PlotGraph.prototype.addTextSVG = function(svg, x, y, textValue, textElement, cla
     svg.appendChild(textElement);
 
 };
-PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
+PlotGraph.prototype.addText = function(x, y, textValue, parameterPass) {
+    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    /*if (typeof parameterPass.textElement == 'undefined') {
+       
 
-    /* if (typeof textElement == 'undefined') {
-         textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    }*/
 
-     }*/
+    textElement.setAttribute("x", x);
+    textElement.setAttribute("y", y);
+    textElement.innerHTML = textValue;
+    textElement.setAttribute("class", parameterPass.className);
+    textElement.setAttribute("font-size", parameterPass.fontSize);
+    textElement.setAttribute("transform", parameterPass.transform);
+    textElement.setAttribute("style", parameterPass.style);
+    parameterPass.svg.appendChild(textElement);
+
+
+};
+/*PlotGraph.prototype.addText = function(x, y, textValue, transform, className, textElement, fontSize, style) {
+
+    
 
     textElement.setAttribute("x", x);
     textElement.setAttribute("y", y);
@@ -103,7 +118,7 @@ PlotGraph.prototype.addText = function(x, y, textValue, transform, className, te
     textElement.setAttribute("style", style);
     this.instance.svg.appendChild(textElement);
 
-};
+};*/
 
 PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
 
