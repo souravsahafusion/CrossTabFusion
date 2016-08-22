@@ -40,7 +40,8 @@ ColumnChart.prototype.plotColumnChart = function() {
         lowLimitYAxis = instance.lowLimitYAxis,
         svg = instance.svg,
         className,
-        scaleColChartFactor;
+        scaleColChartFactor,
+        argumentPass;
 
 
     for (i = 0; i < dataLen; i++) {
@@ -62,7 +63,12 @@ ColumnChart.prototype.plotColumnChart = function() {
             widthRect = widthEachChart * scaleColChartFactor * 2;
             var style = "fill:rgb(30, 122, 205);stroke-width:3;stroke:rgb(30, 122, 205)";
             className = "plotColumnGraph";
-            rectIns = draw.drawRectangle(svg, x, yPointPlot, heightRect, widthRect, className, style);
+            argumentPass = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style
+            };
+            rectIns = draw.drawRectangle(x, yPointPlot, heightRect, widthRect, argumentPass);
             this.columnChartListener(rectIns, className);
             instance.lastPlottedPointX = xPointPlot;
             instance.lastPlottedPointY = yPointPlot;

@@ -38,39 +38,25 @@ PlotGraph.prototype.drawLine = function(svg, x1, y1, x2, y2, style, className, v
 
 };
 //svg, x, y, height, width, className, style,styleColor
-PlotGraph.prototype.drawRectangleSep = function(x, y, height, width, parameterPass) {
+PlotGraph.prototype.drawRectangle = function(x, y, height, width, parameterPass) {
     var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttributeNS(null, 'x', x);
     rect.setAttributeNS(null, 'y', y);
     rect.setAttributeNS(null, 'height', height);
     rect.setAttributeNS(null, 'width', width);
     rect.setAttribute("class", parameterPass.className);
-    rect.setAttribute("style", parameterPass.style);
+    if (typeof parameterPass.styleColor !== 'undefined') {
+        rect.setAttribute("fill", parameterPass.styleColor);
+        rect.setAttribute("stroke", parameterPass.styleColor);
+    } else {
+        rect.setAttribute("style", parameterPass.style);
+    }
     parameterPass.svg.appendChild(rect);
     return rect;
 
 
 };
-PlotGraph.prototype.drawRectangle = function(svg, x, y, height, width, className, style, styleColor) {
-    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttributeNS(null, 'x', x);
-    rect.setAttributeNS(null, 'y', y);
-    rect.setAttributeNS(null, 'height', height);
-    rect.setAttributeNS(null, 'width', width);
-    rect.setAttribute("class", className);
-    if (typeof styleColor !== 'undefined') {
-        rect.setAttribute("fill", styleColor);
-        rect.setAttribute("stroke", styleColor);
-    } else {
-        rect.setAttribute("style", style);
-    }
 
-
-    svg.appendChild(rect);
-    return rect;
-
-
-};
 PlotGraph.prototype.plotTipCirle = function(xPointPlot, yPointPlot, className) {
     var circleTip = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circleTip.setAttribute("cx", xPointPlot); // setting circle 

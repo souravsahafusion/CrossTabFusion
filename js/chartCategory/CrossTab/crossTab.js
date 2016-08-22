@@ -60,7 +60,8 @@ CrossTab.prototype.plotColumnChart = function() {
         rectIns,
         plot = new PlotGraph(),
         className,
-        scale = jsonData.scaleColChartFactor;
+        scale = jsonData.scaleColChartFactor,
+        argumentPass;
     for (i = 0; i < loopLen; i++) { 
         value = instance.productIns[this.ChartIndex].sos[i];
         svg = this.svg[this.ChartIndex];
@@ -84,8 +85,14 @@ CrossTab.prototype.plotColumnChart = function() {
             widthRect = yPointPlot;
             var style = "stroke-width:3;stroke:rgb(30, 122, 205)";
             className = "plotColumnGraph";
+            argumentPass = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style,
+            "styleColor" : styleColor
+            };
 
-            rectIns = plot.drawRectangle(svg, x, y, heightRect, widthRect, className, style, styleColor);
+            rectIns = plot.drawRectangle(x, y, heightRect, widthRect, argumentPass);
 
             //skipping the 2D array for storing x-y w.r.t month and instead storing the previous x-y coordinates
 

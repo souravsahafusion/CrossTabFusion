@@ -75,14 +75,10 @@ DrawYAxis.prototype.drawYAxis = function() {
             svg = instance.svg;
             argumentPass = {
             "svg" : svg,
-            "x" : xl,
-            "y" : y1,
-            "height" : height,
-            "width" : width,
             "className" : className,
             "style" : style
             };
-            this.drawRectangleSep(xl, y1, height, width, argumentPass);
+            this.drawRectangle(xl, y1, height, width, argumentPass);
         }
 
     }

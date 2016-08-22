@@ -20,7 +20,8 @@ DrawChart.prototype.addChartName = function(check) {
         height = heightEachChart * chartNameBoxHtFactor,//chart name box
         width = chartUpBoundXCoor - chartLowBoundXCoor,
         className,
-        textElement;// chart name box
+        textElement,
+        argumentPass;// chart name box
 
     if (check !== 2) {
         y = lowLimitYAxis + commonShift; /*heightEachChart * .02; -> space between y-axis and the chartName box*/
@@ -32,7 +33,12 @@ DrawChart.prototype.addChartName = function(check) {
     
     className = "chartName";
     var style = "fill:rgb(245,250,255);stroke:rgb(190,223,254);stroke-width:1;";
-    draw.drawRectangle(svg, x, y, height, width, className, style);
+    argumentPass = {
+            "svg" : svg,
+            "className" : className,
+            "style" : style
+            };
+    draw.drawRectangle(x, y, height, width, argumentPass);
     y = y + (height) * 0.6;
     x = (chartLowBoundXCoor + chartUpBoundXCoor) / 2 * 0.8; //font position determination horizontally
     style = "stroke:rgb(6,48,86);"
