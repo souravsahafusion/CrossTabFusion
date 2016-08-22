@@ -122,30 +122,38 @@ PlotGraph.prototype.addText = function(x, y, textValue, parameterPass) {
 
 PlotGraph.prototype.chartDivLabelX = function(textValue, x, y, check) {
 
-    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    //var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var argumentText;
     x = x - (widthEachChart / 70);
     y = y + (heightEachChart / 40);
 
-    var transform = '';
+    //var transform = '';
 
     if (check !== 2) {
         y = y - 20;
-        transform = "rotate(0 " + x + "," + y + ")";
+        //transform = "rotate(0 " + x + "," + y + ")";
 
     } else {
-        transform = "rotate(90 " + x + "," + y + ")";
+        //transform = "rotate(90 " + x + "," + y + ")";
     }
 
     var className = "chartDivLabelX";
     var fontSize = heightEachChart * .05;
+    argumentText = {
+        "fontSize" : fontSize,
+        "className" : className,
+        "svg" : this.instance.svg
 
-    this.addText(x, y, textValue, transform, className, textElement, fontSize);
+    };
+
+    this.addText(x, y, textValue, argumentText);
 
 
 };
 PlotGraph.prototype.chartDivLabelY = function(y, index) {
-    var instance = this.instance;
-    var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var instance = this.instance,
+        argumentText;
+    //var textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
     var x = widthEachChart / 16;
     y = y;
     var fontSize = widthEachChart * .04;
@@ -157,8 +165,15 @@ PlotGraph.prototype.chartDivLabelY = function(y, index) {
     }
 
     var className = "chartDivLabelY";
-    var transform = "rotate(0 " + x + "," + y + ")"; // not required only given to match the order, need to remove it
-    this.addText(x, y, textValue, transform, className, textElement, fontSize);
+    argumentText = {
+        "className" : className,
+        "fontSize" : fontSize,
+        "svg" : this.instance.svg
+
+
+    };
+    //var transform = "rotate(0 " + x + "," + y + ")"; // not required only given to match the order, need to remove it
+    this.addText(x, y, textValue, argumentText);
 
 
 };

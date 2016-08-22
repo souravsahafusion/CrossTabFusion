@@ -181,9 +181,9 @@ CrossTab.prototype.addHeader = function() {
         
 
     };
-    this.addText(x, y, textProductType, argumentText);
+    plot.addText(x, y, textProductType, argumentText);
     x = Math.floor(window.innerWidth / (loopLen + 2));
-    this.addText(x / 2, y, textProduct, argumentText);
+    plot.addText(x / 2, y, textProduct, argumentText);
     for (var i = 0; i < loopLen; i++) {
         x1 = x * (i + 1);
         x2 = x * (i + 1);
@@ -194,7 +194,7 @@ CrossTab.prototype.addHeader = function() {
         plot.drawLine(sepSVG, x1, y1, x2, y2, style);
         textZone = jsonData.y_axis_map[i];
         xTemp = x1 + x * .3;
-        this.addText(xTemp, y, textZone, argumentText);
+        plot.addText(xTemp, y, textZone, argumentText);
 
     }
     xTemp = x * (i + 1);
@@ -247,15 +247,15 @@ CrossTab.prototype.addFooter = function() {
             if (j === 0) {
                 tempx1 = x1 + xLabelCoor * (j) + 5;
 
-                this.addText(tempx1, 16, 0 + "K", argumentText);
+                plot.addText(tempx1, 16, 0 + "K", argumentText);
             } else if (j != noOfYTips) {
                 tickValue = maximum / noOfYTips * j / 1000;
                 tempx1 = x1 + xLabelCoor * (j) - 10;
-                this.addText(tempx1, 16, tickValue + "K", argumentText);
+                plot.addText(tempx1, 16, tickValue + "K", argumentText);
             }
         }
         tempx1 = x1 + x * .3;
-        this.addText(tempx1, 28, jsonData.xAxisLabel, argumentText);
+        plot.addText(tempx1, 28, jsonData.xAxisLabel, argumentText);
 
 
     }
@@ -297,12 +297,12 @@ CrossTab.prototype.initiateDraw = function() {
     };
 
 
-    this.addText(0, 12, productType, argumentText);
+    plot.addText(0, 12, productType, argumentText);
     loopLen = instance.productTypes.length;
     for (i = 0; i < loopLen; i++) {
         x = widthEachChart / 2;
         y = 12 + (i) * heightEachChart / (loopLen + 1);
-        this.addText(x, y, instance.productTypes[i], argumentText);
+        plot.addText(x, y, instance.productTypes[i], argumentText);
     }
     
     var style = "stroke:rgb(237, 237, 237);stroke-width:3;";
