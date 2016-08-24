@@ -23,7 +23,7 @@ gulp.task('default', function() {
    
     gulp.src('./css/*.css')
         .pipe(concat('chart.min.css'))
-        .pipe(iife())
+        /*.pipe(iife())*/
         .pipe(gulp.dest('./build/css/'));  
    
     gulp.src('index.html')

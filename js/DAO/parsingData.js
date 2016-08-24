@@ -1,45 +1,47 @@
+"use strict";
 function ParsingData() {
     this.instance = '';
 
 }
-var jsonData = {};
-var widthEachChart = 0;
-var heightEachChart = 0;
+var jsonData = {},
+    widthEachChart = 0,
+    heightEachChart = 0;
 ParsingData.prototype.findYTipsModified = function(diffTenthPow) {
 
-    var instance = this.instance;
-
-    var minValue = instance.minTipValue;
-    var maxValue = instance.maxTipValue;
-    var diff = instance.diffBwTips;
+    var instance = this.instance,
+        flag = 0,   
+        minValue = instance.minTipValue,
+        maxValue = instance.maxTipValue,
+        diff = instance.diffBwTips,
+        i;
 
     for (i = 0; i < 10; i++) {
-        var flag = 0;
-        if (((diff / 5) % (Math.pow(10, diffTenthPow))) == 0) {
+            flag = 0;
+        if (((diff / 5) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 5;
             flag = 1;
             break;
 
-        } else if (((diff / 3) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 3) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 3;
             flag = 1;
             break;
 
-        } else if (((diff / 4) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 4) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 4;
             flag = 1;
             break;
 
-        } else if (((diff / 6) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 6) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 6;
             flag = 1;
             break;
 
-        } else if (((diff / 7) % (Math.pow(10, diffTenthPow))) == 0) {
+        } else if (((diff / 7) % (Math.pow(10, diffTenthPow))) === 0) {
 
             instance.noOfYTips = 7;
             flag = 1;
@@ -65,7 +67,7 @@ ParsingData.prototype.findRangeModified = function() {
 
     minValue = minValue - lastDigit;
     var maxValue = instance.max;
-    var lastDigit = maxValue % 10;
+    lastDigit = maxValue % 10;
 
     if (lastDigit < 0) {
         lastDigit = 10 - lastDigit;
@@ -175,9 +177,9 @@ ParsingData.prototype.scaleValues = function() {
 };
 ParsingData.prototype.findMax = function(tempMap) {
 
-    var maximum = 0; // need to change to first data value instead of zero
-    var i = 0;
-    var productChoose = jsonData.productChoose;
+    var maximum = 0, // need to change to first data value instead of zero
+        i = 0,
+        productChoose = jsonData.productChoose;
     /*if (typeof maximum == 'undefined') {
 
         while (true) {
@@ -191,7 +193,7 @@ ParsingData.prototype.findMax = function(tempMap) {
         }
     }*/
 
-    for (var i = 0; i < jsonData.data.length; i++) {
+    for (i = 0; i < jsonData.data.length; i++) {
         if (jsonData.data[i].product == productChoose && jsonData.data[i].zone == tempMap) {
             //need to change the zone to selectType because zone is specific
             if (jsonData.data[i].sos > maximum) {
@@ -218,8 +220,9 @@ ParsingData.prototype.findMonth = function(index) {
     }
 };
 ParsingData.prototype.setZone = function() {
-    var value;
-    for (var i = 0; i < jsonData.data.length; i++) {
+    var value,
+        i;
+    for (i = 0; i < jsonData.data.length; i++) {
         value = jsonData.data[i].zone;
         if (jsonData.y_axis_map.indexOf(value) < 0) {
             jsonData.y_axis_map.push(value);
@@ -228,16 +231,20 @@ ParsingData.prototype.setZone = function() {
     jsonData.y_axis_map.sort();
 };
 ParsingData.prototype.setKeys = function() {
-    var noOfDatas = jsonData.data.length;
+    var noOfDatas = jsonData.data.length,
+        i,
+        arr = [],
+        j,
+        value;
 
     if (jsonData.y_axis_map.length < 1) {
-        var arr = [];
-        for (var i = 0; i < noOfDatas; i++) {
+        arr = [];
+        for (i = 0; i < noOfDatas; i++) {
             arr[i] = Object.keys(jsonData.data[i]);
         }
-        for (var i = 0; i < noOfDatas; i++) {
-            for (var j = 0; j < arr[i].length - 1; j++) {
-                var value = arr[i][j];
+        for (i = 0; i < noOfDatas; i++) {
+            for (j = 0; j < arr[i].length - 1; j++) {
+                value = arr[i][j];
                 if (jsonData.y_axis_map.indexOf(value) < 0) {
                     jsonData.y_axis_map.push(arr[i][j]);
                 }
@@ -251,9 +258,9 @@ ParsingData.prototype.setKeys = function() {
 };
 ParsingData.prototype.setXAxisTicksLabel = function() {
 
-    var productChoose = jsonData.productChoose;
-    var selectType = jsonData.chartSelect;
-    var value;
+    var productChoose = jsonData.productChoose,
+        selectType = jsonData.chartSelect,
+        value;
     for (var i = 0; i < jsonData.data.length; i++) {
         //setting value to the jsonDataect
         //var monthValue = this.findMonth(i);
@@ -291,7 +298,8 @@ ParsingData.prototype.findMinAndSetDataValue = function(tempMap) {
 
 
     var minimum = 0 /*jsonData.data[0][tempMap]*/ ; //would not work for negative values
-    var i = 0;
+    var i = 0,
+        count = 0;
     /*if (typeof minimum == 'undefined') {
 
         while (true) {
@@ -305,7 +313,7 @@ ParsingData.prototype.findMinAndSetDataValue = function(tempMap) {
     }*/
     instance.tempMap = tempMap;
     
-    for (var i = 0, count = 0; i < jsonData.data.length; i++) {
+    for (i = 0; i < jsonData.data.length; i++) {
         //setting value to the jsonDataect
         //var monthValue = this.findMonth(i);
         //will return month index if date is provided else return the index       

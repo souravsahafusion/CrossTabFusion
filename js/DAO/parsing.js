@@ -39,7 +39,7 @@ function findRangeModified(instance) {
 
     }
 
-    diffBwTips = (maxValue - minValue); // difference negative for negative values
+    diffBwTips = (maxValue - minValue);                   // difference negative for negative values
     padding = diffBwTips / 10;
     diffTenthPow = 0;
 
@@ -121,26 +121,27 @@ function findYTipsModified(diffTenthPow) {
 
 Parsing.prototype.setZoneAndProduct = function() {
     var value,
-        pdts = [],
+        pdts = [],                                   // different products like Coffee, Tea
         i;
 
 
 
-    for ( i = 0; i < jsonData.data.length; i++) {
-        value = jsonData.data[i].zone;
-        if (jsonData.y_axis_map.indexOf(value) < 0) {
-            jsonData.y_axis_map.push(value);
+    for ( i = 0; i < jsonData.data.length; i++) {    //collecting the unique zone and product names from the data
+        value = jsonData.data[i].zone;               //zone value from the json data
+        if (jsonData.y_axis_map.indexOf(value) < 0) {//checking for any similar entry of zone value earlier
+            jsonData.y_axis_map.push(value);         //pushing the zone value only if it's not present
         }
-        value = jsonData.data[i].product;
+        value = jsonData.data[i].product;            //product value from json data
 
         if (pdts.indexOf(value) < 0) {
-            pdts.push(value);
-            this.pdts = pdts;
+            pdts.push(value);                        //pushing the product value only if it's not present
+            
 
         }
 
 
     }
+    this.pdts = pdts;
     jsonData.y_axis_map.sort();
     this.pdts.sort();
 
@@ -178,7 +179,8 @@ Parsing.prototype.setValues = function(input) {
     var range = [],
         productLen,
         pdtsIns,
-        i;
+        i,
+        j;
 
     this.setZoneAndProduct();
     productLen = this.pdts.length;
@@ -193,7 +195,7 @@ Parsing.prototype.setValues = function(input) {
         pdtsIns.model = this.pdts[i];
         range[i] = pdtsIns;
 
-        for (var j = 0; j < jsonData.y_axis_map.length; j++) {
+        for ( j = 0; j < jsonData.y_axis_map.length; j++) {
             //creating a object of the model ProductType for each zone viz. west, east
 
             pdtsIns.productIns[j] = new ProductType();

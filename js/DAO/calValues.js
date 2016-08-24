@@ -3,10 +3,20 @@ function CalValues() {
     this.instance = '';
 
 }
-var jsonData = {};
+var jsonData = {};                                    //global scope need to change after adding IIFE
 var widthEachChart = 0;
 var heightEachChart = 0;
-CalValues.prototype.findYTipsModified = function(diffTenthPow) {
+/**   
+  * checked with by diving by the number of tick values with the difference in range
+    that can beautify the number in each range
+  * Math.pow(10, diffTenthPow) 
+  * modulus 10 for difference 100, modulus 100 for difference 1000 likewise
+  * loop continued for 10 times and in each time the respective Math.pow(10, diffTenthPow)
+  * for small difference of range 3 to less multiplyFactor is preset else it is 1
+  * multiplyFactor is -1  for negative values
+  * (diff - instance.diffBwTips) is > 1 when some number is added to beautify the range
+*/
+CalValues.prototype.findYTipsModified = function(diffTenthPow) { //detecting the number of ticks for each chart
 
     var instance = this.instance,
         minValue = instance.minTipValue,
@@ -52,26 +62,33 @@ CalValues.prototype.findYTipsModified = function(diffTenthPow) {
 
         diff = diff + Math.pow(10, diffTenthPow);
     }
-    //console.log(diff + 'second'+Math.pow(10, diffTenthPow));
+    
     //might need a little change in logic
+
     instance.maxTipValue = (maxValue + (diff - instance.diffBwTips)) / mulTiplyFactor;
+
     instance.diffBwTips = diff / mulTiplyFactor;
     instance.minTipValue = minValue / mulTiplyFactor;
 };
+/**
+  * calculating the unit digit for the min value
+  * detect maximum value is negative or not
+ */
+
 CalValues.prototype.findRangeModified = function() {
 
     var instance = this.instance,
         minValue = instance.min,
-        lastDigit = minValue % 10,
+        lastDigit = minValue % 10,                  // calculating the unit digit for the min value
         maxValue = instance.max,
-        changeFactorMax = instance.changeFactorMax,
+        changeFactorMax = instance.changeFactorMax, // detect maximum value is negative or not
         diffBwTips,
         padding,
         diffTenthPow,
         remMinValue,
         remMaxValue;
 
-    if (lastDigit < 0) {
+    if (lastDigit < 0) {                           // for negative values unit digit is added  
         lastDigit = 10 + lastDigit;
     }
 
@@ -82,7 +99,7 @@ CalValues.prototype.findRangeModified = function() {
     if (lastDigit < 0) {
         lastDigit = 10 - lastDigit;
     }
-    if (lastDigit !== 0) {
+    if (lastDigit !== 0) {                        // checking for the range values within 10
 
         maxValue = maxValue + (10 - lastDigit) * Math.pow(-1, changeFactorMax);
 
