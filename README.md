@@ -1,2 +1,2 @@
-CrossTabFusion
+Crosstab chart
 
